@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      globally_quoted_identifiers: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/phoenix
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+server:
+  port: 8091
