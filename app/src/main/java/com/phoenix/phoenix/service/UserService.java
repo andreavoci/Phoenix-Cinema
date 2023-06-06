@@ -43,6 +43,7 @@ public class UserService {
     public ResponseEntity update(User user) {
         Optional<User> oldUser = repository.findById(user.getId());
         if(oldUser.isPresent()){
+            oldUser.get().setEmail(user.getEmail());
             return ResponseEntity.ok(repository.save(oldUser.get()));
         }
         return ResponseEntity.badRequest().body("no user with this id");
