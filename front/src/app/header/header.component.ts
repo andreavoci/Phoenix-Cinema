@@ -5,17 +5,17 @@ import { Component } from '@angular/core';
   template: `
     <div class="navbar">
 
-     <div class="navbar-brand">
+      <div class="navbar-brand">
 
-       <a class="navbar-item"routerLink="/">
-         <img src="assets/image/logo-phoenix.png" >
-       </a>
+        <a class="navbar-item"routerLink="/">
+          <img src="assets/image/logo-phoenix.png" >
+        </a>
 
-     </div>
-     <div class="navbar-menu">
-
-       <a class="navbar-menu-item" routerLink="/user" routerLinkActive="active">user</a>
-     </div>
+      </div>
+      <div class="navbar-menu">
+        <a class="navbar-menu-item" routerLink="/user" routerLinkActive="active">user</a>
+        <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
+      </div>
    </div>
   `,
   styles: [

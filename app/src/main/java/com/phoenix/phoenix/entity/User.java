@@ -44,17 +44,13 @@ public class User {
 //    @NotBlank(message = "Email mancante!")
     @Size(max = 50)
     @Email
+    @Basic
     private String email;
 
 //    @NotBlank(message = "Password mancante!")
     @Size(max = 120)
     private String password;
 
-    public String getEmail() {
-        return email;
-    }
+    private String token;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
