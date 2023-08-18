@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/phoenix
     username: postgres
-    password: postgres
+    password: root
     driver-class-name: org.postgresql.Driver
 server:
   port: 8091
