@@ -35,7 +35,9 @@ public class Pellicola {
 
     private int pegi;
 
-    private String cast;
+    private String regista;
+
+    private String attori;
 
     private double prezzo_noleggio;
 
@@ -45,7 +47,7 @@ public class Pellicola {
 
     private Date fine_noleggio;
 
-    public Pellicola(String titolo, Fornitore fornitore, Date data_uscita, int durata, Set<MovieGenre> generi, String trama, int pegi, String cast, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
+    public Pellicola(String titolo, Fornitore fornitore, Date data_uscita, int durata, Set<MovieGenre> generi, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
         this.titolo=titolo;
         this.fornitore=fornitore;
         this.data_uscita=data_uscita;
@@ -53,7 +55,8 @@ public class Pellicola {
         this.generi=generi;
         this.trama=trama;
         this.pegi=pegi;
-        this.cast=cast;
+        this.regista=regista;
+        this.attori=attori;
         this.locandina=locandina;
         this.trailer=trailer;
         this.prezzo_noleggio=prezzo_noleggio;
