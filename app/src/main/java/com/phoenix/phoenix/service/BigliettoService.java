@@ -38,8 +38,4 @@ public class BigliettoService {
         repository.deleteById(id);
         return ResponseEntity.ok("ok");
     }
-
-
-
-
 }
