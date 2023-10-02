@@ -4,13 +4,20 @@ import { Component } from '@angular/core';
   selector: 'app-footer',
   template: `
     <footer class="navbar-brand">
-      <div class="container content has-text-centered">
+      <div class="container">
         <p>Made by Andrea, Davide, Domenico, Bruno</p>
       </div>
   </footer>
   `,
   styles: [
     `
+    
+
+    p{
+      font-family: argentum-regular;
+      margin: 5px;
+    }
+
     `,
   ]
 })

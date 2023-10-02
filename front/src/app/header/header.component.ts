@@ -14,6 +14,7 @@ import { Component } from '@angular/core';
       </div>
       <div class="navbar-menu">
         <a class="navbar-menu-item" routerLink="/user" routerLinkActive="active">user</a>
+        <a class="navbar-menu-item" routerLink="/biglietto" routerLinkActive="active">biglietto</a>
         <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
       </div>
    </div>
@@ -23,18 +24,20 @@ import { Component } from '@angular/core';
     .navbar {
       display: flex;
       align-items: center;
-      background-color: #c55a11;
+      background:rgba(0,0,0,0.4);
 
       overflow: hidden;
     }
     .navbar img{
       height :45px;
+      color:white;
+      -webkit-filter: invert(1)
     }
     
     .navbar-menu-item {
       float: left;
       display: block;
-      color: black;
+      color: white;
       text-align: center;
       padding: 18px 16px;
       text-decoration: none;
@@ -47,13 +50,13 @@ import { Component } from '@angular/core';
       float: left;
       display: block;
       text-align: center;
-      padding: 3px;
+      padding: 2.5px;
       text-decoration: none;
     }
 
     /* Change the color of links on hover */
     .navbar a:hover {
-      background-color: #0000002e;
+      background: rgba(250,108,20,0.5);
       color: white;
     }
 
