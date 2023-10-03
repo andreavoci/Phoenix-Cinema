@@ -29,7 +29,8 @@ public class Pellicola {
 
     private int durata;
 
-    private Set<MovieGenre> generi = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private MovieGenre genere;
 
     private String trama;
 
@@ -47,12 +48,12 @@ public class Pellicola {
 
     private Date fine_noleggio;
 
-    public Pellicola(String titolo, Fornitore fornitore, Date data_uscita, int durata, Set<MovieGenre> generi, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
+    public Pellicola(String titolo, Fornitore fornitore, Date data_uscita, int durata, MovieGenre genere, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
         this.titolo=titolo;
         this.fornitore=fornitore;
         this.data_uscita=data_uscita;
         this.durata=durata;
-        this.generi=generi;
+        this.genere=genere;
         this.trama=trama;
         this.pegi=pegi;
         this.regista=regista;

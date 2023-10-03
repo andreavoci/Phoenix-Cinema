@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS pellicola (
     id_fornitore bigint NOT NULL,
     data_uscita date NOT NULL,
     durata VARCHAR NOT NULL,
-    generi generi[] NOT NULL,
+    generi VARCHAR[] NOT NULL,
     pegi VARCHAR NOT NULL,
     trama VARCHAR NOT NULL,
     regista VARCHAR NOT NULL,
@@ -40,21 +40,6 @@ CREATE TABLE IF NOT EXISTS pellicola (
     fine_noleggio date NOT NULL,
     FOREIGN KEY (id_fornitore)
         REFERENCES fornitore(id)
-);
-
-CREATE TYPE generi as enum(
-    'AZIONE',
-    'AVVENTURA',
-    'HORROR',
-    'COMMEDIA',
-    'DRAMMATICO',
-    'BIOGRAFICO',
-    'MUSICAL',
-    'THRILLER',
-    'FANTASY',
-    'DOCUMENTARIO',
-    'ROMANTICO',
-    'CRIME'
 );
 
 CREATE TABLE IF NOT EXISTS "user" (

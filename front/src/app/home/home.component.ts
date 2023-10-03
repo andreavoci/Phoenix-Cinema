@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="center">
       <h1>PHOENIX CINEMA</h1>
-      <button>In programmazione</button>
+      <button [routerLink]="['/pellicola']">In programmazione</button>
     </div>
   `,
   styles: [

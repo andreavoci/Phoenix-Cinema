@@ -16,9 +16,9 @@ public class Fornitore {
     private long id;
 
 //    @NotBlank(message = "Regione Sociale mancante!")
-    private String regione_sociale;
+private String regione_sociale;
 
-//    @NotBlank(message = "Tipo mancante!")
+    //    @NotBlank(message = "Tipo mancante!")
     private String tipo;
 
 //    @NotBlank(message = "Indirizzo mancante!")

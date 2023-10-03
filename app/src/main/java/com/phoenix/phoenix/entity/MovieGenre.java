@@ -11,6 +11,6 @@ public enum MovieGenre {
     THRILLER,
     FANTASY,
     DOCUMENTARIO,
-    ROMANTICO,
+    SENTIMENTALE,
     CRIME
 }

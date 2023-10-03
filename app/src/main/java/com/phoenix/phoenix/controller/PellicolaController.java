@@ -17,7 +17,7 @@ public class PellicolaController {
     public PellicolaController(PellicolaService service){ this.service=service;}
 
     @GetMapping(path = "/all")
-    public List<Pellicola> getAllMovies(){return service.getAllMovies();}
+    public ResponseEntity<?> getAllMovies(){return ResponseEntity.ok(service.getAllMovies());}
 
     @PostMapping(path = "/create")
     public ResponseEntity create(@RequestBody Pellicola pellicola){return service.create(pellicola);}

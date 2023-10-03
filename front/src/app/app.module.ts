@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
+import { PellicolaComponent } from './pellicola/pellicola.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BigliettoComponent } from './biglietto/biglietto.component';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    BigliettoComponent
+    BigliettoComponent,
+    PellicolaComponent
   ],
   imports: [
     BrowserModule,

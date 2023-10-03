@@ -4,6 +4,7 @@ import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
+import { PellicolaComponent } from './pellicola/pellicola.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:'biglietto',
     component: BigliettoComponent
+  },
+  {
+    path:'pellicola',
+    component: PellicolaComponent
   }
 ];
 
