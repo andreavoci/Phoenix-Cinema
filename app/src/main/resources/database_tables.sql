@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS pellicola (
     locandina VARCHAR NOT NULL,
     trailer VARCHAR NOT NULL,
     prezzo_noleggio float NOT NULL ,
+    titolo VARCHAR NOT NULL,
     fine_noleggio date NOT NULL,
     FOREIGN KEY (id_fornitore)
         REFERENCES fornitore(id)

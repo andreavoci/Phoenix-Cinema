@@ -13,5 +13,6 @@ export interface Pellicola{
     prezzo_noleggio:number;
     locandina:string;
     trailer:string;
+    trama:string;
     fine_noleggio:Date;
 }
