@@ -5,22 +5,19 @@ import { Util } from "../services/util";
 
 @Component({
     selector: 'app-pellicola',
-    template: `    
-    <div ngClass="col-ms-10 col-md-4" *ngFor="let p of pellicole">
-        <div class="project">
+    template: `
+    <br>
+    <br><br><br>    
+        <div class="col-ms-10 col-md-4">
+        <div class="project" *ngFor="let p of pellicole">
             <figure class="img-responsive">
-                <img src="{{p.locandina}}">
-                <figcaption>
-                    <span class="project-details">titolo</span>
-                    <span class="project-price"><strong>$100</strong></span>
-                    <span class="project-creator">creator name</span>
-                </figcaption>
+                <img src="{{p.locandina}}" alt="{{p.titolo}}">
                 <span class="actions">
-                        <button class="btn btn-warning bnt-action" type="submit" >View </button>
+                        <button class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
                 </span>
             </figure>
         </div>
-    </div>`,
+        </div>`,
     styles: [`
     body{
     background:#eee;;
@@ -37,7 +34,6 @@ import { Util } from "../services/util";
     margin-bottom: 30px;
     vertical-align: top;
     margin-right: 30px;
-    float: left;
     cursor: pointer;
     width:100%;
 }
@@ -45,13 +41,7 @@ import { Util } from "../services/util";
 .project figure {
     position: relative;
     display: inline-block;
-    width: 283px;
-    -moz-box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
-    -webkit-box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
-    box-shadow: 0 3px 0 #e2e2e2,transparent 0 0 0;
-    -webkit-box-shadow: 0 3px 0 #e2e2e2;
-    -moz-box-shadow: 0 3px 0 #e2e2e2;
-    box-shadow: 0 3px 0 #e2e2e2;
+    width:230px;
 }
 
 .project figure figcaption {
@@ -92,31 +82,6 @@ import { Util } from "../services/util";
     border: 0;
     width: 100%;
 }
-.btn-warning bnt-action{
-    margin: 0% 0% auto;    
-}
-
-figcaption .project-details {
-    display: block;
-    font-size: 16px;
-    line-height: 33px;
-    color: #0093d0;
-    height: 27px;
-    width: 85%;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
-
-figcaption .project-price {
-    position: absolute;
-    right: 15px;
-    top: 12px;
-    font-size: 22px;
-    text-align: right;
-    margin-top: 8px;
-    letter-spacing: -1px;
-    -webkit-font-smoothing: antialiased;
-}
 
 figcaption .project-creator {
     font-size: 13px;
@@ -131,15 +96,16 @@ figcaption .project-creator {
 }
 
 .project figure .actions button {
-    padding: 13px 20px;
     font-size: 16px;
+    color:#FFFFFF;
     top: 32%;
-    position: absolute;
+    position: relative;
     left: 50%;
     width: 90%;
     margin-left: -45%;
     line-height: 18px;
     letter-spacing: 1px;
+    background-color: transparent;
 }                    
       `,
     ]

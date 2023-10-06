@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS pellicola (
     id_fornitore bigint NOT NULL,
     data_uscita date NOT NULL,
     durata VARCHAR NOT NULL,
-    generi VARCHAR[] NOT NULL,
+    generi VARCHAR NOT NULL,
     pegi VARCHAR NOT NULL,
     trama VARCHAR NOT NULL,
     regista VARCHAR NOT NULL,
