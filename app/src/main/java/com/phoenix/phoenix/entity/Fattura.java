@@ -4,14 +4,22 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "contratto")
-public class Contratto {
+@Table(name = "fattura")
+public class Fattura {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private double importo;
+
+    private Date emissione;
+
+    private Date pagamento;
 
 }

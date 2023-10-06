@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-  <div class="body">
-    <app-header></app-header>
+    <div class="body">
+      <app-header></app-header>
       <div class="inner-body">
         <router-outlet></router-outlet>
       </div>
-    <app-footer></app-footer>
+      
+      <app-footer></app-footer>
     </div>
   `,
   styles: [`
@@ -25,11 +26,12 @@ import { Component } from '@angular/core';
 
     .body{
       background-image: url("/assets/image/background.jpg");
+      
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
     }
-  
+
     .inner-body{
       display: flex;
       flex-flow: column;

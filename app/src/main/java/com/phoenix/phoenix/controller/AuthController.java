@@ -20,14 +20,15 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody AuthBody body){return service.login(body.email, body.password);}
+    public ResponseEntity<String> login(@RequestBody LoginBody body){return service.login(body.email, body.password);}
 
 //    public User saveCustomer(User savedUser) {
 //        return service.saveCustomer(savedUser);
 //    }
 }
 
-class AuthBody {
+class LoginBody {
     public String email;
     public String password;
 }
+

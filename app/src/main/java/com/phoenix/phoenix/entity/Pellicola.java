@@ -14,11 +14,11 @@ import java.util.Set;
 @Entity
 @Table(name = "pellicola")
 public class Pellicola {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //    @NotBlank(message = "Titolo mancante!")
     private String titolo;
 
     @ManyToOne

@@ -11,28 +11,36 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Collection;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Posto implements Serializable {
+public class ElementoVendita implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String numero;
-    private String stato;
+    @OneToOne
+    private Merce merce;
+
+    private int quantita;
+
+    private double costo;
+
+
 }
 
 
+
 //convertitore
-class PostoConverter implements AttributeConverter<Collection<Posto>, String> {
+class ElementoVenditaConverter implements AttributeConverter<Collection<ElementoVendita>, String> {
 
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @NotNull
-    public String convertToDatabaseColumn(@NotNull Collection<Posto> myCustomObject) {
+    public String convertToDatabaseColumn(@NotNull Collection<ElementoVendita> myCustomObject) {
         try {
             return objectMapper.writeValueAsString(myCustomObject);
         } catch (Exception ex) {
@@ -42,9 +50,9 @@ class PostoConverter implements AttributeConverter<Collection<Posto>, String> {
 
     @Override
     @NotNull
-    public Collection<Posto> convertToEntityAttribute(@NotNull String databaseDataAsJSONString) {
+    public Collection<ElementoVendita> convertToEntityAttribute(@NotNull String databaseDataAsJSONString) {
         try {
-            return objectMapper.readValue(databaseDataAsJSONString,  new TypeReference<Collection<Posto>>(){});
+            return objectMapper.readValue(databaseDataAsJSONString,  new TypeReference<Collection<ElementoVendita>>(){});
         } catch (Exception ex) {
             return null;
         }

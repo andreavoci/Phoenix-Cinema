@@ -18,15 +18,12 @@ import java.util.List;
 @Entity
 @Table(name="sala")
 public class Sala {
-    //Sala(ID, nome, List(POSTI))
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String nome;
 
-    private Collection<String> posti;
-
-    @Convert(converter = PostoConverter.class)
-    private Collection<Posto> prova;
+    private int capienza;
 }

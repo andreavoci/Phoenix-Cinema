@@ -1,7 +1,7 @@
 package com.phoenix.phoenix.service;
 
+import com.phoenix.phoenix.entity.AuthBody;
 import com.phoenix.phoenix.entity.User;
-import com.phoenix.phoenix.repository.AuthRepository;
 import com.phoenix.phoenix.repository.UserRepository;
 import com.phoenix.phoenix.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AuthService {
+
     private UserRepository repository;
 
     @Autowired
@@ -34,7 +34,8 @@ public class AuthService {
                 String newtoken = Util.generateToken();
                 userByEmail.get().setToken(newtoken);
                 repository.save(userByEmail.get());
-                return new ResponseEntity<String>("{\"token\":\""+newtoken+"\"}",HttpStatus.OK);
+                return new ResponseEntity<String>("{\"token\":\""+newtoken+"\", \"id\":\""+userByEmail.get().getId()+"\" }",HttpStatus.OK);
+
             }
             else{
                 return new ResponseEntity<String>("Password sbagliata",HttpStatus.BAD_REQUEST);
@@ -44,6 +45,11 @@ public class AuthService {
         else{
             return new ResponseEntity<String>("Email inesistente",HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //Authenticate authbody
+    public Optional<User> authenticate(AuthBody authBody){
+        return repository.findById(authBody.getId());
     }
 
 //    public User saveCustomer(User savedUser) {

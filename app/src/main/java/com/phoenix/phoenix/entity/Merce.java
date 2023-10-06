@@ -13,24 +13,15 @@ import lombok.ToString;
 @Entity
 @Table(name = "merce")
 public class Merce {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @NotBlank(message = "Nome mancante!")
-    @Size(max = 50)
     private String nome;
 
-//    @NotBlank(message = "Tipo mancante!")
     private String tipo;
 
-//    @NotBlank(message = "Prezzo mancante!")
-    private double prezzo; //double o string?
+    private double prezzo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_fornitore")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonIgnore
-    private Fornitore fornitore;
 }

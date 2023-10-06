@@ -1,30 +1,29 @@
 package com.phoenix.phoenix.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="`biglietto`")
-public class Biglietto {
+@Table(name = "ordine")
+public class Ordine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "id_programmazione")
-    private Programmazione programmazione;
+    private User cliente;
 
-    private long posto;
+    private Collection<Long> biglietti;
 
-    private double costo;
+    private double sconto;
 
-
-
-
-
+    private Date data;
 }

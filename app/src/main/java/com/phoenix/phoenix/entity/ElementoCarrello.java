@@ -11,28 +11,37 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Collection;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Posto implements Serializable {
+@Entity
+public class ElementoCarrello implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String numero;
-    private String stato;
+    @OneToOne
+    @JoinColumn(name = "programmazione")
+    private Programmazione programmazione;
+
+    private long posto;
+
+    private double costo;
+
 }
 
 
+
 //convertitore
-class PostoConverter implements AttributeConverter<Collection<Posto>, String> {
+class ElementoCarrelloConverter implements AttributeConverter<Collection<ElementoCarrello>, String> {
 
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @NotNull
-    public String convertToDatabaseColumn(@NotNull Collection<Posto> myCustomObject) {
+    public String convertToDatabaseColumn(@NotNull Collection<ElementoCarrello> myCustomObject) {
         try {
             return objectMapper.writeValueAsString(myCustomObject);
         } catch (Exception ex) {
@@ -42,9 +51,9 @@ class PostoConverter implements AttributeConverter<Collection<Posto>, String> {
 
     @Override
     @NotNull
-    public Collection<Posto> convertToEntityAttribute(@NotNull String databaseDataAsJSONString) {
+    public Collection<ElementoCarrello> convertToEntityAttribute(@NotNull String databaseDataAsJSONString) {
         try {
-            return objectMapper.readValue(databaseDataAsJSONString,  new TypeReference<Collection<Posto>>(){});
+            return objectMapper.readValue(databaseDataAsJSONString,  new TypeReference<Collection<ElementoCarrello>>(){});
         } catch (Exception ex) {
             return null;
         }

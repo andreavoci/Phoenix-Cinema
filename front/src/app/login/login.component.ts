@@ -45,6 +45,7 @@ export class LoginComponent {
       success => {
         console.log(success.token)
         AuthService.setToken("token",success.token)
+        AuthService.setToken("id",success.id)
         window.location.reload()
       },
       error => {
