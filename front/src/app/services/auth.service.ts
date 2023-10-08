@@ -1,5 +1,10 @@
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
+    constructor(){}
     static setToken(key:string, value:string){
 
         // First, serialize it (but just if token is not string type).
@@ -22,3 +27,4 @@ export class AuthService {
     
     }
 }
+

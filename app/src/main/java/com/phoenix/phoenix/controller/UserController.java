@@ -29,6 +29,16 @@ public class UserController {
         return service.getUser(id);
     }
 
+    @GetMapping(path = "api/user/profile")
+    public ResponseEntity getUserProfile(@RequestParam Long id) {
+        User user = service.getUser(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping(path = "/create")
     public ResponseEntity registerNewUser(@RequestBody User user){
         return service.create(user);

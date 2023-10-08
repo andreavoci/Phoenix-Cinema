@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
 import { ProgrammazioneComponent } from './programmazione/programmazione.component';
+import { ProfileComponent } from './profile/profile.components';
+
+
 
 const routes: Routes = [
   {
@@ -31,6 +34,10 @@ const routes: Routes = [
   {
     path:'pellicola/:id',
     component: ProgrammazioneComponent
+  },
+  {
+    path: 'profile', 
+    component: ProfileComponent
   }
 ];
 
