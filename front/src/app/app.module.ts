@@ -13,6 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
 import { ProgrammazioneComponent } from './programmazione/programmazione.component';
+import { CarrelloComponent } from './carrello/carrello.component';
+import { OrdineComponent } from './ordine/ordine.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ProgrammazioneComponent } from './programmazione/programmazione.compone
     LoginComponent,
     BigliettoComponent,
     PellicolaComponent,
-    ProgrammazioneComponent
+    ProgrammazioneComponent,
+    CarrelloComponent,
+    OrdineComponent
   ],
   imports: [
     BrowserModule,

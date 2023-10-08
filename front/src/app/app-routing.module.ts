@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
 import { ProgrammazioneComponent } from './programmazione/programmazione.component';
+import { CarrelloComponent } from './carrello/carrello.component';
+import { OrdineComponent } from './ordine/ordine.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path:'pellicola/:id',
     component: ProgrammazioneComponent
+  },
+  {
+    path:'carrello',
+    component: CarrelloComponent
+  },
+  {
+    path:'ordini',
+    component: OrdineComponent
   }
 ];
 
