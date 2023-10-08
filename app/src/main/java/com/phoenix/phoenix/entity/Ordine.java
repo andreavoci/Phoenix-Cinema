@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +22,17 @@ public class Ordine {
     @OneToOne
     private User cliente;
 
-    private Collection<Long> biglietti;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordine")
+    private List<Biglietto> biglietti = new ArrayList<>();
 
     private double sconto;
 
     private Date data;
+
+    public Ordine(User cliente, List<Biglietto> biglietti, double sconto, Date data) {
+        this.cliente = cliente;
+        this.biglietti = biglietti;
+        this.sconto = sconto;
+        this.data = data;
+    }
 }

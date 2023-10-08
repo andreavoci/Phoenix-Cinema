@@ -48,7 +48,7 @@ public class AuthService {
     }
 
     //Authenticate authbody
-    public Optional<User> authenticate(AuthBody authBody){
+    public Optional<User> authenticate(AuthBody<?> authBody){
         return repository.findById(authBody.getId());
     }
 

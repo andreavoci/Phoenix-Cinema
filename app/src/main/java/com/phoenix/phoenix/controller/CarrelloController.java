@@ -20,14 +20,20 @@ public class CarrelloController {
     public CarrelloController(CarrelloService service){ this.service=service;}
 
     @PostMapping
-    public ResponseEntity getCart(@RequestBody AuthBody body){return service.getCart(body);}
+    public ResponseEntity getCart(@RequestBody AuthBody<String> body){return service.getCart(body);}
 
     @PostMapping(path = "/add")
     public ResponseEntity addToCart(@RequestBody AuthBody<ElementoCarrello> body) {return service.addToCart(body);}
 
 
     @PostMapping(path = "/delete")
+    public ResponseEntity deleteCartElement(@RequestBody AuthBody<Long> body) {return service.deleteCartElement(body);}
+
+    @PostMapping(path = "/deleteAll")
     public ResponseEntity deleteCart(@RequestBody AuthBody body) {return service.deleteCart(body);}
+    
+    @PostMapping(path = "/checkout")
+    public ResponseEntity checkout(@RequestBody AuthBody body) {return service.checkout(body);}
 
 
 

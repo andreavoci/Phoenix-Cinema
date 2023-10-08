@@ -38,6 +38,7 @@ export class LoginComponent {
   ngOnInit(): void {
     this.token = AuthService.getToken("token")
     console.log(this.token)
+    console.log(AuthService.getToken("id"))
   }
 
   login(form: any){

@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,15 +17,21 @@ public class Biglietto {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "id_programmazione")
     private Programmazione programmazione;
 
     private long posto;
 
     private double costo;
 
+    @ManyToOne
+    @JoinColumn(name = "ordine_id")
+    @JsonIgnore
+    private Ordine ordine;
 
 
-
-
+    public Biglietto(Programmazione programmazione, long posto, double costo) {
+        this.programmazione = programmazione;
+        this.posto = posto;
+        this.costo = costo;
+    }
 }

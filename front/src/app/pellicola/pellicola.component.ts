@@ -14,7 +14,7 @@ import { Util } from "../services/util";
             <figure class="img-responsive">
                 <img src="{{p.locandina}}" alt="{{p.titolo}}">
                 <span class="actions">
-                        <button class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
+                        <button [routerLink]="[p.id]" class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
                 </span>
             </figure>
         </div>

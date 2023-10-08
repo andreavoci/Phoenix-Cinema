@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -23,12 +24,16 @@ public class ElementoCarrello implements Serializable {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "programmazione")
     private Programmazione programmazione;
 
     private long posto;
 
     private double costo;
+
+    @ManyToOne
+    @JoinColumn(name = "carrello_id")
+    @JsonIgnore
+    private Carrello carrello;
 
 }
 

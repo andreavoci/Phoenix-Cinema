@@ -15,7 +15,6 @@ import { PellicolaComponent } from './pellicola/pellicola.component';
 import { ProgrammazioneComponent } from './programmazione/programmazione.component';
 import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
-import { ProfileComponent } from './profile/profile.components';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { ProfileComponent } from './profile/profile.components';
     PellicolaComponent,
     ProgrammazioneComponent,
     CarrelloComponent,
-    OrdineComponent,
-    ProfileComponent
+    OrdineComponent
   ],
   imports: [
     BrowserModule,

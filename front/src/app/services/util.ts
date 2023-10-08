@@ -6,6 +6,9 @@ export namespace Util {
     export const bigliettiServerUrl = 'http://localhost:8091/api/biglietti';
     export const authServerUrl = 'http://localhost:8091/api/auth';
     export const pellicoleServerUrl = 'http://localhost:8091/api/pellicole';
+    export const programmazioniServerUrl = 'http://localhost:8091/api/programmazioni';
+    export const carrelloServerUrl = 'http://localhost:8091/api/carrello';
+    export const ordiniServerUrl = 'http://localhost:8091/api/ordini';
 
 }
 

@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,22 +23,26 @@ public class Carrello {
 
     @OneToOne
     private User cliente;
+//
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrello", orphanRemoval = true)
+    private List<ElementoCarrello> elementi = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "carrello_id")
-    private Collection<ElementoCarrello> elementi = new ArrayList<>();
+
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "carrello_id")
+//    private Collection<ElementoCarrello> elementi = new ArrayList<>();
 
     private double sconto;
 
     private Date data;
 
-    public void addElemento(ElementoCarrello elemento){
-        this.elementi.add(elemento);
-    }
+//    public void addElemento(ElementoCarrello elemento){
+//        this.elementi.add(elemento);
+//    }
 
-    public Carrello(User cliente, Collection<ElementoCarrello> elementi, double sconto, Date data) {
+    public Carrello(User cliente, List<ElementoCarrello> elementi, double sconto, Date data) {
         this.cliente = cliente;
-        this.elementi = elementi;
+//        this.elementi = elementi;
         this.sconto = sconto;
         this.data = data;
     }

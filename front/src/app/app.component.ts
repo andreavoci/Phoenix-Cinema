@@ -36,6 +36,7 @@ import { Component } from '@angular/core';
       flex-flow: column;
       height: calc( 100vh - 80px); 
       flex: 1;
+      overflow-y: auto;
     }
  
     app-footer{

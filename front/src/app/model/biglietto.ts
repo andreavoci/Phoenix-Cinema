@@ -1,10 +1,10 @@
+import { Programmazione } from "./programmazione";
+
 export interface Biglietto{
 
     id:number;
-    nome:string;
-    regista:string;
-    film:string;
-    sala:string;
-    posto:string;
-
+    programmazione:Programmazione;
+    posto:number;
+    costo:number;
 }
+    

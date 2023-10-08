@@ -16,6 +16,8 @@ import { Component } from '@angular/core';
         <a class="navbar-menu-item" routerLink="/user" routerLinkActive="active">user</a>
         <a class="navbar-menu-item" routerLink="/biglietto" routerLinkActive="active">biglietto</a>
         <a class="navbar-menu-item" routerLink="/pellicola" routerLinkActive="active">pellicole</a>
+        <a class="navbar-menu-item" routerLink="/carrello" routerLinkActive="active">Carrello</a>
+        <a class="navbar-menu-item" routerLink="/ordini" routerLinkActive="active">Ordini</a>
         <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
       </div>
    </div>
