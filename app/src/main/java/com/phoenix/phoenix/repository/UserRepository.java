@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     //questa classe permette di accedere alle JPAREPOSITORY a tutte le classi che la includono.
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     Optional<User> findUserByEmail(String email);
+
+
 }

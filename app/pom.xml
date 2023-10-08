@@ -86,6 +86,8 @@
             <artifactId>hypersistence-utils-hibernate-62</artifactId>
             <version>3.5.0</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

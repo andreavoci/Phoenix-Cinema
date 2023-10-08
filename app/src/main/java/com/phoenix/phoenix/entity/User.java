@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.phoenix.phoenix.enumeraioni.Ruolo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,7 +39,8 @@ public class User {
     private String password;
 
     private String token;
-    
-    private String ruolo = null;
+
+    @Enumerated(EnumType.STRING)
+    private Ruolo ruolo;
 
 }

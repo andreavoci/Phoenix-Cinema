@@ -6,8 +6,11 @@ import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
 import { ProgrammazioneComponent } from './programmazione/programmazione.component';
+
 import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
+
+import { ProfileComponent } from './profile/profile.components';
 
 const routes: Routes = [
   {
@@ -41,6 +44,10 @@ const routes: Routes = [
   {
     path:'ordini',
     component: OrdineComponent
+  },
+  {
+    path: 'profile', 
+    component: ProfileComponent
   }
 ];
 
