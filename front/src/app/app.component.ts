@@ -26,7 +26,6 @@ import { Component } from '@angular/core';
 
     .body{
       background-image: url("/assets/image/background.jpg");
-      
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -48,6 +47,7 @@ import { Component } from '@angular/core';
       width: 100%;
       text-align: center;
     }
+
   `,]
 })
 export class AppComponent {

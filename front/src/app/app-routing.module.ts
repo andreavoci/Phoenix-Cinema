@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
+import { ProgrammazioneComponent } from './programmazione/programmazione.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'pellicola',
     component: PellicolaComponent
+  },
+  {
+    path:'pellicola/:id',
+    component: ProgrammazioneComponent
   }
 ];
 

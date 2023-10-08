@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.service;
 
 import com.phoenix.phoenix.entity.Pellicola;
+import com.phoenix.phoenix.entity.User;
 import com.phoenix.phoenix.repository.PellicolaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,20 +11,22 @@ import java.util.List;
 
 @Service
 public class PellicolaService {
-    private PellicolaRepository pellicolaRepository;
+    private PellicolaRepository repository;
 
     @Autowired
-    public PellicolaService(PellicolaRepository repository){this.pellicolaRepository=repository;}
+    public PellicolaService(PellicolaRepository repository){this.repository=repository;}
 
-    public List<Pellicola> getAllMovies(){return pellicolaRepository.findAll();}
+    public List<Pellicola> getAllMovies(){return repository.findAll();}
 
-    public ResponseEntity create(Pellicola pellicola){ return ResponseEntity.ok(pellicolaRepository.save(pellicola));}
+    public Pellicola getPellicola(Long id){return repository.findById(id).get();}
+
+    public ResponseEntity create(Pellicola pellicola){ return ResponseEntity.ok(repository.save(pellicola));}
 
     public ResponseEntity delete(Long id){
-        if(!pellicolaRepository.existsById(id)){
-            return ResponseEntity.badRequest().body("no ticket with this id");
+        if(!repository.existsById(id)){
+            return ResponseEntity.badRequest().body("no film with this id");
         }
-        pellicolaRepository.deleteById(id);
+        repository.deleteById(id);
         return ResponseEntity.ok("ok");
     }
 }

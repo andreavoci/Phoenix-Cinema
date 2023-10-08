@@ -32,6 +32,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
   public token : string | null = null;
+
   constructor(private http: HttpClient){ }
 
   ngOnInit(): void {
@@ -41,7 +42,7 @@ export class LoginComponent {
 
   login(form: any){
     // console.log(data)
-    this.http.post<LoginResponse>(Util.authServerUrl+"login",form).subscribe(
+    this.http.post<LoginResponse>(Util.authServerUrl+"/login",form).subscribe(
       success => {
         console.log(success.token)
         AuthService.setToken("token",success.token)

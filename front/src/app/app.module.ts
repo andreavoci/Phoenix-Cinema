@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { BigliettoComponent } from './biglietto/biglietto.component';
 import { PellicolaComponent } from './pellicola/pellicola.component';
+import { ProgrammazioneComponent } from './programmazione/programmazione.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PellicolaComponent } from './pellicola/pellicola.component';
     HomeComponent,
     LoginComponent,
     BigliettoComponent,
-    PellicolaComponent
+    PellicolaComponent,
+    ProgrammazioneComponent
   ],
   imports: [
     BrowserModule,

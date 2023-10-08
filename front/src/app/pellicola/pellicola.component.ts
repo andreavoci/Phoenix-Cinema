@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { Pellicola } from "../model/pellicola";
 import { HttpClient } from "@angular/common/http";
 import { Util } from "../services/util";
@@ -116,11 +117,11 @@ export class PellicolaComponent {
     constructor(private http: HttpClient){}
 
     ngOnInit(): void {
-        this.getAll();
+        this.getAll();       
     }
 
     getAll(){
-        this.http.get<Pellicola[]>(Util.pellicoleServerUrl+"/all").subscribe(result=>{
+        this.http.get<Pellicola[]>(Util.pellicoleServerUrl).subscribe(result=>{
             this.pellicole=result;
             console.log(result);
         })

@@ -46,17 +46,12 @@ import { HttpClient } from '@angular/common/http'
 })
 export class UserComponent {
   public users: User[] = [];
-  
-  private apiServerUrl = 'http://localhost:8091';
-  
 
   constructor(private http: HttpClient){ }
-
-  
   
   create(data: any){
     console.log(data)
-    this.http.post(Util.userServerUrl+"create",data).subscribe(result =>{
+    this.http.post(Util.userServerUrl+"/create",data).subscribe(result =>{
       console.log(result)
       window.location.reload()
     })
@@ -65,14 +60,14 @@ export class UserComponent {
   update(data: any){
     var newUser : User = data
 
-    this.http.post(Util.userServerUrl+"update",newUser).subscribe(result =>{
+    this.http.post(Util.userServerUrl+"/update",newUser).subscribe(result =>{
       console.log(result)
       window.location.reload()
     })
   }
 
   delete(user:User){
-    this.http.delete(Util.userServerUrl+"delete/"+user.id).subscribe(result =>{
+    this.http.delete(Util.userServerUrl+"/delete/"+user.id).subscribe(result =>{
       console.log(result)
       window.location.reload()
     })
@@ -83,7 +78,7 @@ export class UserComponent {
   }
 
   getAll() {
-    this.http.get<User[]>(this.apiServerUrl+"/api/users").subscribe(result=>{
+    this.http.get<User[]>(Util.userServerUrl).subscribe(result=>{
       this.users = result;
       console.log(result)
     })

@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.controller;
 
 import com.phoenix.phoenix.entity.Pellicola;
+import com.phoenix.phoenix.entity.User;
 import com.phoenix.phoenix.service.PellicolaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,13 @@ public class PellicolaController {
     @Autowired
     public PellicolaController(PellicolaService service){ this.service=service;}
 
-    @GetMapping(path = "/all")
-    public ResponseEntity<?> getAllMovies(){return ResponseEntity.ok(service.getAllMovies());}
+    @GetMapping
+    public List<Pellicola> getAllMovies(){return service.getAllMovies();}
+
+    @GetMapping("/{id}")
+    public Pellicola getPellicola(@PathVariable("id") Long id){
+        return service.getPellicola(id);
+    }
 
     @PostMapping(path = "/create")
     public ResponseEntity create(@RequestBody Pellicola pellicola){return service.create(pellicola);}
