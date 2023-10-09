@@ -29,6 +29,8 @@ import { Component } from '@angular/core';
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+      
+      font-family: argentum-regular;
     }
 
     .inner-body{

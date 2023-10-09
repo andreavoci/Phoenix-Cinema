@@ -10,5 +10,6 @@ export interface User {
     telefono:string;
     email:string;
     password:string;
+    ruolo:string;
 
 }

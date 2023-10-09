@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { Util } from '../services/util';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-header',
@@ -16,10 +19,10 @@ import { AuthService } from '../services/auth.service';
       <div class="navbar-menu">
         <a class="navbar-menu-item" routerLink="/pellicola" routerLinkActive="active">pellicole</a>
         <a class="navbar-menu-item" routerLink="/carrello" routerLinkActive="active">Carrello</a>
-        <a class="navbar-menu-item" routerLink="/ordini" routerLinkActive="active">Ordini</a>
         <div *ngIf="token ;then logged else guest">here is ignored</div>
         <ng-template #logged>
-          <a class="navbar-menu-item" routerLink="/profile" routerLinkActive="active">Profilo</a>
+          <a class="navbar-menu-item" routerLink="/profilo" routerLinkActive="active">Profilo</a>
+          <a *ngIf="user?.ruolo!=null" class="navbar-menu-item" routerLink="/profilo" routerLinkActive="active">AreaPersonale</a>
         </ng-template>
         <ng-template #guest>        
           <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
@@ -79,10 +82,24 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderComponent {
   public token : string | null = null;
+  public userId = -1;
+  user : User |null = null;
 
-  constructor(){ }
+  constructor(private http: HttpClient){ }
 
   ngOnInit(): void {
     this.token = AuthService.getToken("token")
+    if(AuthService.getToken("id")){
+      this.userId = Number(AuthService.getToken("id"))
+    }
+    this.checkDipendente()
+  }
+
+  checkDipendente(){
+    if(this.token){
+      this.http.get<User>(Util.userServerUrl+"/"+this.userId).subscribe( result=> {
+        this.user = result;
+    });
+    }
   }
 }

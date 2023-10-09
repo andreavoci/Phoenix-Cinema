@@ -3,5 +3,9 @@ package com.phoenix.phoenix.entity;
 public enum Ruolo {
     DIRETTORE,
     HELPDESK,
-    OPERATORE
+    OPERATORE,
+    BIGLIETTERIA,
+    PROIEZIONE,
+    MAGAZZINO,
+    HR
 }

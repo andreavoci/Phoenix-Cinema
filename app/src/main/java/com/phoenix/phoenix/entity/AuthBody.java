@@ -7,6 +7,6 @@ public class AuthBody<T> {
     private long id;
 //    private long token;
     private T body;
-
 }
+
 
