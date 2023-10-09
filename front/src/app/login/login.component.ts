@@ -6,28 +6,47 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-login',
   template: `
-
-    <div *ngIf="token != null; else elseBlock"> 
-      <p>questo è il token dell'utente salvato : {{token}}</p>
-      
-      <button (click)="logout()" type="submit">Logout</button>
-
-    </div>
-    <ng-template #elseBlock>
-      <div id="userDiv"> 
-        <br><br><br>LOGIN
-        <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
-          <input type="text" name="email" ngModel placeholder="email"><br><br>
-          <input type="password" name="password" ngModel placeholder="password"><br><br>
-          <b><p style="color:red;weight:bold" id="loginform-error" ><p></b>
-          <button type="submit">Login</button>
-        </form>
-
+    <div class="container">
+      <div *ngIf="token != null; else elseBlock"> 
+        <h1>ACCESSO GIA' EFFETTUATO</h1>
+        
+        <button (click)="logout()" type="submit" class="button">Logout</button>
 
       </div>
-    </ng-template>
+      <ng-template #elseBlock>
+        <div id="userDiv"> 
+          <br><br><br>LOGIN
+          <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+            <input type="text" name="email" ngModel placeholder="email"><br><br>
+            <input type="password" name="password" ngModel placeholder="password"><br><br>
+            <b><p style="color:red;weight:bold" id="loginform-error" ><p></b>
+            <button type="submit">Login</button>
+          </form>
+
+
+        </div>
+        
+      </ng-template>
+    </div>
   `,
   styles: [
+    `
+    .container{
+      width: 100%;
+      background: gray;
+      height: 100%;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      overflow: auto;
+      align-items: center;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .button{
+      font-size:24px;
+      padding:10px 15px;
+    }
+    `,
   ]
 })
 export class LoginComponent {

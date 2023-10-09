@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,16 @@ import { Component } from '@angular/core';
 
       </div>
       <div class="navbar-menu">
-        <a class="navbar-menu-item" routerLink="/user" routerLinkActive="active">user</a>
-        <a class="navbar-menu-item" routerLink="/biglietto" routerLinkActive="active">biglietto</a>
         <a class="navbar-menu-item" routerLink="/pellicola" routerLinkActive="active">pellicole</a>
         <a class="navbar-menu-item" routerLink="/carrello" routerLinkActive="active">Carrello</a>
         <a class="navbar-menu-item" routerLink="/ordini" routerLinkActive="active">Ordini</a>
-        <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
+        <div *ngIf="token ;then logged else guest">here is ignored</div>
+        <ng-template #logged>
+          <a class="navbar-menu-item" routerLink="/profile" routerLinkActive="active">Profilo</a>
+        </ng-template>
+        <ng-template #guest>        
+          <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
+        </ng-template>
       </div>
    </div>
   `,
@@ -73,5 +78,11 @@ import { Component } from '@angular/core';
   ]
 })
 export class HeaderComponent {
+  public token : string | null = null;
 
+  constructor(){ }
+
+  ngOnInit(): void {
+    this.token = AuthService.getToken("token")
+  }
 }

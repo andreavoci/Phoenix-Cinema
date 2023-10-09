@@ -31,7 +31,7 @@ public class CarrelloController {
 
     @PostMapping(path = "/deleteAll")
     public ResponseEntity deleteCart(@RequestBody AuthBody body) {return service.deleteCart(body);}
-    
+
     @PostMapping(path = "/checkout")
     public ResponseEntity checkout(@RequestBody AuthBody body) {return service.checkout(body);}
 

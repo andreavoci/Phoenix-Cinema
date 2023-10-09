@@ -7,5 +7,5 @@ export interface Ordine{
     cliente:User;
     biglietti:Array<Biglietto>;
     sconto:number;
-    data:Data;
+    data:Date;
 }

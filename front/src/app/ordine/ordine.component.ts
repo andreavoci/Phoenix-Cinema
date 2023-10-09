@@ -17,15 +17,15 @@ import { Util } from '../services/util';
         
       </div>
       <div *ngFor="let o of ordini" class="container-ordine">
-        <p class="text-order">ORDINE #? : [???] ??/??/???? - ??:?? </p>
+        <p class="text-order">ORDINE #{{o.id}} : {{o.data | date:'[ccc] dd/MM/yyyy HH:mm'}}</p>
         <div *ngFor="let b of o.biglietti" class="container-biglietto">
           <div class="container-dettagli">
             
-            <p class="text-title">????????????????</p>
+            <p class="text-title">{{b.programmazione.pellicola.titolo}}</p>
             <div class="container-info">
-                <p class="text-info">[???] ??/??/???? - ??:??</p>
+                <p class="text-info">{{b.programmazione.orario | date:'[ccc] dd/MM/yyyy HH:mm'}}</p>
               
-                <p class="text-info">POSTO : ???</p>
+                <p class="text-info">POSTO : {{b.posto}}</p>
             </div>
           </div>
         </div>

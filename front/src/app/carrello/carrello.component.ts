@@ -26,11 +26,13 @@ import { ElementoCarrello } from '../model/elementocarrello';
       </div>
       <div *ngFor="let e of elementi" class="container-elemento">
         <div class="container-dettagli">
-          <p class="text-title">????????????????</p>
+          <p class="text-title">{{e.programmazione.pellicola.titolo}}</p>
           <div class="container-info">
-              <p class="text-info">[???] ??/??/???? - ??:??</p>
+              <p class="text-info">
+                {{e.programmazione.orario | date:'[ccc] dd/MM/yyyy HH:mm'}}
+              </p>
             
-              <p class="text-info">POSTO : ???</p>
+              <p class="text-info">POSTO : {{e.posto}}</p>
           </div>
         </div>
         <div class="container-button">

@@ -12,10 +12,12 @@ import { Util } from "../services/util";
         <div class="col-ms-10 col-md-4">
         <div class="project" *ngFor="let p of pellicole">
             <figure class="img-responsive">
-                <img src="{{p.locandina}}" alt="{{p.titolo}}">
-                <span class="actions">
-                        <button [routerLink]="[p.id]" class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
-                </span>
+                <a [routerLink]="[p.id]">
+                    <img src="{{p.locandina}}" alt="{{p.titolo}}">
+                    <span class="actions">
+                            <button [routerLink]="[p.id]" class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
+                    </span>
+                </a>
             </figure>
         </div>
         </div>`,
