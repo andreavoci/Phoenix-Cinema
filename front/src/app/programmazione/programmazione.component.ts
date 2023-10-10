@@ -19,8 +19,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     <div class="container-body">
       <div class="container-left">
         <h2 class="title-text">TRAILER</h2>
-        <iframe [src]="trailerUrl">
-        </iframe>
+        <div class="container-video">
+          <iframe class="video" [src]="trailerUrl">
+          </iframe>
+         </div>
         <h2 class="title-text">TRAMA</h2>
         <p class="paragraph-text">{{pellicola.trama}}</p>
         <h2 class="title-text">REGISTA</h2>
@@ -107,9 +109,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
       margin-top: 20px;
       margin-left: 20px;
     }
+    .container-video {
+      position: relative;
+      width: 90%;
+      padding-top: 40%; 
+    }
     .video {
-      width: 80%;
-      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      border:none;
     }
     .paragraph-text {
       align-self: flex-start;

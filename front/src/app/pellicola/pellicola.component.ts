@@ -7,109 +7,81 @@ import { Util } from "../services/util";
 @Component({
     selector: 'app-pellicola',
     template: `
-    <br>
-    <br><br><br>    
-        <div class="col-ms-10 col-md-4">
-        <div class="project" *ngFor="let p of pellicole">
-            <figure class="img-responsive">
-                <a [routerLink]="[p.id]">
-                    <img src="{{p.locandina}}" alt="{{p.titolo}}">
-                    <span class="actions">
-                            <button [routerLink]="[p.id]" class="btn btn-warning btn-action" type="submit" >Acquista ora</button>
-                    </span>
-                </a>
-            </figure>
+        <div class="container-film">
+            <a *ngFor="let p of pellicole" [routerLink]="[p.id]">
+                <img src="{{p.locandina}}">
+                <span class="actions">
+                    <div class="center">
+                        <p>{{p.titolo}}
+                        <p style="font-size:12px;">info</p>
+                            
+                    </div>
+                </span>
+            </a>
         </div>
-        </div>`,
+        
+    `,
     styles: [`
-    body{
-    background:#eee;;
-}
-.title{
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4) !important;    
-}
+        .container-film {
+            flex-flow: row wrap;
+            flex: 0 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        a{
+            flex: 0 0 calc(25% - 1em);
+            margin: 5px 10px;
+            position: relative;
+            display: inline-block;
+            max-width:200px;
+            width:100%;
+            height:100%;
+        }
+        img {
+            border: 0;
+            border-radius:15px;
+            width: 200px;
+            object-fit: cover;
+        }
+        
+        a:hover .actions {
 
-.divider-title{
-    border:1px solid #dddddd;
-}
+            opacity: 1;
+        }
+        a .actions {
+            border-radius:15px;
+            display: block;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            background-color: rgba(29,29,29,.7);
+            -ms-transition: all .2s ease-out;
+            -webkit-transition: all .2s ease-out;
+            -moz-transition: all .2s ease-out;
+            -o-transition: all .2s ease-out;
+            transition: all .2s ease-out;
+        }
+        .center{
+            width : 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align:center;
+            justify-content: center;
+        }
+        a p{
+            color:#FFFFFF;
+            letter-spacing: 1px;
+            font-size: 20px;
+        }
 
-.project {
-    margin-bottom: 30px;
-    vertical-align: top;
-    margin-right: 30px;
-    cursor: pointer;
-    width:100%;
-}
+        
 
-.project figure {
-    position: relative;
-    display: inline-block;
-    width:230px;
-}
-
-.project figure figcaption {
-    position: relative;
-    z-index: 10;
-    padding: 8px 18px 11px;
-    background: #fff;
-    -ms-transition: all .2s ease-out;
-    -webkit-transition: all .2s ease-out;
-    -moz-transition: all .2s ease-out;
-    -o-transition: all .2s ease-out;
-    transition: all .2s ease-out;
-    text-align: left;
-    color: #555;
-}
-
-.project figure:hover .actions {
-    opacity: 1;
-}
-
-.project figure .actions {
-    display: block;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    background-color: rgba(29,29,29,.7);
-    -ms-transition: all .2s ease-out;
-    -webkit-transition: all .2s ease-out;
-    -moz-transition: all .2s ease-out;
-    -o-transition: all .2s ease-out;
-    transition: all .2s ease-out;
-}
-
-.project figure img {
-    border: 0;
-    width: 100%;
-}
-
-figcaption .project-creator {
-    font-size: 13px;
-    color: #545454;
-    display: block;
-}
-
-figcaption .project-creator {
-    font-size: 13px;
-    color: #545454;
-    display: block;
-}
-
-.project figure .actions button {
-    font-size: 16px;
-    color:#FFFFFF;
-    top: 32%;
-    position: relative;
-    left: 50%;
-    width: 90%;
-    margin-left: -45%;
-    line-height: 18px;
-    letter-spacing: 1px;
-    background-color: transparent;
-}                    
       `,
     ]
 })
