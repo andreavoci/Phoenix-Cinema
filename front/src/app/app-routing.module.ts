@@ -9,6 +9,7 @@ import { ProgrammazioneComponent } from './programmazione/programmazione.compone
 import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
+import { AboutUsComponent } from './aboutus/aboutus.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path:'profilo',
     component: ProfileComponent
+  },
+  {
+    path:'about-us',
+    component: AboutUsComponent
   }
 ];
 

@@ -14,11 +14,11 @@ import { User } from '../model/user';
         <a class="navbar-item"routerLink="/">
           <img src="assets/image/logo-phoenix.png" >
         </a>
-
       </div>
       <div class="navbar-menu">
         <a class="navbar-menu-item" routerLink="/pellicola" routerLinkActive="active">pellicole</a>
         <a class="navbar-menu-item" routerLink="/carrello" routerLinkActive="active">Carrello</a>
+        <a class="navbar-menu-item" routerLink="/about-us" routerLinkActive="active">About Us</a>
         <div *ngIf="token ;then logged else guest">here is ignored</div>
         <ng-template #logged>
           <a class="navbar-menu-item" routerLink="/profilo" routerLinkActive="active">Profilo</a>

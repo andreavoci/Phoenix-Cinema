@@ -16,6 +16,7 @@ import { ProgrammazioneComponent } from './programmazione/programmazione.compone
 import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
+import { AboutUsComponent } from './aboutus/aboutus.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProfileComponent } from './profile/profile.components';
     ProgrammazioneComponent,
     CarrelloComponent,
     OrdineComponent,
-    ProfileComponent
+    ProfileComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
