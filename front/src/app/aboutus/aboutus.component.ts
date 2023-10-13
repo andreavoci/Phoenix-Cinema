@@ -174,7 +174,7 @@ import { Component } from '@angular/core';
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 11px;
     }
     .social-logo img {
       max-width: 30px;
