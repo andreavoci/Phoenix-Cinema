@@ -7,47 +7,75 @@ import { Component } from '@angular/core';
       <div class="about-us-header">
         <h2>-About Us-</h2>
       </div>
-      <div class="about-us-content">
+      <div class="section">
         <div class="description">
-          <p>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2012 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</p>
-          <p>Abbiamo plasmato una destinazione cinematografica che celebra il potere delle storie. Ogni visita al Phoenix Cinema è un viaggio attraverso mondi fantastici, un'opportunità per ridere, piangere e condividere emozioni uniche sul grande schermo.</p>
-          <p>Le nostre strutture di alta qualità, la vasta selezione di film e l'impegno costante per l'innovazione ci rendono una presenza ineguagliabile nella comunità di Rende e oltre.</p>
-          <p>Il nostro cinema è il luogo ideale per serate speciali con amici e familiari. Organizziamo eventi speciali, proiezioni private e molto altro ancora. Siamo qui per soddisfare le vostre esigenze specifiche e per condividere la magia delle storie e il potere delle immagini in movimento.</p>
+          <strong>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2012 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</strong>
+          <strong>Abbiamo plasmato una destinazione cinematografica che celebra il potere delle storie. Ogni visita al Phoenix Cinema è un viaggio attraverso mondi fantastici, un'opportunità per ridere, piangere e condividere emozioni uniche sul grande schermo.</strong>
+          <strong>Le nostre strutture di alta qualità, la vasta selezione di film e l'impegno costante per l'innovazione ci rendono una presenza ineguagliabile nella comunità di Rende e oltre.</strong>
+          <strong>Il nostro cinema è il luogo ideale per serate speciali con amici e familiari. Organizziamo eventi speciali, proiezioni private e molto altro ancora. Siamo qui per soddisfare le vostre esigenze specifiche e per condividere la magia delle storie e il potere delle immagini in movimento.</strong>
         </div>
       </div>
-      <div class="about-us-image-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Phoenix_Cinema_frontage_at_night.jpg" alt="About Us Image" class="about-us-image">
-      </div>
-      <div class="contact-us-box">
-        <h3>Contattaci Per Qualsiasi Necessità!</h3>
-        <div class="social-media">
-          <div class="social-logo">
-            <a href="https://www.instagram.com/Phoenix_CinemaRende" target="_blank">
-              <img src="https://img.freepik.com/premium-vector/modern-badge-logo-instagram-icon_578229-124.jpg" alt="Instagram Logo">
-            </a>
-            <p>@Phoenix_Rende_Cinema</p>
+      <div class="section">
+        <div class="member">
+          <img src="https://giornaledellospettacolo.globalist.it/wp-content/uploads/2017/12/0004C26D-aldo-baglio-a-autore-e-interprete-del-film-ma-non-regista.jpg" alt="Aldo Image" class="member-image">
+          <div class="member-description">
+            <strong>Aldo</strong>
+            <p> è il cuore pulsante di Phoenix Cinema. La sua visione e passione per il cinema hanno dato vita a questa avventura straordinaria. Aldo è il creatore di opportunità e il motore di questa esperienza cinematografica unica.</p>
           </div>
-          <div class="social-logo">
-            <a href="https://www.facebook.com/PhoenixCinemaRende" target="_blank">
-              <img src="https://img.freepik.com/premium-vector/blue-social-media-logo_197792-1759.jpg" alt="Facebook Logo">
-            </a>
-            <p>@PhoenixCinemaRende</p>
+        </div>
+        <div class="member">
+          <img src="https://cdn.calciomercato.com/images/2020-04/cosi.la.vita.460x340.jpg" alt="Giovanni Image" class="member-image">
+          <div class="member-description">
+            <strong>Giovanni</strong>
+            <p> è la mente strategica dietro il successo di Phoenix Cinema. Il suo impegno nel garantire un ambiente di lavoro stimolante è fondamentale per il benessere dei dipendenti e la qualità dell'esperienza offerta al pubblico.</p>
+          </div>
+        </div>
+        <div class="member">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh7RgVhQZvp4GAF4OrdSEtae4w7bD4ShDFUA&usqp=CAU" alt="Giacomo Image" class="member-image">
+          <div class="member-description">
+            <strong>Giacomo</strong>
+            <p> Con la sua dedizione e il suo impegno costante, Giacomo contribuisce in modo significativo a rendere questo cinema un luogo straordinario. La sua presenza rassicurante e la sua passione per l'arte cinematografica sono evidenti in tutto ciò che fa.</p>
           </div>
         </div>
       </div>
-      <div class="newsletter-box">
-        <h4>Iscriviti alla Newsletter</h4>
-        <form>
-          <div class="input-group">
-            <input type="text" placeholder="Nome Utente">
+      <div class="social-news-container" style="display: flex; justify-content: space-between;">
+        <div class="newsletter-box column" style="flex: 1; text-align: center; background-color: white;">
+          <h4 style="text-align: center;">Iscriviti alla Newsletter</h4>
+          <form>
+            <div class="input-group">
+              <input type="text" placeholder="Indirizzo Email" #emailInput>
+            </div>
+            <div class="input-group" style="text-align: center;">
+              <button type="button" (click)="subscribe(emailInput.value)">Iscriviti</button>
+            </div>
+            <div *ngIf="!isEmailValid" class="error-message" style="text-align: center;">
+              Indirizzo email non valido.
+            </div>
+            <div *ngIf="subscriptionConfirmed" class="confirmation-message" style="text-align: center;">
+              Ottimo! Abbiamo ricevuto la tua iscrizione.
+            </div>
+          </form>
+        </div>
+        <div class="center-logo" style="display: flex; align-items: center; justify-content: center;">
+          <img src="http://localhost:4200/assets/image/logo-phoenix.png" alt="Logo del Cinema">
+        </div>
+        <div class="contact-us-box column" style="flex: 1; background-color: white; padding: 10px; border: 2px solid #333; border-radius: 10px; color: #333; text-align: center; margin-left: 20px;">
+          <h3>Contattaci Per Qualsiasi Necessità!</h3>
+          <div class="social-media">
+            <div class="social-logo">
+              <a href="https://www.instagram.com/Phoenix_CinemaRende" target="_blank">
+                <img src="https://img.freepik.com/premium-vector/modern-badge-logo-instagram-icon_578229-124.jpg" alt="Instagram Logo">
+              </a>
+              <strong>@Phoenix_Rende_Cinema</strong>
+            </div>
+            <div class="social-logo">
+              <a href="https://www.facebook.com/PhoenixCinemaRende" target="_blank">
+                <img src="https://img.freepik.com/premium-vector/blue-social-media-logo_197792-1759.jpg" alt="Facebook Logo">
+              </a>
+              <strong>@PhoenixCinemaRende</strong>
+            </div>
           </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password">
-          </div>
-          <div class="input-group">
-            <button type="submit">Iscriviti</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   `,
@@ -61,7 +89,21 @@ import { Component } from '@angular/core';
       border: 2px solid #333;
       border-radius: 10px;
     }
-
+    .social-news-container {
+      display: flex;
+      justify-content: space-between;
+      width: 70%;
+      margin-top: 20px;
+    }
+    .newsletter-box {
+      flex: 1;
+      text-align: left;
+      padding: 0 10px;
+      background-color: white;
+      border: 2px solid #333;
+      border-radius: 10px;
+      margin-right: 10px;
+    }
     .about-us-header {
       font-size: 24px;
       color: #333;
@@ -71,38 +113,38 @@ import { Component } from '@angular/core';
       border-radius: 10px;
       margin-bottom: 20px;
     }
-
-    .about-us-content {
+    .section {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
-      margin-bottom: 20px;
+      margin-top: 20px;
     }
-
     .description {
       color: #333;
       max-width: 60%;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       padding: 20px;
       border: 2px solid #333;
       border-radius: 10px;
-    }
-
-    .about-us-image-container {
+      margin: 0 auto;
       text-align: center;
-      margin-top: 20px;
     }
-
-    .about-us-image {
-      width: 300px;
-      height: 200px;
+    .member {
+      text-align: center;
+      max-width: 30%;
+    }
+    .member-image {
+      width: 130px;
+      height: 130px;
       border: 2px solid #333;
-      border-radius: 10px;
-      margin: 10px;
+      border-radius: 50%;
     }
-
-    .contact-us-box, .newsletter-box {
+    .member-description {
+      max-width: 100%;
+      color: white;
+    }
+    .contact-us-box,
+    .newsletter-box {
       background-color: white;
       padding: 10px;
       border: 2px solid #333;
@@ -110,35 +152,51 @@ import { Component } from '@angular/core';
       color: #333;
       text-align: center;
     }
-
-    .social-media {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
+    .confirmation-message,
+    .error-message {
+      color: #00FF00;
     }
-
+    .error-message {
+      color: #FF0000;
+    }
+    .social-media {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 10px;
+      background-color: white;
+      border: 2px solid #333;
+      border-radius: 10px;
+      color: #333;
+    }
     .social-logo {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-right: 20px;
+      margin-bottom: 10px;
     }
-
     .social-logo img {
       max-width: 30px;
       max-height: 30px;
     }
-
+    .center-logo img {
+      max-width: 90px;
+      max-height: 90px;
+      border-radius: 50%;
+      background-color: white;
+      padding: 5px;
+      border: 2px solid #333;
+    }
     .input-group {
       margin-bottom: 10px;
     }
-
     input {
       width: 100%;
       padding: 10px;
       border: 2px solid #333;
       border-radius: 5px;
     }
-
     button {
       width: 100%;
       padding: 10px;
@@ -150,4 +208,21 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class AboutUsComponent {}
+export class AboutUsComponent {
+  subscriptionConfirmed: boolean = false;
+  isEmailValid: boolean = true;
+
+  subscribe(email: string) {
+    if (this.validateEmail(email)) {
+      this.subscriptionConfirmed = true;
+      this.isEmailValid = true;
+    } else {
+      this.isEmailValid = false;
+    }
+  }
+
+  validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+}
