@@ -4,63 +4,79 @@ import { Util } from '../services/util';
 import { AuthService } from '../services/auth.service';
 import { User } from "../model/user";
 
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
 @Component({
   selector: 'app-profile',
   template: `
-    <div class="container" *ngIf="user">
-      <div class="header">
-        <h1>Profilo Personale</h1>
-        <button class="logout-button" (click)="logout()">Logout</button>
-        <div class="user-info">
-          <div class="info">
-            <strong>Nome:</strong> {{ user.nome }}
-          </div>
-          <div class="info">
-            <strong>Cognome:</strong> {{ user.cognome }}
-          </div>
-          <div class="info">
-            <strong>Email:</strong>
-            <span *ngIf="!isEditingEmail">{{ user.email }}</span>
-            <input *ngIf="isEditingEmail" [(ngModel)]="newEmail" />
-            <button (click)="toggleEdit('email')">Modifica</button>
-          </div>
-          <div class="info">
-            <strong>Password:</strong>
-            <span *ngIf="!isEditingPassword">{{ showPassword ? user.password : '******' }}</span>
-            <input *ngIf="isEditingPassword" [(ngModel)]="newPassword" />
-            <button (click)="toggleEdit('password')">Modifica</button>
-            <button (click)="toggleShowPassword()">Mostra Password</button>
-            <button (click)="saveChanges()" class="save-button">Salva Modifiche</button>
-          </div>
+  <div class="container" *ngIf="user">
+  <div class="header">
+    <h1>Profilo Personale</h1>
+    <button class="logout-button" (click)="logout()">Logout</button>
+    <div class="user-info">
+      <div class="info">
+        <strong>Nome:</strong> {{ user.nome }}
+      </div>
+      <div class="info">
+        <strong>Cognome:</strong> {{ user.cognome }}
+      </div>
+      <div class="info">
+        <strong>Email:</strong>
+        <span *ngIf="!isEditingEmail">{{ user.email }}</span>
+        <input *ngIf="isEditingEmail" [(ngModel)]="newEmail" />
+        <button (click)="toggleEdit('email')">Modifica</button>
+        <div *ngIf="isEditingEmail">
+          <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
+          <button (click)="saveEmail()" class="save-button">Salva Email</button>
+          <button (click)="cancelEdit('email')" class="cancel-button">Annulla</button>
         </div>
       </div>
-      <button
-        type="submit"
-        class="button show-history-button"
-        (click)="toggleTable()"
-      >
-        <span class="left-button">Ordini</span> / <span class="right-button">Storico</span>
-      </button>
-      <div *ngIf="user.ruolo === 'magazziniere'">  /*CODICE DA AGGIUNGERE DOPO AVER DEFINITO I RUOLI DEGLI ATTORI E MANSIONI */
-        <!-- Contenuto specifico per il magazziniere -->
+      <div class="info">
+        <strong>Password:</strong>
+        <span *ngIf="!isEditingPassword">{{ showPassword ? user.password : '******' }}</span>
+        <input *ngIf="isEditingPassword" [(ngModel)]="newPassword" />
+        <button (click)="toggleEdit('password')">Modifica</button>
+        <button (click)="toggleShowPassword()">Mostra Password</button>
+        <div *ngIf="isEditingPassword">
+          <div class="password-criteria">
+            <h4>Criteri di sicurezza:</h4>
+          <ul>
+            <li>Almeno 6 caratteri</li>
+            <li>Almeno una lettera maiuscola</li>
+            <li>Almeno una lettera minuscola</li>
+            <li>Almeno un numero</li>
+            <li>Almeno un carattere speciale (!,@,#,$,%,^,&,*)</li>
+          </ul>
+          </div>
+          <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
+          <button (click)="savePassword()" class="save-button">Salva Password</button>
+          <button (click)="cancelEdit('password')" class="cancel-button">Annulla</button>
+        </div>
       </div>
-      <div *ngIf="user.ruolo === 'direttore'">
-        <!-- Contenuto specifico per il direttore -->
-      </div>
-      <table *ngIf="showOrders || showHistory" class="table">
-        <!-- Tabella degli ordini o dello storico -->
-        <tr>
-          <th>Titolo</th>
-          <th>Data</th>
-          <th>Quantità</th>
-        </tr>
-        <tr *ngFor="let order of (showOrders ? orders : history)">
-          <td>{{ order.titolo }}</td>
-          <td>{{ order.data }}</td>
-          <td>{{ order.quantita }}</td>
-        </tr>
-      </table>
     </div>
+  </div>
+  <button
+    type="submit"
+    class="button show-history-button"
+    (click)="toggleTable()"
+  >
+    <span class="left-button">Ordini</span> / <span class="right-button">Storico</span>
+  </button>
+  <table *ngIf="showOrders || showHistory" class="table">
+    <tr>
+      <th>Titolo</th>
+      <th>Data</th>
+      <th>Quantità</th>
+    </tr>
+    <tr *ngFor="let order of (showOrders ? orders : history)">
+      <td>{{ order.titolo }}</td>
+      <td>{{ order.data }}</td>
+      <td>{{ order.quantita }}</td>
+    </tr>
+  </table>
+</div>
+
   `,
   styles: [
     `
@@ -133,6 +149,10 @@ import { User } from "../model/user";
         padding: 8px;
         text-align: left;
       }
+
+      .error-message {
+        color: red;
+      }
     `,
   ],
 })
@@ -147,6 +167,8 @@ export class ProfileComponent implements OnInit {
   showPassword: boolean = false;
   newEmail: string = '';
   newPassword: string = '';
+  emailError: string | null = null;
+  passwordError: string | null = null;
 
   orders: any[] = [
     { titolo: 'Ordine 1', data: '01/10/2023', quantita: 5 },
@@ -197,22 +219,69 @@ export class ProfileComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  saveChanges() {
-    if (this.user) {
-      if (this.isEditingEmail) {
-        this.user.email = this.newEmail;
+  saveEmail() {
+    if (this.isEditingEmail) {
+      if (!emailRegex.test(this.newEmail)) {
+        // Imposta un messaggio di errore per l'email
+        this.emailError = 'L\'indirizzo email non è valido';
+      } else {
+          if (this.user){
+            // L'email è valida, procedi con l'aggiornamento dell'email
+            this.user.email = this.newEmail;
+          }
+        // Resetta l'errore
+        this.emailError = null;
+        // Esegui il salvataggio
+        this.saveChanges();
       }
-      if (this.isEditingPassword) {
-        this.user.password = this.newPassword;
-      }
-      //Chiamaata http che dovrebbe aggiornare i mail e password su DB 
-      this.http.put(Util.userServerUrl + "/" + this.userId, this.user).subscribe((response) => {
-        console.log("Modifiche salvate con successo sul DB", response);
-      });
-      // E reimposta i flag di modifica su false
-      this.isEditingEmail = false;
-      this.isEditingPassword = false;
     }
+    this.isEditingEmail = false;
+  }
+
+  savePassword() {
+    if (this.isEditingPassword) {
+      if (!this.isPasswordValid(this.newPassword)) {
+        // Imposta un messaggio di errore per la password
+        this.passwordError = 'La password non rispetta i criteri di sicurezza';
+      } else {
+        // La password è valida, procedi con l'aggiornamento della password
+          if (this.user){
+            this.user.password = this.newPassword;
+          }
+        // Resetta l'errore
+        this.passwordError = null;
+        // Esegui il salvataggio
+        this.saveChanges();
+      }
+    }
+    this.isEditingPassword = false;
+  }
+
+  saveChanges() {
+    // Chiamaata http che dovrebbe aggiornare i mail e password su DB 
+    this.http.put(Util.userServerUrl + "/" + this.userId, this.user).subscribe((response) => {
+      console.log("Modifiche salvate con successo sul DB", response);
+    });
+    // Reimposta i flag di modifica su false
+    this.isEditingEmail = false;
+    this.isEditingPassword = false;
+  }
+
+  isPasswordValid(password: string): boolean {
+    // Aggiungi qui i criteri di sicurezza desiderati
+    const minLength = 6;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*]/.test(password);
+
+    return (
+      password.length >= minLength &&
+      hasUppercase &&
+      hasLowercase &&
+      hasNumber &&
+      hasSpecialChar
+    );
   }
 
   logout(){
@@ -221,6 +290,14 @@ export class ProfileComponent implements OnInit {
    AuthService.deleteToken("token")
    AuthService.deleteToken("id")
    window.location.reload()
+  }
+
+  cancelEdit(field: string) {
+    if (field === 'email') {
+      this.isEditingEmail = false;
+    } else if (field === 'password') {
+      this.isEditingPassword = false;
+    }
   }
 
 }
