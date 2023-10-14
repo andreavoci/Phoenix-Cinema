@@ -10,6 +10,7 @@ import { User } from "../model/user";
     <div class="container" *ngIf="user">
       <div class="header">
         <h1>Profilo Personale</h1>
+        <button class="logout-button" (click)="logout()">Logout</button>
         <div class="user-info">
           <div class="info">
             <strong>Nome:</strong> {{ user.nome }}
@@ -40,6 +41,12 @@ import { User } from "../model/user";
       >
         <span class="left-button">Ordini</span> / <span class="right-button">Storico</span>
       </button>
+      <div *ngIf="user.ruolo === 'magazziniere'">  /*CODICE DA AGGIUNGERE DOPO AVER DEFINITO I RUOLI DEGLI ATTORI E MANSIONI */
+        <!-- Contenuto specifico per il magazziniere -->
+      </div>
+      <div *ngIf="user.ruolo === 'direttore'">
+        <!-- Contenuto specifico per il direttore -->
+      </div>
       <table *ngIf="showOrders || showHistory" class="table">
         <!-- Tabella degli ordini o dello storico -->
         <tr>
@@ -206,6 +213,14 @@ export class ProfileComponent implements OnInit {
       this.isEditingEmail = false;
       this.isEditingPassword = false;
     }
+  }
+
+  logout(){
+    console.log("delete")
+
+   AuthService.deleteToken("token")
+   AuthService.deleteToken("id")
+   window.location.reload()
   }
 
 }
