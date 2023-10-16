@@ -17,6 +17,7 @@ import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
+import { AcquistoComponent } from './acquisto/acquisto.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AboutUsComponent } from './aboutus/aboutus.component';
     CarrelloComponent,
     OrdineComponent,
     ProfileComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    AcquistoComponent
   ],
   imports: [
     BrowserModule,

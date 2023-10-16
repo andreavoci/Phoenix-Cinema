@@ -10,6 +10,7 @@ import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
+import { AcquistoComponent } from './acquisto/acquisto.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path:'about-us',
     component: AboutUsComponent
+  },
+  {
+    path: 'pellicola/:id/acquisto',
+    component: AcquistoComponent
   }
 ];
 
