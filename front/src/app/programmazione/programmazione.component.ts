@@ -54,7 +54,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
             il film comincerà 25 minuti dopo l'ora indicata sul biglietto.
           </p>
         </div>
-        <a href="pellicola/{{pellicola.id}}/acquisto">Acquista</a>
+        <a [routerLink]="['/acquisto']" [queryParams]="{id: k.value[0].id}">Acquista</a>
       </section>
     </article>
   </div>
@@ -453,5 +453,4 @@ export class ProgrammazioneComponent {
     });
     console.log(this.dateJSON);
   }
-
 }

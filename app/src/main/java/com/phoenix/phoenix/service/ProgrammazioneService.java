@@ -1,6 +1,5 @@
 package com.phoenix.phoenix.service;
 
-import com.phoenix.phoenix.entity.Pellicola;
 import com.phoenix.phoenix.entity.Posto;
 import com.phoenix.phoenix.entity.Programmazione;
 import com.phoenix.phoenix.repository.ProgrammazioneRepository;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgrammazioneService {
@@ -18,6 +18,8 @@ public class ProgrammazioneService {
 
     @Autowired
     public ProgrammazioneService(ProgrammazioneRepository repository){this.repository=repository;}
+
+    public Optional<Programmazione> getById(long id){return repository.findById(id);}
 
     public List<Programmazione> getAll(){return repository.findAll();}
 
@@ -38,7 +40,9 @@ public class ProgrammazioneService {
             indice++;
         }
         programmazione.setPosti(posti);
-        return ResponseEntity.ok(repository.save(programmazione));
+        Programmazione p = new Programmazione();
+        p= programmazione;
+        return ResponseEntity.ok(repository.save(p));
 //        return ResponseEntity.ok("ok");
     }
 }

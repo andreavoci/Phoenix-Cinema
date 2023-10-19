@@ -64,7 +64,7 @@ const routes: Routes = [
     component: RiservataComponent
   },
   {
-    path: 'pellicola/:id/acquisto',
+    path: 'acquisto',
     component: AcquistoComponent
   }
 ];
