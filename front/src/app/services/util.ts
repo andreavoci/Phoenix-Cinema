@@ -9,6 +9,7 @@ export namespace Util {
     export const programmazioniServerUrl = 'http://localhost:8091/api/programmazioni';
     export const carrelloServerUrl = 'http://localhost:8091/api/carrello';
     export const ordiniServerUrl = 'http://localhost:8091/api/ordini';
+    export const saleServerUrl = 'http://localhost:8091/api/sale';
 
 }
 

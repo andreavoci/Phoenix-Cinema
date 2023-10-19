@@ -12,38 +12,32 @@ import { Util } from "../services/util";
     <br>
     <a style="color: azure; display: flex; height: 40px;">Oggi al cinema</a>
         <div class="container-film">
-            <ng-container *ngFor="let p of programm">
-            <ng-container *ngIf="p.id<3">
+            <div *ngFor="let p of programm">
             <a [routerLink]="[p.id]">
                 <img src="{{p.locandina}}">
                 <span class="actions">
                     <div class="center">
                         <p>{{p.titolo}}
                         <p style="font-size:12px;">info</p>
-                            
                     </div>
                 </span>
             </a>
-            </ng-container>
-            </ng-container>
+            </div>
         </div>
     <br><br>
     <a style="color: azure; display: flex; height: 40px;">Prossimamente</a>
     <div class="container-film">
-            <ng-container *ngFor="let p of nuove">
-            <ng-container *ngIf="p.data_uscita">
-            <a [routerLink]="[p.id]">
-                <img src="{{p.locandina}}">
-                <span class="actions">
-                    <div class="center">
-                        <p>{{p.titolo}}
-                        <p style="font-size:12px;">info</p>
-                            
-                    </div>
-                </span>
-            </a>
-            </ng-container>
-            </ng-container>
+        <div *ngFor="let p of nuove">
+        <a [routerLink]="[p.id]">
+            <img src="{{p.locandina}}">
+            <span class="actions">
+                <div class="center">
+                    <p>{{p.titolo}}
+                    <p style="font-size:12px;">info</p>
+                </div>
+            </span>
+        </a>
+        </div>
         </div>
     `,
     styles: [`
@@ -135,13 +129,15 @@ export class PellicolaComponent {
         console.log(this.pellicole);
         this.pellicole.forEach(p=>{
             var orario = new Date(p.data_uscita);
-            console.log(oggi<orario);    
+            console.log(oggi>orario);    
             if(oggi>orario){
                 this.programm.push(p);
             }else{
                 this.nuove.push(p);
             }
         })
+        console.log(this.programm);
+        console.log(this.nuove);
     }
     
 }
