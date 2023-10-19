@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +21,9 @@ public class Fattura {
 
     private Date emissione;
 
-    private Date pagamento;
+    @ManyToOne
+    private Fornitore fornitore;
 
+    @OneToMany(mappedBy = "fattura")
+    private List<Fornitura> forniture;
 }

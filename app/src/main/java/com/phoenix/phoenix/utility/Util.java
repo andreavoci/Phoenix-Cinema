@@ -1,7 +1,12 @@
 package com.phoenix.phoenix.utility;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Random;
 
+@Configuration
 public class Util {
 
     public static String generateToken() {
@@ -18,5 +23,9 @@ public class Util {
 
         System.out.println(generatedString);
         return generatedString;
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

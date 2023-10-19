@@ -17,14 +17,13 @@ public class Fornitura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @ManyToOne
     private Fornitore fornitore;
 
-    @OneToOne
-    private Merce merce;
-
-    @OneToOne
+    @ManyToOne
     private Fattura fattura;
+
+    private String tipo;
 
     private Date arrivo;
 
@@ -33,5 +32,7 @@ public class Fornitura {
     private double prezzo;
 
     private int quantita;
+
+    private String stato;
 
 }

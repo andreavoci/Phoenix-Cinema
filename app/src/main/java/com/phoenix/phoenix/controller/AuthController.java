@@ -22,6 +22,9 @@ public class AuthController {
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(@RequestBody LoginBody body){return service.login(body.email, body.password);}
 
+    @PostMapping(path = "/register")
+    public ResponseEntity<String> register(@RequestBody LoginBody body){return service.register(body.email, body.password);}
+
 //    public User saveCustomer(User savedUser) {
 //        return service.saveCustomer(savedUser);
 //    }

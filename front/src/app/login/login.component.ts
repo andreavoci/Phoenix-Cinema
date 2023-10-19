@@ -79,6 +79,23 @@ export class LoginComponent {
 
     )
   }
+
+  register(form: any){
+    this.http.post<LoginResponse>(Util.authServerUrl+"/register",form).subscribe(
+      success=>{
+        console.log(success.token)
+        AuthService.setToken("token",success.token)
+        AuthService.setToken("id",success.id)
+        window.location.reload()
+      },
+      error=>{console.log(error.error)
+        let element = document.getElementById("loginform-error")
+        if(element != null){
+          element.innerHTML = error.error
+        }
+      }
+    )
+  }
   
 
   logout(){

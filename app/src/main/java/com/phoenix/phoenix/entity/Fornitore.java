@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -27,5 +29,9 @@ public class Fornitore {
 
     private String telefono;
 
+    @OneToMany(mappedBy = "fornitore")
+    private List<Fattura> fatture;
 
+    @OneToMany(mappedBy = "fornitore")
+    private List<Fornitura> forniture;
 }

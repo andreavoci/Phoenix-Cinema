@@ -24,4 +24,5 @@ public class Merce {
 
     private double prezzo;
 
+    private int quantità;
 }

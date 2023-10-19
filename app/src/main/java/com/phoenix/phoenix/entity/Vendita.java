@@ -24,7 +24,7 @@ public class Vendita {
     @Convert(converter = ElementoVenditaConverter.class)
     private Collection<ElementoVendita> elementi;
 
-    private double sconto;
+    private double totale;
 
     private Date data;
 
