@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { Component } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { Pellicola } from "../model/pellicola";
@@ -7,8 +8,13 @@ import { Util } from "../services/util";
 @Component({
     selector: 'app-pellicola',
     template: `
+    <br>
+    <br>
+    <a style="color: azure; display: flex; height: 40px;">Oggi al cinema</a>
         <div class="container-film">
-            <a *ngFor="let p of pellicole" [routerLink]="[p.id]">
+            <ng-container *ngFor="let p of programm">
+            <ng-container *ngIf="p.id<3">
+            <a [routerLink]="[p.id]">
                 <img src="{{p.locandina}}">
                 <span class="actions">
                     <div class="center">
@@ -18,8 +24,27 @@ import { Util } from "../services/util";
                     </div>
                 </span>
             </a>
+            </ng-container>
+            </ng-container>
         </div>
-        
+    <br><br>
+    <a style="color: azure; display: flex; height: 40px;">Prossimamente</a>
+    <div class="container-film">
+            <ng-container *ngFor="let p of nuove">
+            <ng-container *ngIf="p.data_uscita">
+            <a [routerLink]="[p.id]">
+                <img src="{{p.locandina}}">
+                <span class="actions">
+                    <div class="center">
+                        <p>{{p.titolo}}
+                        <p style="font-size:12px;">info</p>
+                            
+                    </div>
+                </span>
+            </a>
+            </ng-container>
+            </ng-container>
+        </div>
     `,
     styles: [`
         .container-film {
@@ -87,17 +112,36 @@ import { Util } from "../services/util";
 })
 export class PellicolaComponent {
     public pellicole: Pellicola[] = [];
+    public nuove: Pellicola[] = [];
+    public programm: Pellicola[] = [];
 
     constructor(private http: HttpClient){}
 
     ngOnInit(): void {
-        this.getAll();       
+        this.getAll();  
     }
 
     getAll(){
         this.http.get<Pellicola[]>(Util.pellicoleServerUrl).subscribe(result=>{
             this.pellicole=result;
             console.log(result);
+        this.spartisciPellicole();
         })
     }
+
+    spartisciPellicole(){
+        var oggi = new Date();
+        console.log(oggi);
+        console.log(this.pellicole);
+        this.pellicole.forEach(p=>{
+            var orario = new Date(p.data_uscita);
+            console.log(oggi<orario);    
+            if(oggi>orario){
+                this.programm.push(p);
+            }else{
+                this.nuove.push(p);
+            }
+        })
+    }
+    
 }

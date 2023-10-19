@@ -18,6 +18,7 @@ import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
 import { RiservataComponent } from './riservata/riservata.component';
+import { AcquistoComponent } from './acquisto/acquisto.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RiservataComponent } from './riservata/riservata.component';
     OrdineComponent,
     ProfileComponent,
     AboutUsComponent,
-    RiservataComponent
+    RiservataComponent,
+    AcquistoComponent
   ],
   imports: [
     BrowserModule,

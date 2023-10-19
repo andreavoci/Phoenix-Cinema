@@ -11,6 +11,7 @@ import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
 import { RiservataComponent } from './riservata/riservata.component';
+import { AcquistoComponent } from './acquisto/acquisto.component';
 
 
 const routes: Routes = [
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path:'riservata/:type',
     component: RiservataComponent
+  },
+  {
+    path: 'pellicola/:id/acquisto',
+    component: AcquistoComponent
   }
 ];
 
