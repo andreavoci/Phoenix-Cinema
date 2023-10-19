@@ -10,6 +10,7 @@ import { CarrelloComponent } from './carrello/carrello.component';
 import { OrdineComponent } from './ordine/ordine.component';
 import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
+import { RiservataComponent } from './riservata/riservata.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,14 @@ const routes: Routes = [
   {
     path:'about-us',
     component: AboutUsComponent
+  },
+  {
+    path:'riservata',
+    component: RiservataComponent
+  },
+  {
+    path:'riservata/:type',
+    component: RiservataComponent
   }
 ];
 

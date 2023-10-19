@@ -22,7 +22,7 @@ import { User } from '../model/user';
         <div *ngIf="token ;then logged else guest">here is ignored</div>
         <ng-template #logged>
           <a class="navbar-menu-item" routerLink="/profilo" routerLinkActive="active">Profilo</a>
-          <a *ngIf="user?.ruolo!=null" class="navbar-menu-item" routerLink="/profilo" routerLinkActive="active">AreaPersonale</a>
+          <a *ngIf="user?.ruolo!=null" class="navbar-menu-item" routerLink="/riservata" routerLinkActive="active">AreaPersonale</a>
         </ng-template>
         <ng-template #guest>        
           <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
