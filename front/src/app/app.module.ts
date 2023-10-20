@@ -20,6 +20,8 @@ import { AboutUsComponent } from './aboutus/aboutus.component';
 import { RiservataComponent } from './riservata/riservata.component';
 import { AcquistoComponent } from './acquisto/acquisto.component';
 import { SharedService } from './services/shared.service';
+import { AuthGuard } from './services/auth.guard';
+import { RegistrazioneComponent } from './registrazione/registrazione.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { SharedService } from './services/shared.service';
     ProfileComponent,
     AboutUsComponent,
     RiservataComponent,
-    AcquistoComponent
+    AcquistoComponent,
+    RegistrazioneComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,7 @@ import { SharedService } from './services/shared.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [SharedService],
+  providers: [SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

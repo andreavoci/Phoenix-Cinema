@@ -2,32 +2,29 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { LoginResponse, Util } from '../services/util';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   template: `
-    <div class="container">
-      <div *ngIf="token != null; else elseBlock"> 
-        <h1>ACCESSO GIA' EFFETTUATO</h1>
-        
-        <button (click)="logout()" type="submit" class="button">Logout</button>
-
-      </div>
-      <ng-template #elseBlock>
-        <div id="userDiv"> 
-          <br><br><br>LOGIN
-          <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
-            <input type="text" name="email" ngModel placeholder="email"><br><br>
-            <input type="password" name="password" ngModel placeholder="password"><br><br>
-            <b><p style="color:red;weight:bold" id="loginform-error" ><p></b>
-            <button type="submit">Login</button>
-          </form>
-
-
-        </div>
-        
-      </ng-template>
+  <div class="container">
+    <div *ngIf="token != null; else elseBlock"> 
+      <h1>ACCESSO GIA' EFFETTUATO</h1>
+      <button (click)="logout()" type="submit" class="button">Logout</button>
     </div>
+    <ng-template #elseBlock>
+      <div id="userDiv"> 
+        <br><br><br>LOGIN
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+          <input type="text" name="email" ngModel placeholder="email"><br><br>
+          <input type="password" name="password" ngModel placeholder="password"><br><br>
+          <b><p style="color:red;weight:bold" id="loginform-error"><p></b>
+          <button type="submit">Login</button>
+        </form>
+        <p>Non sei registrato? <a (click)="navigateToRegistration()">Registrati QUI</a></p>
+      </div>
+    </ng-template>
+  </div>
   `,
   styles: [
     `
@@ -52,7 +49,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
   public token : string | null = null;
 
-  constructor(private http: HttpClient){ }
+  constructor(private http: HttpClient, private router: Router){ }
 
   ngOnInit(): void {
     this.token = AuthService.getToken("token")
@@ -76,7 +73,6 @@ export class LoginComponent {
           element.innerHTML = error.error
         }
       }
-
     )
   }
 
@@ -96,7 +92,6 @@ export class LoginComponent {
       }
     )
   }
-  
 
   logout(){
      console.log("delete")
@@ -105,4 +100,8 @@ export class LoginComponent {
     window.location.reload()
   }
 
+  navigateToRegistration() {
+    this.router.navigate(['/registrazione']);
+  }
+  
 }
