@@ -4,11 +4,13 @@ import { Component } from '@angular/core';
 import { Programmazione } from '../model/programmazione';
 import { HttpClient } from '@angular/common/http';
 import { Util } from '../services/util';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-acquisto',
   template: `
   <br><br>
+
   <div class="titolo"><h1>{{programmazioneSelezionata?.pellicola?.titolo}}</h1></div><br>
     <!-- sala.component.html -->
     <div class="container">
@@ -118,14 +120,13 @@ h2 {
 export class AcquistoComponent {
     programmazioneSelezionata: Programmazione|null = null;
     posti: { numero: number, selezionato: boolean }[] = [];
-    idProgrammazione: number = 0;
+    idProgrammazione: number = -1;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     // Inizializza i posti nella sala cinematografica (puoi personalizzarli come desideri)
-    this.route.queryParams.subscribe((params)=>{
-      if(params['id']){
-        this.idProgrammazione = +params['id'];
-      }
-    });
+    if (this.route.snapshot.paramMap.get('id')){
+      this.idProgrammazione = Number(this.route.snapshot.paramMap.get('id'));
+    }
+
     this.getProgrammazione(this.idProgrammazione);
   }
 

@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthBody } from '../model/authbody';
 import { ElementoCarrello } from '../model/elementocarrello';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-programmazione',
@@ -34,19 +35,24 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 <h1>Programmazione:</h1>
   <div class="row" *ngFor="let k of dateJSON | keyvalue" class="container-elemento">
     <article class="card fl-left">
-      <section class="date">
-        <time datetime="23th feb">
+    
+      <div class="date">
+        <p>{{k.value[0].orario | date:'dd'}}</p>
+        <p>{{k.value[0].orario | date:'MMM'}}</p>
+      </div> 
+        <!-- <time datetime="23th feb">
           <span>{{k.value[0].orario | date:'dd'}}</span><span>{{k.value[0].orario | date:'MMM'}}</span>
-        </time>
-      </section>
+        </time> -->
       <section class="card-cont">
         <h3>{{pellicola.titolo}}</h3>
         <div class="even-date">
          <i class="fa fa-calendar"></i>
-         <time>
-           <span>{{k.value[0].orario | date:'ccc - dd/MM/yyyy'}}</span><span *ngFor="let v of k.value">{{v.orario | date: 'HH:mm'}} </span>
-           <p>phoenix cinema</p>
-         </time>
+
+         <!-- <time> -->
+              <p>{{k.value[0].orario | date:'ccc - dd/MM/yyyy'}}</p>
+           
+         <!-- </time> -->
+         <p>phoenix cinema</p>
         </div>
         <div class="even-info">
           <i class="fa fa-map-marker"></i>
@@ -54,7 +60,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
             il film comincerà 25 minuti dopo l'ora indicata sul biglietto.
           </p>
         </div>
-        <a [routerLink]="['/acquisto']" [queryParams]="{id: k.value[0].id}">Acquista</a>
+        <button *ngFor="let v of k.value" [routerLink]="['/acquisto/'+v.id]" (click)="setAcquisto(v)">{{v.orario | date: 'HH:mm'}}</button>
       </section>
     </article>
   </div>
@@ -62,16 +68,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     </div>
   </div>
   
-
-
-    <!-- <p>
-      programmazione works!
-    </p>
-    <br>USERLIST [{{programmazioni.length}}] :
-      <ul>
-        
-        <li *ngFor="let p of programmazioni"> {{p|json}}  --  <button>DELETE</button></li>
-      </ul> -->
 
       
   `,
@@ -161,24 +157,21 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
       padding-bottom: 10px;
       justify-content: flex-start;
     }
-    .button {
-      margin-left: 10px;
-      margin-right: 10px;
+    button {
+      
+      margin-left: 5px;
+      margin-right: 5px;
       padding: 4px 8px;
       font-size: 16px;
+      font-weight:bold;
+      background:rgba(250,108,20,1);
+      border: solid 2px black;
+      border-radius:5px;
     }
-    @import url('https://fonts.googleapis.com/css?family=Oswald');
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box
-}
-
-body {
-    background-color: #dadde6;
-    font-family: arial
-}
+    button:hover {
+      cursor:pointer;
+      background:orange;
+    }
 
 .fl-left {
     float: left
@@ -197,12 +190,14 @@ h1 {
 }
 
 .row {
-    overflow: hidden
+    overflow: hidden;
+    
 }
 
 .card {
     display: table-row;
     width: 100%;
+    height:auto;
     background-color: #fff;
     color: #989898;
     margin-bottom: 10px;
@@ -217,13 +212,14 @@ h1 {
 }
 
 .date {
-    display: table-cell;
-    width: 25%;
-    position: relative;
-    text-align: center;
-    border-right: 2px dashed #dadde6
+  display: table-cell;
+  width: 25%;
+  height:auto;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 2px dashed #dadde6;  
 }
-
 .date:before,
 .date:after {
     content: "";
@@ -237,12 +233,26 @@ h1 {
     z-index: 1;
     border-radius: 50%
 }
+/* 
 
 .date:after {
     top: auto;
     bottom: -15px
+} */
+
+.date p:first-child {
+    color: #2b2b2b;
+    font-weight: 600;
+    font-size: 250%
 }
 
+.date p:last-child{
+
+  text-transform: uppercase;
+    font-weight: 600;
+    margin-top: -10px
+}
+/* 
 .date time {
     display: block;
     position: absolute;
@@ -267,13 +277,13 @@ h1 {
     text-transform: uppercase;
     font-weight: 600;
     margin-top: -10px
-}
+} */
 
 .card-cont {
     display: table-cell;
     width: 75%;
     font-size: 85%;
-    padding: 10px 10px 30px 50px
+    padding: 15px 30px;
 }
 
 .card-cont h3 {
@@ -302,7 +312,8 @@ h1 {
 }
 
 .card-cont .even-info p {
-    padding: 30px 50px 0 0
+    font-size: 90%;
+    padding: 10px 0px 10px 0px;
 }
 
 .card-cont .even-date time span {
@@ -398,7 +409,7 @@ export class ProgrammazioneComponent {
   dateJSON: { [key: string]: Programmazione[] } = {};
   trailerUrl:SafeResourceUrl="";
 
-  constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
+  constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer,private sharedService: SharedService) {}
 
   ngOnInit(): void {
     // Recupera il parametro 'id' dall'URL
@@ -452,5 +463,9 @@ export class ProgrammazioneComponent {
   
     });
     console.log(this.dateJSON);
+  }
+  
+  setAcquisto(p:Programmazione){
+    console.log(p)
   }
 }

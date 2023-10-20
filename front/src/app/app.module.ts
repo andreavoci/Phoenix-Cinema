@@ -19,6 +19,7 @@ import { ProfileComponent } from './profile/profile.components';
 import { AboutUsComponent } from './aboutus/aboutus.component';
 import { RiservataComponent } from './riservata/riservata.component';
 import { AcquistoComponent } from './acquisto/acquisto.component';
+import { SharedService } from './services/shared.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { AcquistoComponent } from './acquisto/acquisto.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

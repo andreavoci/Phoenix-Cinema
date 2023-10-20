@@ -64,7 +64,7 @@ const routes: Routes = [
     component: RiservataComponent
   },
   {
-    path: 'acquisto',
+    path: 'acquisto/:id',
     component: AcquistoComponent
   }
 ];
