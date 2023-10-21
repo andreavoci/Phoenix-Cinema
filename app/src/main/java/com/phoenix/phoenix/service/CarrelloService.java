@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.service;
 
+import com.phoenix.phoenix.converter.PostoConverter;
 import com.phoenix.phoenix.entity.*;
 import com.phoenix.phoenix.repository.*;
 import jakarta.persistence.*;
@@ -30,6 +31,11 @@ public class CarrelloService {
     private ElementoCarrelloRepository elementoCarrelloRepository;
 
     @Autowired
+    private ProgrammazioneRepository programmazioneRepository;
+    @Autowired
+    private PostoConverter postoConverter;
+
+    @Autowired
     private AuthService authService;
 
     @Autowired
@@ -56,38 +62,44 @@ public class CarrelloService {
     @Transactional
     public ResponseEntity addToCart(AuthBody<?> authBody){
 
-        Object o = authBody.getBody();
+        ArrayList<Object> objects = (ArrayList<Object>) authBody.getBody();
+        System.out.println(objects);
+        System.out.println(objects.get(0));
+        for(int i=0;i<objects.size();i++){
 
-        if(o instanceof ElementoCarrello){
+            if(objects.get(i) instanceof ElementoCarrello){
 
-            ElementoCarrello elemento = (ElementoCarrello) o;
-            ResponseEntity response = getCart(authBody);
+                ElementoCarrello elemento = (ElementoCarrello) objects.get(i) ;
+                ResponseEntity response = getCart(authBody);
 
-            if(response.getStatusCode().is2xxSuccessful()){
-                if(response.getBody() instanceof Carrello){
-                    Carrello carrello = (Carrello) response.getBody();
+                if(response.getStatusCode().is2xxSuccessful()){
+                    if(response.getBody() instanceof Carrello){
+                        Carrello carrello = (Carrello) response.getBody();
 
-                    elemento.setCarrello(carrello);
-                    carrello.getElementi().add(elemento);
+                        elemento.setCarrello(carrello);
+                        carrello.getElementi().add(elemento);
 
-                    repository.save(carrello);
-                    return ResponseEntity.ok("updated correctly");
+                        repository.save(carrello);
+                    }
+                    else{
+                        Carrello newCarrello = new Carrello(authService.authenticate(authBody).get(),new ArrayList<>(),0, Calendar.getInstance().getTime());
+
+                        elemento.setCarrello(newCarrello);
+                        newCarrello.getElementi().add(elemento);
+
+                        repository.save(newCarrello);
+                    }
                 }
-                else{
-                    Carrello newCarrello = new Carrello(authService.authenticate(authBody).get(),new ArrayList<>(),0, Calendar.getInstance().getTime());
-
-                    elemento.setCarrello(newCarrello);
-                    newCarrello.getElementi().add(elemento);
-
-                    repository.save(newCarrello);
-                    return ResponseEntity.ok("added correctly");
+                else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("malformed");
                 }
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("malformed");
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("malformed");
-        }
+            else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("malformed");
+            }
+        };
+
+        return ResponseEntity.ok("updated correctly");
     }
 
     public ResponseEntity deleteCartElement(AuthBody<?> authBody){
@@ -135,23 +147,42 @@ public class CarrelloService {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user doesn't exist");
     }
-
+    @Transactional
     public ResponseEntity checkout(AuthBody authBody){
         Optional<User> optUser = authService.authenticate(authBody);
         if(optUser.isPresent()) {
             Optional<Carrello> optCarrello = repository.findCartByUserID(optUser.get());
             if (optCarrello.isPresent()) {
                 Ordine newOrdine = new Ordine(optUser.get(),new ArrayList<>(),optCarrello.get().getSconto(),Calendar.getInstance().getTime());
+
                 if(!optCarrello.get().getElementi().isEmpty()){
+                    Programmazione editedProgrammazione = optCarrello.get().getElementi().get(0).getProgrammazione();
+                    Collection<Posto> posti = editedProgrammazione.getPosti();
                     optCarrello.get().getElementi().forEach(e->{
                         Biglietto newBiglietto = new Biglietto(e.getProgrammazione(),e.getPosto(),e.getCosto());
                         newBiglietto.setOrdine(newOrdine);
                         newOrdine.getBiglietti().add(newBiglietto);
+                        //togliere posti dalla programmazione
+                        posti.forEach(posto -> {
+                            if(posto.getId()==e.getPosto()){
+                                posto.setStato("OCCUPATO");
+                                System.out.println("okok");
+                            }
+                        });
+
+                        //
 
                     });
-
+//                    editedProgrammazione.setPosti(posti);
+//                    editedProgrammazione.setPrezzo(10);
+//                    programmazioneRepository.save(editedProgrammazione);
+                    String postiConverted = postoConverter.convertToDatabaseColumn(posti);
+                    System.out.println(postiConverted);
+                    System.out.println(posti);
+                    programmazioneRepository.aggiornaPosti(posti,editedProgrammazione.getId());
                     ordineRepository.save(newOrdine);
                     repository.delete(optCarrello.get());
+
 
                     return ResponseEntity.ok("order created");
                 }

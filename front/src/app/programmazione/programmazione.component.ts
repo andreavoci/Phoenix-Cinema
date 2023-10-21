@@ -32,37 +32,19 @@ import { SharedService } from '../services/shared.service';
         <p class="paragraph-text">{{pellicola.attori}}</p>
       </div>
       <section class="container-right">
-<h1>Programmazione:</h1>
-  <div class="row" *ngFor="let k of dateJSON | keyvalue" class="container-elemento">
-    <article class="card fl-left">
+<h1 class="prog-title">Programmazione:</h1>
+  <div class="row" *ngFor="let k of dateJSON | keyvalue" >
     
       <div class="date">
+        <p>{{k.value[0].orario | date:'ccc'}}</p>
         <p>{{k.value[0].orario | date:'dd'}}</p>
         <p>{{k.value[0].orario | date:'MMM'}}</p>
       </div> 
-        <!-- <time datetime="23th feb">
-          <span>{{k.value[0].orario | date:'dd'}}</span><span>{{k.value[0].orario | date:'MMM'}}</span>
-        </time> -->
-      <section class="card-cont">
-        <h3>{{pellicola.titolo}}</h3>
-        <div class="even-date">
-         <i class="fa fa-calendar"></i>
-
-         <!-- <time> -->
-              <p>{{k.value[0].orario | date:'ccc - dd/MM/yyyy'}}</p>
-           
-         <!-- </time> -->
+      <section class="content">
          <p>phoenix cinema</p>
-        </div>
-        <div class="even-info">
-          <i class="fa fa-map-marker"></i>
-          <p>
-            il film comincerà 25 minuti dopo l'ora indicata sul biglietto.
-          </p>
-        </div>
-        <button *ngFor="let v of k.value" [routerLink]="['/acquisto/'+v.id]" (click)="setAcquisto(v)">{{v.orario | date: 'HH:mm'}}</button>
+          <p>il film comincerà 25 minuti dopo l'ora indicata sul biglietto.</p>
+        <button *ngFor="let v of k.value" [routerLink]="['/acquisto/'+v.id]" >{{v.orario | date: 'HH:mm'}}</button>
       </section>
-    </article>
   </div>
   </section>
     </div>
@@ -112,6 +94,7 @@ import { SharedService } from '../services/shared.service';
       display: flex;
       align-items: flex-start;
       flex-direction: column;
+      padding:0px 10px 0px 0px;
     }
     .container-left {
       flex: 0 0 auto;
@@ -173,28 +156,17 @@ import { SharedService } from '../services/shared.service';
       background:orange;
     }
 
-.fl-left {
-    float: left
-}
 
-.fl-right {
-    float: right
-}
-
-h1 {
-    text-transform: uppercase;
-    font-weight: 900;
-    border-left: 10px solid #fec500;
-    padding-left: 10px;
-    margin-bottom: 30px
-}
-
-.row {
-    overflow: hidden;
+    .prog-title {
+        text-transform: uppercase;
+        font-weight: 900;
+        border-left: 10px solid #fec500;
+        padding-left: 10px;
+        margin-bottom: 30px
+    }
     
-}
-
-.card {
+.row {
+    float: left;
     display: table-row;
     width: 100%;
     height:auto;
@@ -203,12 +175,9 @@ h1 {
     margin-bottom: 10px;
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    border-radius: 4px;
-    position: relative
-}
-
-.card+.card {
-    margin-left: 2%
+    border-radius: 8px;
+    position: relative;
+    
 }
 
 .date {
@@ -220,6 +189,7 @@ h1 {
   vertical-align: middle;
   border-right: 2px dashed #dadde6;  
 }
+
 .date:before,
 .date:after {
     content: "";
@@ -233,17 +203,17 @@ h1 {
     z-index: 1;
     border-radius: 50%
 }
-/* 
 
-.date:after {
-    top: auto;
-    bottom: -15px
-} */
-
-.date p:first-child {
+.date p:first-child{
+  text-transform: uppercase;
+    font-weight: 600;
+    font-size: 120%;
+}
+.date p:nth-child(2) {
     color: #2b2b2b;
     font-weight: 600;
-    font-size: 250%
+    font-size: 250%;
+    margin-top: -10px
 }
 
 .date p:last-child{
@@ -252,153 +222,18 @@ h1 {
     font-weight: 600;
     margin-top: -10px
 }
-/* 
-.date time {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%)
-}
 
-.date time span {
-    display: block
-}
-
-.date time span:first-child {
-    color: #2b2b2b;
-    font-weight: 600;
-    font-size: 250%
-}
-
-.date time span:last-child {
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-top: -10px
-} */
-
-.card-cont {
+.content {
     display: table-cell;
     width: 75%;
     font-size: 85%;
     padding: 15px 30px;
 }
 
-.card-cont h3 {
-    color: #3C3C3C;
-    font-size: 130%
-}
-
-.row:last-child .card:last-of-type .card-cont h3 {
-    text-decoration: line-through
-}
-
-.card-cont>div {
-    display: table-row
-}
-
-.card-cont .even-date i,
-.card-cont .even-info i,
-.card-cont .even-date time,
-.card-cont .even-info p {
-    display: table-cell
-}
-
-.card-cont .even-date i,
-.card-cont .even-info i {
-    padding: 5% 5% 0 0
-}
-
-.card-cont .even-info p {
+.content p {
     font-size: 90%;
-    padding: 10px 0px 10px 0px;
+    padding: 5px 0px 10px 0px;
 }
-
-.card-cont .even-date time span {
-    display: flex;
-    flex: 0 0 auto;
-}
-
-.card-cont a {
-    display: block;
-    text-decoration: none;
-    width: 80px;
-    height: 30px;
-    background-color: #D8DDE0;
-    color: #fff;
-    text-align: center;
-    line-height: 30px;
-    border-radius: 2px;
-    position: absolute;
-    right: 10px;
-    bottom: 10px
-}
-
-.row:last-child .card:first-child .card-cont a {
-    background-color: #037FDD
-}
-
-.row:last-child .card:last-child .card-cont a {
-    background-color: #F8504C
-}
-
-@media screen and (max-width: 860px) {
-    .card {
-        display: block;
-        float: none;
-        width: 100%;
-        margin-bottom: 10px
-    }
-    .card+.card {
-        margin-left: 0
-    }
-    .card-cont .even-date,
-    .card-cont .even-info {
-        font-size: 75%
-    }
-}
-/* Stili globali */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: arial;
-}
-
-/* Stili per il popup */
-.popup {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-}
-
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  max-width: 80%;
-  text-align: center;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
   `,
   ]
 })
@@ -434,22 +269,6 @@ export class ProgrammazioneComponent {
     })
   }
 
-  addToCart(p:Programmazione){
-    
-    console.log(AuthService.getToken("id"))
-    if(AuthService.getToken("id")){
-      var userId:number = Number(AuthService.getToken("id"))
-      
-      var elementoCarrello:ElementoCarrello = new ElementoCarrello(p,1,p.prezzo);
-    
-      var authBody:AuthBody=new AuthBody(userId,elementoCarrello);
-      
-      this.http.post(Util.carrelloServerUrl+"/add",authBody).subscribe(result =>{
-      
-      console.log(result)
-    })
-    }
-  }
 
   splitDay(){
     this.programmazioni.forEach(element => {
@@ -465,7 +284,4 @@ export class ProgrammazioneComponent {
     console.log(this.dateJSON);
   }
   
-  setAcquisto(p:Programmazione){
-    console.log(p)
-  }
 }

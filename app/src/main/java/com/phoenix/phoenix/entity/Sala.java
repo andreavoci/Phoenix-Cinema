@@ -1,6 +1,5 @@
 package com.phoenix.phoenix.entity;
 
-import com.phoenix.phoenix.entity.PostoConverter;
 import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

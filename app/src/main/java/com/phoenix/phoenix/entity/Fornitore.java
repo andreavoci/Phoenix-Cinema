@@ -29,9 +29,4 @@ public class Fornitore {
 
     private String telefono;
 
-    @OneToMany(mappedBy = "fornitore")
-    private List<Fattura> fatture;
-
-    @OneToMany(mappedBy = "fornitore")
-    private List<Fornitura> forniture;
 }

@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.phoenix.phoenix.converter.PostoConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

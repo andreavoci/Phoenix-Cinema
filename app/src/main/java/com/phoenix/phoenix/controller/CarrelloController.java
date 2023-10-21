@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class CarrelloController {
     public ResponseEntity getCart(@RequestBody AuthBody<String> body){return service.getCart(body);}
 
     @PostMapping(path = "/add")
-    public ResponseEntity addToCart(@RequestBody AuthBody<ElementoCarrello> body) {return service.addToCart(body);}
+    public ResponseEntity addToCart(@RequestBody AuthBody<Collection<ElementoCarrello>> body) {return service.addToCart(body);}
 
 
     @PostMapping(path = "/delete")

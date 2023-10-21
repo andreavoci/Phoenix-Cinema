@@ -17,6 +17,7 @@ import { Programmazione } from '../model/programmazione';
       <button type="button" class="button" routerLink="/riservata">BACK</button>
       <br>
       <div *ngIf="type==0 ;then prova0"></div>
+      <div *ngIf="type==1 ;then prova1"></div>
       <div *ngIf="type==-1 ;then nochoice"></div>
     </div>
     <ng-template #prova0>
@@ -36,6 +37,19 @@ import { Programmazione } from '../model/programmazione';
 
         <input type="datetime-local" name="orario" ngModel><br><br>
         <button type="submit">Crea programmazione</button>
+      </form>
+      
+    </ng-template>
+    
+    <ng-template #prova1>
+      
+      <form #newsalaform="ngForm" (ngSubmit)="newSala(newsalaform.value)">
+        
+      <input type="text" name="nome" ngModel placeholder="nome"><br><br>
+      
+      <input type="text" name="capienza" ngModel placeholder="capienza"><br><br>
+       
+        <button type="submit">Crea Sala</button>
       </form>
       
     </ng-template>
@@ -115,6 +129,15 @@ export class RiservataComponent {
   newProgrammazione(form: any){
     console.log(form)
     this.http.post<HttpResponse<Programmazione>>(Util.programmazioniServerUrl+"/create",form).subscribe(result=>{
+      console.log(result);
+      
+    })
+  }
+  //prova 1
+  
+  newSala(form: any){
+    console.log(form)
+    this.http.post<HttpResponse<Programmazione>>(Util.saleServerUrl+"/create",form).subscribe(result=>{
       console.log(result);
       
     })

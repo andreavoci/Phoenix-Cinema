@@ -1,127 +1,155 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pellicola } from './../model/pellicola';
 import { Component } from '@angular/core';
 import { Programmazione } from '../model/programmazione';
 import { HttpClient } from '@angular/common/http';
 import { Util } from '../services/util';
 import { SharedService } from '../services/shared.service';
+import { AuthService } from '../services/auth.service';
+import { ElementoCarrello } from '../model/elementocarrello';
+import { AuthBody } from '../model/authbody';
 
 @Component({
   selector: 'app-acquisto',
   template: `
-  <br><br>
+    <br>
+    <div *ngIf="programmazioneSelezionata"> 
+      <div class="titolo">
+        <h1>{{programmazioneSelezionata.pellicola.titolo}} </h1>
+        <p>{{programmazioneSelezionata.orario | date:"dd/MM/yyyy [HH:mm]"}}</p>
+        <div class="checkout">
+          <p class="total-cost">{{totalCost}} €</p>
+          <button class="acquista" (click)="addToCart()">ACQUISTA</button><br>
+        </div>
+      </div>
+      <div class="container">
+        <div class="sala">
+          <div class="posti">
+            <button class="posto"
+              *ngFor="let posto of programmazioneSelezionata.posti"
+              [class.selected]="postiAggiunti[posto.id]!=undefined"
+              [class.busy]="posto.stato=='OCCUPATO'"
+              (click)="selezionaPosto(posto.id, posto.numero)"
+            >
+            <img src="assets/image/sedia_acquisto.png">
+            <div class="numero_posto" >{{posto.numero}}</div>
+            </button>
+          </div>
+        </div>
+        <div class="informazioni" style="color: white">
+          <h3>Posti selezionati:</h3>
+          <p style="font-size:15px;font-weight:bold;"*ngFor="let p of postiAggiunti | keyvalue">[ {{p.value}} ] - {{programmazioneSelezionata.prezzo}}€</p>
+          
 
-  <div class="titolo"><h1>{{programmazioneSelezionata?.pellicola?.titolo}}</h1></div><br>
-    <!-- sala.component.html -->
-    <div class="container">
-<div class="sala">
-  <div class="posti">
-    <div
-      *ngFor="let posto of programmazioneSelezionata?.posti; let i = index"
-      (click)="selezionaPosto(i)"
-    >
-      
-<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
-            <image xlink:href="../../assets/image/kisspng-computer-icons-cinema-clip-art-cinema-chair-5b17e507d0bbf4.020476731528292615855.svg" width="60" height="60" />
-            <text x="30" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="black">{{posto.numero}}</text>
-          </svg>
-    </div>
-  </div>
-</div>
-<div class="informazioni" style="color: white">
-  <h2>{{programmazioneSelezionata?.pellicola?.titolo}}</h2>
-</div>
+        </div>
+      </div>
     </div>
   `,
   styles: [`
-  .container{
-    display:flex;
-  }
-  .titolo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px; /* Regola l'altezza desiderata */
-}
+    .container{
+      display:flex;
+    }
+    img{
+      width:40px;
+      height:40px;
+    }
+    .numero_posto{
+      font-size:10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .titolo {
+      position: relative;
+      display: flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items: left; /* Centra il testo orizzontalmente */
+      color:white;
+      margin: 0px 15px 10px 25px ; 
+      height: auto; /* Regola l'altezza desiderata */
+    }
+    .checkout{
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:5px 15px;
+    }
+    .total-cost{
+      color:white;
+      font-weight:bold;
+      font-size:20px;
+      padding:0px 15px;
+    }
+    .acquista{
+      cursor:pointer;
+      padding:6px 5px;
+      border:solid 1px white;
+      border-radius:5px;
+      font-weight:bold;
+      font-size:15px;
+      color:white;
+      background:rgba(250,108,20,1);
+    }
 
-h1 {
-  font-size: 72px; /* Regola la dimensione del carattere desiderata */
-  text-align: center; /* Centra il testo orizzontalmente */
-  color:white;
-}
- .sala {
-  flex:1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 50vh;
-  padding: 20px;
-  max-width: 100%;
-  margin: 0 auto;
-}
+    .posti {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(45px, 1fr));
+      gap: 1px;
+      border: none;
+      background-color: #fff;
+      padding: 5px;
+      flex-basis: calc(20% - 10px);
+      margin:10px 10px 0px 25px;
+      
+    }
 
-.posti {
-  display: grid;
-  grid-template-columns: repeat(10, minmax(20px, 1fr));
-  gap: 5px;
-  width: 900%;
-  max-width: 1000px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  padding: 5px;
-  flex-basis: calc(20% - 10px);
-}
+    .posto {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      width: auto;
+      border: none;
+      background:none;
+      position: relative;
+    }
 
-.posti > div {
-  flex: 1;
-  padding: 1px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 47px;
-  width: auto;
-  background: #f5f5f5;
-  border: 1px solid #ccc;
-  position: relative;
-}
+    .posto:hover {
+      filter:brightness(50%) sepia(100%) hue-rotate(-3deg) saturate(10);
+    }
 
-.posti > div .numero {
-  display: inline-block;
-  font-size: 12px;
-}
+    .posto.selected {
+      filter:brightness(50%) sepia(100%) hue-rotate(-3deg) saturate(10);
+    }
+    .posto.busy {
+      pointer-events: none;
+      filter:brightness(30%) sepia(80%) hue-rotate(-50deg) saturate(10);
+    }
+    .informazioni{
+      flex:1;
+      display: flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items: center;
+      height: 100% /* Regola l'altezza desiderata */
+    }
 
-/* Aggiungi il colore di selezione */
-.posti > div.selezionato {
-  background-color: #3498db;
-  color: #fff;
-}
-
-.posto:hover {
-  background-color: #95a5a6;
-  color: #fff;
-}
-.informazioni{
-  flex:1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px; /* Regola l'altezza desiderata */
-}
-
-h2 {
-  font-size: 36px; /* Regola la dimensione del carattere desiderata */
-  text-align: center; /* Centra il testo orizzontalmente */
-  color:white;
-}
   `]
 })
 export class AcquistoComponent {
-    programmazioneSelezionata: Programmazione|null = null;
-    posti: { numero: number, selezionato: boolean }[] = [];
-    idProgrammazione: number = -1;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  programmazioneSelezionata: Programmazione|null = null;
+  posti: { numero: number, selezionato: boolean }[] = [];
+  idProgrammazione: number = -1;
+  postiAggiunti:{ [key: number]: String }={}
+  totalCost = 0;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     // Inizializza i posti nella sala cinematografica (puoi personalizzarli come desideri)
     if (this.route.snapshot.paramMap.get('id')){
       this.idProgrammazione = Number(this.route.snapshot.paramMap.get('id'));
@@ -137,8 +165,47 @@ export class AcquistoComponent {
     })
   }
 
-  selezionaPosto(index: number) {
+  selezionaPosto(p_id: number,p_numero:String) {
+    if(this.programmazioneSelezionata){
+      if(p_id in this.postiAggiunti){
+        delete this.postiAggiunti[p_id];
+      }
+      else{
+        this.postiAggiunti[p_id]=p_numero;
+      }
+      this.totalCost=0;
+      for(let k in this.postiAggiunti){
+        this.totalCost+=this.programmazioneSelezionata.prezzo;
+      }
+    }
+
     // Cambia lo stato di selezione del posto quando viene fatto clic su di esso
-    this.posti[index].selezionato = !this.posti[index].selezionato;
+    // this.posti[index].selezionato = !this.posti[index].selezionato;
+  }
+  
+  addToCart(){
+    
+    console.log(AuthService.getToken("id"))
+    if(this.programmazioneSelezionata){
+      if(AuthService.getToken("id")){
+        var userId:number = Number(AuthService.getToken("id"))
+        var elementi:ElementoCarrello[] = [];
+        for (let key in this.postiAggiunti) {
+          console.log(key)
+          console.log(this.postiAggiunti[key])
+          elementi.push(new ElementoCarrello(this.programmazioneSelezionata,Number(key),this.programmazioneSelezionata.prezzo));
+          // Use `key` and `value`
+        }
+        
+        var authBody:AuthBody=new AuthBody(userId,elementi);
+        
+        this.http.post(Util.carrelloServerUrl+"/add",authBody, { responseType: 'text' }).subscribe(result =>{
+        
+        console.log(result)
+        
+        this.router.navigate(['/carrello']);
+      })
+      }
+    }
   }
 }

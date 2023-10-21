@@ -45,7 +45,8 @@ public class AuthService {
             System.out.println(password);
             System.out.println("ciao"=="ciao");
             System.out.println(userByEmail.get().getPassword().equals(password));
-            if(encoder.matches(password, userByEmail.get().getPassword())){
+//            if(encoder.matches(password, userByEmail.get().getPassword())){
+            if(userByEmail.get().getPassword().equals(password)){
                 String newtoken = Util.generateToken();
                 userByEmail.get().setToken(newtoken);
                 //repository.save(userByEmail.get());

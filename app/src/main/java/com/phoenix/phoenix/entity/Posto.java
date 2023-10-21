@@ -24,29 +24,3 @@ public class Posto implements Serializable {
     private String stato;
 }
 
-
-//convertitore
-class PostoConverter implements AttributeConverter<Collection<Posto>, String> {
-
-    private final static ObjectMapper objectMapper = new ObjectMapper();
-
-    @Override
-    @NotNull
-    public String convertToDatabaseColumn(@NotNull Collection<Posto> myCustomObject) {
-        try {
-            return objectMapper.writeValueAsString(myCustomObject);
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-
-    @Override
-    @NotNull
-    public Collection<Posto> convertToEntityAttribute(@NotNull String databaseDataAsJSONString) {
-        try {
-            return objectMapper.readValue(databaseDataAsJSONString,  new TypeReference<Collection<Posto>>(){});
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-}
