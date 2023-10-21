@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
           <b><p style="color:red;weight:bold" id="loginform-error"><p></b>
           <button type="submit">Login</button>
         </form>
-        <p>Non sei registrato? <a (click)="navigateToRegistration()">Registrati QUI</a></p>
+        <p>Non sei registrato? Registrati <a href="/registrazione">QUI</a></p>
       </div>
     </ng-template>
   </div>

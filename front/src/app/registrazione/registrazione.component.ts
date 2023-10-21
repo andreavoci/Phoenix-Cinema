@@ -82,7 +82,7 @@ export class RegistrazioneComponent {
   constructor(private http: HttpClient) { }
 
   register(form: any) {
-    this.http.post<LoginResponse>(Util.authServerUrl + "/registrazione", form).subscribe(
+    this.http.post<LoginResponse>(Util.authServerUrl + "/register", form).subscribe(
       success => {
         console.log(success.token)
         AuthService.setToken("token", success.token)
