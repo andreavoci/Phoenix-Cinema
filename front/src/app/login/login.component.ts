@@ -64,7 +64,7 @@ export class LoginComponent {
         console.log(success.token)
         AuthService.setToken("token",success.token)
         AuthService.setToken("id",success.id)
-        window.location.reload()
+        window.location.href = '/profilo'
       },
       error => {
         console.log(error.error)
