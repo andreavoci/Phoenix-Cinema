@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class Fornitura {
     @ManyToOne
     private Fornitore fornitore;
 
-    @ManyToOne
+    @OneToOne
     private Fattura fattura;
 
     private String tipo;
@@ -35,4 +36,6 @@ public class Fornitura {
 
     private String stato;
 
+    @OneToMany(mappedBy = "fornitura")
+    Collection<Merce> merci;
 }

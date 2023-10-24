@@ -10,14 +10,14 @@ import { AuthService } from '../services/auth.service';
       <div class="registration-form">
         <h2>Registrazione</h2>
         <form #registrationForm="ngForm" (ngSubmit)="register(registrationForm.value)">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" ngModel required>
           </div>
           <div class="form-group">
             <label for="cognome">Cognome</label>
             <input type="text" id="cognome" name="cognome" ngModel required>
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" ngModel required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
@@ -26,10 +26,10 @@ import { AuthService } from '../services/auth.service';
             <label for="password">Password</label>
             <input type="password" id="password" name="password" ngModel required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&*]).{6,}$">
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="dataNascita">Data di Nascita</label>
             <input type="date" id="dataNascita" name="dataNascita" ngModel required>
-          </div>
+          </div> -->
           <div class="button-group">
             <button type="submit">Registrati</button>
           </div>

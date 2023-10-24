@@ -20,7 +20,8 @@ public class Fornitore {
 
     private String ragione_sociale;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoFornitore tipo;
 
     private String indirizzo;
 

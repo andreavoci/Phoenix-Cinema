@@ -21,9 +21,5 @@ public class Fattura {
 
     private Date emissione;
 
-    @ManyToOne
-    private Fornitore fornitore;
-
-    @OneToMany(mappedBy = "fattura")
-    private List<Fornitura> forniture;
+    private Date pagamento;
 }

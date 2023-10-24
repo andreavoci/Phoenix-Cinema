@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.service;
 
 import com.phoenix.phoenix.entity.AuthBody;
+import com.phoenix.phoenix.entity.RuoloUtente;
 import com.phoenix.phoenix.entity.User;
 import com.phoenix.phoenix.repository.UserRepository;
 import com.phoenix.phoenix.utility.Util;
@@ -29,6 +30,7 @@ public class AuthService {
         Optional<User> userByEmail = repository.findUserByEmail(email);
         if(! userByEmail.isPresent()){
             User user = new User(email, encoder.encode(password));
+            user.setRuolo(RuoloUtente.CLIENTE);
             repository.save(user);
             String token = Util.generateToken();
             return new ResponseEntity<String>("{\"token\":\""+token+"\", \"id\":\""+user.getId()+"\" }",HttpStatus.OK);
@@ -44,14 +46,13 @@ public class AuthService {
             System.out.println(userByEmail.get().getPassword());
             System.out.println(password);
             System.out.println("ciao"=="ciao");
-            System.out.println(userByEmail.get().getPassword().equals(password));
-//            if(encoder.matches(password, userByEmail.get().getPassword())){
-            if(userByEmail.get().getPassword().equals(password)){
+            System.out.println(encoder.matches(password, userByEmail.get().getPassword()));
+            if(encoder.matches(password, userByEmail.get().getPassword())){
+            //if(userByEmail.get().getPassword().equals(password)){
                 String newtoken = Util.generateToken();
                 userByEmail.get().setToken(newtoken);
                 //repository.save(userByEmail.get());
                 return new ResponseEntity<String>("{\"token\":\""+newtoken+"\", \"id\":\""+userByEmail.get().getId()+"\" }",HttpStatus.OK);
-
             }
             else{
                 return new ResponseEntity<String>("Password sbagliata",HttpStatus.BAD_REQUEST);

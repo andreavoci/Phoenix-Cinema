@@ -1,11 +1,12 @@
 package com.phoenix.phoenix.entity;
 
-public enum Ruolo {
+public enum Mansione {
     DIRETTORE,
     HELPDESK,
     OPERATORE,
     BIGLIETTERIA,
     PROIEZIONE,
     MAGAZZINO,
-    HR
+    HR,
+    SOCIALMEDIAMANAGER
 }

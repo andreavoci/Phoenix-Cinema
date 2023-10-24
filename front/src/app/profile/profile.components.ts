@@ -14,13 +14,13 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   <div class="header">
     <h1>Profilo Personale</h1>
     <button class="logout-button" (click)="logout()">Logout</button>
-    <div class="user-info">
-      <div class="info">
+     <div class="user-info">
+      <!-- <div class="info">
         <strong>Nome:</strong> {{ user.nome }}
       </div>
       <div class="info">
         <strong>Cognome:</strong> {{ user.cognome }}
-      </div>
+      </div> -->
       <div class="info">
         <strong>Email:</strong>
         <span *ngIf="!isEditingEmail">{{ user.email }}</span>
@@ -75,7 +75,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       <td>{{ order.quantita }}</td>
     </tr>
   </table>
-</div>
+  </div>
 
   `,
   styles: [
@@ -289,7 +289,7 @@ export class ProfileComponent implements OnInit {
 
    AuthService.deleteToken("token")
    AuthService.deleteToken("id")
-   window.location.reload()
+   window.location.href = '/'
   }
 
   cancelEdit(field: string) {
