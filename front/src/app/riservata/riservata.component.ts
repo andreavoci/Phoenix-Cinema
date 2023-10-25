@@ -6,6 +6,7 @@ import { Util } from '../services/util';
 import { Sala } from '../model/sala';
 import { Pellicola } from '../model/pellicola';
 import { Programmazione } from '../model/programmazione';
+import { Fornitura } from '../model/fornitura';
 
 @Component({
   selector: 'app-riservata',
@@ -19,6 +20,7 @@ import { Programmazione } from '../model/programmazione';
       <div *ngIf="type==0 ;then prova0"></div>
       <div *ngIf="type==1 ;then prova1"></div>
       <div *ngIf="type==2 ;then prova2"></div>
+      <div *ngIf="type==3 ;then prova3"></div>
       <div *ngIf="type==-1 ;then nochoice"></div>
     </div>
     <ng-template #prova0>
@@ -87,6 +89,47 @@ import { Programmazione } from '../model/programmazione';
       </div>
     </ng-template>
 
+    
+    <ng-template #prova3>
+      VISUALIZZAZIONE FORNITURE
+      <dialog #dialogo>
+        
+        <div class="background-blur">
+            
+          <div class="component-div">
+              <button (click)="dialogo.close()">chiudi</button>
+          </div>
+        </div>
+      </dialog>
+   <button type="button" class="button" (click)="dialogo.show();"> POPUP </button>
+
+      <div class="table-div">
+      <table>
+        <tr class="title">
+          <th>ID</th>
+          <th>Fornitore</th>
+          <th>Fattura</th>
+          <th>Tipo</th>
+          <th>Prezzo</th>
+          <th>Quantità</th>
+          <th>Merci</th>
+          <th>Arrivo</th>
+          <th>Scadenza</th>
+        </tr>
+        <tr class="row" *ngFor="let f of forniture">
+          <td>{{f.id}}</td>
+          <td>{{f.fornitore.id}}</td>
+          <td>{{f.fattura.id}}</td>
+          <td>{{f.tipo}}</td>
+          <td>{{f.prezzo}}</td>
+          <td>{{f.quantita}}</td>
+          <td>[{{f.merci.length}}]</td>
+          <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
+          <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
+        </tr>
+      </table>
+      </div>
+    </ng-template>
 
 
       
@@ -110,6 +153,32 @@ import { Programmazione } from '../model/programmazione';
     </ng-template>
   `,
   styles: [ `
+
+    .component-div{
+            position: fixed;
+            border-radius:10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            padding: 150px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* display: block; */   /* Assicura che il popup sia sopra lo sfondo sfocato */
+        }
+        
+      .background-blur {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%; /* Sostituisci 'sfondo.jpg' con il percorso dell'immagine di sfondo */
+          background-size: cover;
+          backdrop-filter: blur(5px);
+          z-index:1;/* Applica l'effetto di sfondo sfocato */
+        /* Assicura che lo sfondo sia dietro il popup */
+      }
+
     .container {
       width: 100vw;
       background: gray;
@@ -173,6 +242,7 @@ export class RiservataComponent {
   prova =[0,1,2,3,4,5];
   sale: Sala[] = [];
   pellicole: Pellicola[] = [];
+  forniture: Fornitura[] = [];
   //-1:all  |  0:bho
   constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
 
@@ -187,22 +257,40 @@ export class RiservataComponent {
       if(this.type==2){
         this.getPellicole()
       }
+      
+      if(this.type==3){
+        this.getForniture()
+      }
+      
+      if(this.type==4){
+        this.getSale()
+      }
     }
     console.log(this.type)  
   }
+  
+  
+  //prova 3
+  getForniture(){
+    this.http.get<Fornitura[]>(Util.fornitureServerUrl).subscribe(result=>{
+      this.forniture = result;
+    })
+  }
 
+  //prova 2
   getPellicole(){
     this.http.get<Pellicola[]>(Util.pellicoleServerUrl).subscribe(result=>{
       this.pellicole = result;
     })
   }
+  //prova 4
   getSale(){
     this.http.get<Sala[]>(Util.saleServerUrl).subscribe(result=>{
       this.sale = result;
     })
   }
-  //prova 0
 
+  //prova 0
   newProgrammazione(form: any){
     console.log(form)
     this.http.post<HttpResponse<Programmazione>>(Util.programmazioniServerUrl+"/create",form).subscribe(result=>{
@@ -210,8 +298,8 @@ export class RiservataComponent {
       
     })
   }
+
   //prova 1
-  
   newSala(form: any){
     console.log(form)
     this.http.post<HttpResponse<Programmazione>>(Util.saleServerUrl+"/create",form).subscribe(result=>{

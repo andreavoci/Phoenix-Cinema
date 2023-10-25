@@ -28,5 +28,6 @@ public class Merce {
 
     @ManyToOne
     @JoinColumn(name = "fornitura")
+    @JsonIgnore
     private Fornitura fornitura;
 }

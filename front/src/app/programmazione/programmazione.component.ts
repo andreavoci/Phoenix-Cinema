@@ -58,7 +58,7 @@ import { SharedService } from '../services/shared.service';
       width: 100%;
       display: flex;
       background: rgb(250,108,20);
-background: radial-gradient(circle, rgba(250,108,20,1) 0%, rgba(90,30,4,1) 100%);
+      background: radial-gradient(circle, rgba(250,108,20,1) 0%, rgba(90,30,4,1) 100%);
       height: 100%;
       align-items: flex-start;
       flex-direction: column;
