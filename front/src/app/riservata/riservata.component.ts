@@ -18,10 +18,11 @@ import { Programmazione } from '../model/programmazione';
       <br>
       <div *ngIf="type==0 ;then prova0"></div>
       <div *ngIf="type==1 ;then prova1"></div>
+      <div *ngIf="type==2 ;then prova2"></div>
       <div *ngIf="type==-1 ;then nochoice"></div>
     </div>
     <ng-template #prova0>
-      
+      CREAZIONE PROGRAMMAZIONE
       <form #newprogform="ngForm" (ngSubmit)="newProgrammazione(newprogform.value)">
         
         <select name="pellicola" ngModel>
@@ -42,7 +43,7 @@ import { Programmazione } from '../model/programmazione';
     </ng-template>
     
     <ng-template #prova1>
-      
+      CREAZIONE SALA
       <form #newsalaform="ngForm" (ngSubmit)="newSala(newsalaform.value)">
         
       <input type="text" name="nome" ngModel placeholder="nome"><br><br>
@@ -52,6 +53,38 @@ import { Programmazione } from '../model/programmazione';
         <button type="submit">Crea Sala</button>
       </form>
       
+    </ng-template>
+
+    <ng-template #prova2>
+      VISUALIZZAZIONE PELLICOLE
+      <div class="table-div">
+      <table>
+        <tr class="title">
+          <th>Titolo</th>
+          <th>Regista</th>
+          <th>Attori</th>
+          <th>Trama</th>
+          <th>Durata</th>
+          <th>Generi</th>
+          <th>PEGI</th>
+          <th>Prezzo</th>
+          <th>Uscita</th>
+          <th>Fine noleggio</th>
+        </tr>
+        <tr class="row" *ngFor="let p of pellicole">
+          <td>{{p.titolo}}</td>
+          <td>{{p.regista}}</td>
+          <td>{{p.attori}}</td>
+          <td>{{p.trama}}</td>
+          <td>{{p.durata}}</td>
+          <td>{{p.generi}}</td>
+          <td>{{p.pegi}}</td>
+          <td>{{p.prezzo_noleggio}}</td>
+          <td>{{p.data_uscita | date :"dd/MM/yyyy"}}</td>
+          <td>{{p.fine_noleggio | date :"dd/MM/yyyy"}}</td>
+        </tr>
+      </table>
+      </div>
     </ng-template>
 
 
@@ -78,7 +111,7 @@ import { Programmazione } from '../model/programmazione';
   `,
   styles: [ `
     .container {
-      width: 100%;
+      width: 100vw;
       background: gray;
       height: 100%;
       min-height: calc(100vh - 80px);
@@ -89,6 +122,48 @@ import { Programmazione } from '../model/programmazione';
       justify-content: flex-start;
     }
 
+    
+.table-div {
+  width: 100%;
+  height: 100%;
+}
+table {
+  /* table-layout:fixed; */
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.title {
+  background-color: #fa680c;
+  text-align: left;
+}
+
+.title td, .title th {
+  border:3px solid black;
+  text-align: left;
+  padding: 8px;
+  white-space: nowrap; /* Evita la riduzione di spazi */
+  text-overflow: ellipsis; /* Tronca il testo e mostra "..." se è troppo lungo */
+  height: 20px;
+}
+.row td,.row th {
+  text-align: center;
+  
+  border-left:4px solid black;
+  border-right:4px solid black;
+  border-bottom:2px solid black;
+  padding: 8px;
+  white-space: nowrap; /* Evita la riduzione di spazi */
+      text-overflow: ellipsis; /* Tronca il testo e mostra "..." se è troppo lungo */
+      height: 20px;
+}
+
+.row:nth-child(even) {
+  background-color: #fa8e4b;
+}
+.row:nth-child(odd) {
+  background-color: #faad7d;
+}
   `,
   ]
 })
@@ -108,7 +183,9 @@ export class RiservataComponent {
       if(this.type==0){
         this.getPellicole()
         this.getSale()
-        console.log()
+      }
+      if(this.type==2){
+        this.getPellicole()
       }
     }
     console.log(this.type)  
@@ -142,6 +219,9 @@ export class RiservataComponent {
       
     })
   }
+
+  
+  //prova 1
   
     // id:number;
     // pellicola:Pellicola;

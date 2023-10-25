@@ -22,8 +22,8 @@ public class Pellicola {
     private String titolo;
 
     @ManyToOne
-    @JoinColumn(name = "id_fornitore")
-    private Fornitore fornitore;
+    @JoinColumn(name = "id_fornitura")
+    private Fornitura fornitura;
 
     private Date data_uscita;
 
@@ -48,9 +48,9 @@ public class Pellicola {
 
     private Date fine_noleggio;
 
-    public Pellicola(String titolo, Fornitore fornitore, Date data_uscita, int durata, MovieGenre genere, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
+    public Pellicola(String titolo, Fornitura fornitura, Date data_uscita, int durata, MovieGenre genere, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
         this.titolo=titolo;
-        this.fornitore=fornitore;
+        this.fornitura=fornitura;
         this.data_uscita=data_uscita;
         this.durata=durata;
         this.genere=genere;

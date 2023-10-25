@@ -1,9 +1,9 @@
-import { Fornitore } from "../model/fornitore";
+import { Fornitura } from "./fornitura";
 
 export interface Pellicola{
     id:number;
     titolo:string;
-    fornitore:Fornitore;
+    fornitura:Fornitura;
     data_uscita:Date;
     durata:number;
     generi:string;
