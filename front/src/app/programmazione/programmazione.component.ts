@@ -204,7 +204,9 @@ import { SharedService } from '../services/shared.service';
     z-index: 1;
     border-radius: 50%
 }
-
+.date p{
+  margin: 7px 0;
+}
 .date p:first-child{
   text-transform: uppercase;
     font-weight: 600;

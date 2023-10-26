@@ -7,24 +7,25 @@ import { AuthBody } from '../model/authbody';
 import { NONE_TYPE } from '@angular/compiler';
 import { AuthService } from '../services/auth.service';
 import { ElementoCarrello } from '../model/elementocarrello';
+import { Programmazione } from '../model/programmazione';
 
 @Component({
   selector: 'app-carrello',
   template: `
     <div class="container">
-      <div class="container-title">
+      <div class="header">
       
-        <button type="button" class="button-left" (click)="removeAll()">
+        <!-- <button type="button" class="button-left" (click)="removeAll()">
           ELIMINA TUTTO
-        </button>
+        </button> -->
         
         <h1>CARRELLO</h1>
         
-        <button type="button" class="button-right" (click)="checkout()">
+        <!-- <button type="button" class="button-right" (click)="checkout()">
           CHECKOUT
-        </button>
+        </button> -->
       </div>
-      <div *ngFor="let e of elementi" class="container-elemento">
+      <!-- <div *ngFor="let e of elementi" class="container-elemento">
         <div class="container-dettagli">
           <p class="text-title">{{e.programmazione.pellicola.titolo}}</p>
           <div class="container-info">
@@ -40,9 +41,22 @@ import { ElementoCarrello } from '../model/elementocarrello';
             RIMUOVI
           </button>
         </div>
+      </div> -->
+      <div class="row" *ngFor="let e of elementi">
+        <div class="date">
+          <p>{{e.programmazione.orario | date:'ccc'}}</p>
+          <p>{{e.programmazione.orario | date:'dd'}}</p>
+          <p>{{e.programmazione.orario | date:'MMM'}}</p>
+        </div> 
+        <section class="content">
+          <p>phoenix cinema</p>
+            <p>{{e.programmazione.pellicola.titolo}}</p>
+            <p>{{getPosto(e)}}</p>
+            <button (click)="remove(e)" [routerLink]="['/carrello']">RIMUOVI</button>
+        </section>
       </div>
-
-
+      <div *ngIf="elementi.length>0">
+      <button class="checkout-button" (click)="checkout()">CHECKOUT</button>
       <!-- <p>
         carrello works!
       </p>
@@ -53,13 +67,15 @@ import { ElementoCarrello } from '../model/elementocarrello';
           </div>
         </div>
       </div> -->
+      </div>
     </div>
   `,
   styles: [`
   
     .container {
       width: 100%;
-      background: gray;
+      background: rgb(250,108,20);
+      background: radial-gradient(circle, rgba(250,108,20,1) 0%, rgba(90,30,4,1) 100%);
       height: 100%;
       min-height: calc(100vh - 80px);
       display: flex;
@@ -68,16 +84,16 @@ import { ElementoCarrello } from '../model/elementocarrello';
       flex-direction: column;
       justify-content: flex-start;
     }
-    .container-title {
-      flex: 0 0 auto;
-      width: 100%;
-      height: auto;
-      margin-top: 25px;
-      display: flex;
-      align-self: center;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
+    .header {
+        background: #000000;
+        color: white;
+        padding: 10px;
+        text-align: left;
+        width: 100%;
+        margin-bottom: 20px;
+        justify-content: space-between;
+        text-align: center; /* Sposta a destra */
+      }
     .container-elemento {
       flex: 0 0 auto;
       width: 100%;
@@ -129,22 +145,93 @@ import { ElementoCarrello } from '../model/elementocarrello';
       flex-direction: column;
       justify-content: center;
     }
-    .button-right {
-      align-self: flex-end;
-      margin-top: 5px;
-      margin-right: 40px;
-      margin-bottom: 10px;
-      padding: 5px 8px;
+    button {
+      
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 4px 8px;
+      font-size: 16px;
+      font-weight:bold;
+      background:rgba(250,108,20,1);
+      border: solid 2px black;
+      border-radius:5px;
     }
-    .button-left {
-      align-self: flex-end;
-      margin-top: 5px;
-      margin-left: 40px;
-      margin-bottom: 10px;
-      padding: 5px 8px;
+    button:hover {
+      cursor:pointer;
+      background:orange;
     }
 
+    .row {
+  display: table;
+  justify-content: center; /* Center the tickets horizontally */
+  width: 60%; /* Adjust the width to make them narrower */
+  margin: 10px auto; /* Center the tickets vertically and add margin */
+  background-color: #fff;
+  color: #989898;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  border-radius: 8px;
+  position: relative;
+    
+}
 
+.date {
+  display: table-cell;
+  width: 25%;
+  height:auto;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 2px dashed #dadde6;
+  margin: 0 auto;
+}
+
+.date:before,
+.date:after {
+    content: "";
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-color: #DADDE6;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
+    border-radius: 50%
+}
+.date p{
+  margin: 7px 0;
+}
+.date p:first-child{
+  text-transform: uppercase;
+    font-weight: 600;
+    font-size: 120%;
+}
+.date p:nth-child(2) {
+    color: #2b2b2b;
+    font-weight: 600;
+    font-size: 250%;
+    margin-top: -10px
+}
+
+.date p:last-child{
+
+  text-transform: uppercase;
+    font-weight: 600;
+    margin-top: -10px
+}
+
+.content {
+    display: table-cell;
+    width: 75%;
+    font-size: 85%;
+    padding: 15px 30px;
+}
+
+.content p {
+    font-size: 90%;
+    padding: 5px 0px 10px 0px;
+}
   `,
   ]
 })
@@ -203,4 +290,13 @@ export class CarrelloComponent {
     })
   }
 
+  getPosto(e:ElementoCarrello): string{
+    var programmazione:Programmazione = e.programmazione;
+    for(const p of programmazione.posti){
+      if(p.id === e.posto){
+        return p.numero;
+      }
+    }
+    return "";
+  }
 }

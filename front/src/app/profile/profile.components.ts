@@ -1,8 +1,11 @@
+import { Programmazione } from './../model/programmazione';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Util } from '../services/util';
 import { AuthService } from '../services/auth.service';
 import { User } from "../model/user";
+import { Ordine } from '../model/ordine';
+import { AuthBody } from '../model/authbody';
 
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -12,15 +15,15 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   template: `
   <div class="container" *ngIf="user">
   <div class="header">
-    <h1>Profilo Personale</h1>
-    <button class="logout-button" (click)="logout()">Logout</button>
+    <h1>PROFILO</h1>
+    <!-- <button class="logout-button" (click)="logout()">Logout</button>
      <div class="user-info">
-      <!-- <div class="info">
+       <div class="info">
         <strong>Nome:</strong> {{ user.nome }}
       </div>
       <div class="info">
         <strong>Cognome:</strong> {{ user.cognome }}
-      </div> -->
+      </div>
       <div class="info">
         <strong>Email:</strong>
         <span *ngIf="!isEditingEmail">{{ user.email }}</span>
@@ -55,8 +58,8 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         </div>
       </div>
     </div>
-  </div>
-  <button
+  </div> -->
+  <!-- <button
     type="submit"
     class="button show-history-button"
     (click)="toggleTable()"
@@ -74,7 +77,25 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       <td>{{ order.data }}</td>
       <td>{{ order.quantita }}</td>
     </tr>
-  </table>
+  </table> -->
+  </div>
+  <ng-container *ngIf="user.ruolo == 'CLIENTE'">
+  <h1>ORDINI:</h1>
+  <div class="row" *ngFor="let o of ordini">
+    
+    <div class="date">
+      <p>{{o.biglietti[0].programmazione.orario | date:'ccc'}}</p>
+      <p>{{o.biglietti[0].programmazione.orario | date:'dd'}}</p>
+      <p>{{o.biglietti[0].programmazione.orario | date:'MMM'}}</p>
+    </div> 
+    <section class="content">
+       <p>phoenix cinema</p>
+        <p>{{o.biglietti[0].programmazione.pellicola.titolo}}</p>
+        <p>{{getPosti(o)}}</p>
+    </section>
+</div>
+<button class="logout-button" (click)="logout()">Logout</button>
+  </ng-container>
   </div>
 
   `,
@@ -82,7 +103,8 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     `
       .container {
         width: 100%;
-        background: gray;
+        background: rgb(250,108,20);
+        background: radial-gradient(circle, rgba(250,108,20,1) 0%, rgba(90,30,4,1) 100%);
         height: 100%;
         min-height: calc(100vh - 80px);
         display: flex;
@@ -98,7 +120,8 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         text-align: left;
         width: 100%;
         margin-bottom: 20px;
-        justify-content: space-between; /* Sposta a destra */
+        justify-content: space-between;
+        text-align: center; /* Sposta a destra */
       }
 
       .user-info {
@@ -153,6 +176,102 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       .error-message {
         color: red;
       }
+      button {
+      
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 4px 8px;
+      font-size: 16px;
+      font-weight:bold;
+      background:rgba(250,108,20,1);
+      border: solid 2px black;
+      border-radius:5px;
+    }
+    button:hover {
+      cursor:pointer;
+      background:orange;
+    }
+
+
+    .prog-title {
+        text-transform: uppercase;
+        font-weight: 900;
+        border-left: 10px solid #fec500;
+        padding-left: 10px;
+        margin-bottom: 30px
+    }
+    
+.row {
+  display: table;
+  justify-content: center; /* Center the tickets horizontally */
+  width: 60%; /* Adjust the width to make them narrower */
+  margin: 10px auto; /* Center the tickets vertically and add margin */
+  background-color: #fff;
+  color: #989898;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  border-radius: 8px;
+  position: relative;
+    
+}
+
+.date {
+  display: table-cell;
+  width: 25%;
+  height:auto;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 2px dashed #dadde6;
+  margin: 0 auto;
+}
+
+.date:before,
+.date:after {
+    content: "";
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-color: #DADDE6;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
+    border-radius: 50%
+}
+.date p{
+  margin: 7px 0;
+}
+.date p:first-child{
+  text-transform: uppercase;
+    font-weight: 600;
+    font-size: 120%;
+}
+.date p:nth-child(2) {
+    color: #2b2b2b;
+    font-weight: 600;
+    font-size: 250%;
+    margin-top: -10px
+}
+
+.date p:last-child{
+
+  text-transform: uppercase;
+    font-weight: 600;
+    margin-top: -10px
+}
+
+.content {
+    display: table-cell;
+    width: 75%;
+    font-size: 85%;
+    padding: 15px 30px;
+}
+
+.content p {
+    font-size: 90%;
+    padding: 5px 0px 10px 0px;
+}
     `,
   ],
 })
@@ -170,17 +289,9 @@ export class ProfileComponent implements OnInit {
   emailError: string | null = null;
   passwordError: string | null = null;
 
-  orders: any[] = [
-    { titolo: 'Ordine 1', data: '01/10/2023', quantita: 5 },
-    { titolo: 'Ordine 2', data: '02/10/2023', quantita: 3 },
-    { titolo: 'Ordine 3', data: '03/10/2023', quantita: 7 },
-  ];
-
-  history: any[] = [
-    { titolo: 'Biglietto 1', data: '01/10/2022', quantita: 1 },
-    { titolo: 'Biglietto 2', data: '02/10/2022', quantita: 2 },
-    { titolo: 'Biglietto 3', data: '03/10/2022', quantita: 1 },
-  ];
+  ordini: Ordine[] = [];
+  posti: { numero: number, selezionato: boolean }[] = [];
+  dateJSON: { [key: string]: Ordine[] } = {};
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -194,95 +305,96 @@ export class ProfileComponent implements OnInit {
       this.user = result;
       console.log(result);
     });
+    this.getOrdini();
   }
 
-  toggleEdit(field: string) {
-    if (field === 'email') {
-      this.isEditingEmail = !this.isEditingEmail;
-    } else if (field === 'password') {
-      this.isEditingPassword = !this.isEditingPassword;
-    }
-  }
+  // toggleEdit(field: string) {
+  //   if (field === 'email') {
+  //     this.isEditingEmail = !this.isEditingEmail;
+  //   } else if (field === 'password') {
+  //     this.isEditingPassword = !this.isEditingPassword;
+  //   }
+  // }
 
-  toggleTable() {
-    if (this.showOrders) {
-      this.showOrders = false;
-      this.showHistory = true;
-    } else {
-      this.showOrders = true;
-      this.showHistory = false;
-    }
+  // toggleTable() {
+  //   if (this.showOrders) {
+  //     this.showOrders = false;
+  //     this.showHistory = true;
+  //   } else {
+  //     this.showOrders = true;
+  //     this.showHistory = false;
+  //   }
     
-  }
+  // }
 
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
-  }
+  // toggleShowPassword() {
+  //   this.showPassword = !this.showPassword;
+  // }
 
-  saveEmail() {
-    if (this.isEditingEmail) {
-      if (!emailRegex.test(this.newEmail)) {
-        // Imposta un messaggio di errore per l'email
-        this.emailError = 'L\'indirizzo email non è valido';
-      } else {
-          if (this.user){
-            // L'email è valida, procedi con l'aggiornamento dell'email
-            this.user.email = this.newEmail;
-          }
-        // Resetta l'errore
-        this.emailError = null;
-        // Esegui il salvataggio
-        this.saveChanges();
-      }
-    }
-    this.isEditingEmail = false;
-  }
+  // saveEmail() {
+  //   if (this.isEditingEmail) {
+  //     if (!emailRegex.test(this.newEmail)) {
+  //       // Imposta un messaggio di errore per l'email
+  //       this.emailError = 'L\'indirizzo email non è valido';
+  //     } else {
+  //         if (this.user){
+  //           // L'email è valida, procedi con l'aggiornamento dell'email
+  //           this.user.email = this.newEmail;
+  //         }
+  //       // Resetta l'errore
+  //       this.emailError = null;
+  //       // Esegui il salvataggio
+  //       this.saveChanges();
+  //     }
+  //   }
+  //   this.isEditingEmail = false;
+  // }
 
-  savePassword() {
-    if (this.isEditingPassword) {
-      if (!this.isPasswordValid(this.newPassword)) {
-        // Imposta un messaggio di errore per la password
-        this.passwordError = 'La password non rispetta i criteri di sicurezza';
-      } else {
-        // La password è valida, procedi con l'aggiornamento della password
-          if (this.user){
-            this.user.password = this.newPassword;
-          }
-        // Resetta l'errore
-        this.passwordError = null;
-        // Esegui il salvataggio
-        this.saveChanges();
-      }
-    }
-    this.isEditingPassword = false;
-  }
+  // savePassword() {
+  //   if (this.isEditingPassword) {
+  //     if (!this.isPasswordValid(this.newPassword)) {
+  //       // Imposta un messaggio di errore per la password
+  //       this.passwordError = 'La password non rispetta i criteri di sicurezza';
+  //     } else {
+  //       // La password è valida, procedi con l'aggiornamento della password
+  //         if (this.user){
+  //           this.user.password = this.newPassword;
+  //         }
+  //       // Resetta l'errore
+  //       this.passwordError = null;
+  //       // Esegui il salvataggio
+  //       this.saveChanges();
+  //     }
+  //   }
+  //   this.isEditingPassword = false;
+  // }
 
-  saveChanges() {
-    // Chiamaata http che dovrebbe aggiornare i mail e password su DB 
-    this.http.put(Util.userServerUrl + "/" + this.userId, this.user).subscribe((response) => {
-      console.log("Modifiche salvate con successo sul DB", response);
-    });
-    // Reimposta i flag di modifica su false
-    this.isEditingEmail = false;
-    this.isEditingPassword = false;
-  }
+  // saveChanges() {
+  //   // Chiamaata http che dovrebbe aggiornare i mail e password su DB 
+  //   this.http.put(Util.userServerUrl + "/" + this.userId, this.user).subscribe((response) => {
+  //     console.log("Modifiche salvate con successo sul DB", response);
+  //   });
+  //   // Reimposta i flag di modifica su false
+  //   this.isEditingEmail = false;
+  //   this.isEditingPassword = false;
+  // }
 
-  isPasswordValid(password: string): boolean {
-    // Aggiungi qui i criteri di sicurezza desiderati
-    const minLength = 6;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*]/.test(password);
+  // isPasswordValid(password: string): boolean {
+  //   // Aggiungi qui i criteri di sicurezza desiderati
+  //   const minLength = 6;
+  //   const hasUppercase = /[A-Z]/.test(password);
+  //   const hasLowercase = /[a-z]/.test(password);
+  //   const hasNumber = /[0-9]/.test(password);
+  //   const hasSpecialChar = /[!@#$%^&*]/.test(password);
 
-    return (
-      password.length >= minLength &&
-      hasUppercase &&
-      hasLowercase &&
-      hasNumber &&
-      hasSpecialChar
-    );
-  }
+  //   return (
+  //     password.length >= minLength &&
+  //     hasUppercase &&
+  //     hasLowercase &&
+  //     hasNumber &&
+  //     hasSpecialChar
+  //   );
+  // }
 
   logout(){
     console.log("delete")
@@ -292,12 +404,33 @@ export class ProfileComponent implements OnInit {
    window.location.href = '/'
   }
 
-  cancelEdit(field: string) {
-    if (field === 'email') {
-      this.isEditingEmail = false;
-    } else if (field === 'password') {
-      this.isEditingPassword = false;
-    }
+  // cancelEdit(field: string) {
+  //   if (field === 'email') {
+  //     this.isEditingEmail = false;
+  //   } else if (field === 'password') {
+  //     this.isEditingPassword = false;
+  //   }
+  // }
+  getOrdini() {
+    var authbody:AuthBody = new AuthBody(this.userId,"empty");
+    console.log(authbody);
+    this.http.post<Ordine[]>(Util.ordiniServerUrl, authbody).subscribe(result=>{
+      this.ordini=result;
+      console.log(result);
+    })
   }
 
+  getPosti(o:Ordine): string{
+    var lun:number = o.biglietti.length;
+    var posto:string = "";
+    for(let index = 0; index<lun; index++){
+    var programmazione:Programmazione = o.biglietti[index].programmazione;
+    for(const p of programmazione.posti){
+      if(p.id === o.biglietti[index].posto){
+        posto += p.numero+" ";
+      }
+    }
+  }
+    return posto;
+  }
 }
