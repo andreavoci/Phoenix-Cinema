@@ -21,6 +21,7 @@ import { Fornitura } from '../model/fornitura';
       <div *ngIf="type==1 ;then prova1"></div>
       <div *ngIf="type==2 ;then prova2"></div>
       <div *ngIf="type==3 ;then prova3"></div>
+      <div *ngIf="type==4 ;then prova4"></div>
       <div *ngIf="type==-1 ;then nochoice"></div>
     </div>
     <ng-template #prova0>
@@ -93,44 +94,77 @@ import { Fornitura } from '../model/fornitura';
     <ng-template #prova3>
       VISUALIZZAZIONE FORNITURE
       <dialog #dialogo>
-        
         <div class="background-blur">
-            
+
           <div class="component-div">
-              <button (click)="dialogo.close()">chiudi</button>
+            <button (click)="dialogo.close()" >chiudi</button>
           </div>
+
         </div>
       </dialog>
-   <button type="button" class="button" (click)="dialogo.show();"> POPUP </button>
+      <button type="button" class="button" (click)="dialogo.show();"> POPUP </button>
+      <div class="container-buttons">
+        <button class="item-button" style="background:green" (click)="creaFornitura();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
+        </button>
+        
+        <button class="item-button" style="background:red" (click)="eliminaFornitura();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
+        </button>
+        <p class="button-item">{{messageError}}</p>
+        <div *ngIf="checkElimina==true">
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazione()">Conferma</button>
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazione()">Annulla</button>
+        </div>
+      </div>
 
+      <div class="table-div">
+        <table>
+          <tr class="title">
+            <th></th>
+            <th>ID</th>
+            <th>Fornitore</th>
+            <th>Fattura</th>
+            <th>Tipo</th>
+            <th>Prezzo</th>
+            <th>Quantità</th>
+            <th>Merci</th>
+            <th>Arrivo</th>
+            <th>Scadenza</th>
+          </tr>
+          <tr class="row" *ngFor="let f of forniture">
+            <td><input type="checkbox" [value]=f.id (change)="onCheckChange($event)" style="width:20px;height:20px"></td>
+            <td>{{f.id}}</td>
+            <td><span *ngIf="f.fornitore">{{f.fornitore.id}}</span></td>
+            <td><span *ngIf="f.fattura">{{f.fattura.id}}</span></td>
+            <td>{{f.tipo}}</td>
+            <td>{{f.prezzo}}</td>
+            <td>{{f.quantita}}</td>
+            <td><span *ngIf="f.merci">[{{f.merci.length}}]</span></td>
+            <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
+            <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
+          </tr>
+        </table>
+      </div>
+    </ng-template>
+
+    <ng-template #prova4>
+      VISUALIZZAZIONE SALE
       <div class="table-div">
       <table>
         <tr class="title">
           <th>ID</th>
-          <th>Fornitore</th>
-          <th>Fattura</th>
-          <th>Tipo</th>
-          <th>Prezzo</th>
-          <th>Quantità</th>
-          <th>Merci</th>
-          <th>Arrivo</th>
-          <th>Scadenza</th>
+          <th>Nome</th>
+          <th>Capienza</th>
         </tr>
-        <tr class="row" *ngFor="let f of forniture">
-          <td>{{f.id}}</td>
-          <td>{{f.fornitore.id}}</td>
-          <td>{{f.fattura.id}}</td>
-          <td>{{f.tipo}}</td>
-          <td>{{f.prezzo}}</td>
-          <td>{{f.quantita}}</td>
-          <td>[{{f.merci.length}}]</td>
-          <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
-          <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
+        <tr class="row" *ngFor="let s of sale">
+          <td>{{s.id}}</td>
+          <td>{{s.nome}}</td>
+          <td>{{s.capienza}}</td>
         </tr>
       </table>
       </div>
     </ng-template>
-
 
       
     <ng-template #nochoice>
@@ -166,7 +200,32 @@ import { Fornitura } from '../model/fornitura';
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             /* display: block; */   /* Assicura che il popup sia sopra lo sfondo sfocato */
         }
-        
+      
+      .container-buttons{
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align:center;
+        width:100%;
+        height:40px;
+        margin:5px 0px 5px 0px;
+      }
+
+      .item-button{
+        border:2px solid rgba(0,0,0,0.3);
+        border-radius:8px;
+        margin:0px 5px 0px 5px;
+        height:40px;
+        width:40px;
+        display: flex; 
+        color: white;
+        text-align: center;
+        align-items: center;
+      }
+      .item-button:hover{
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
       .background-blur {
           position: fixed;
           top: 0;
@@ -239,10 +298,13 @@ table {
 
 export class RiservataComponent {
   type: number = -1;
+  messageError = "";
   prova =[0,1,2,3,4,5];
   sale: Sala[] = [];
   pellicole: Pellicola[] = [];
   forniture: Fornitura[] = [];
+  checkElimina : boolean = false;
+  creando:boolean = false;
   //-1:all  |  0:bho
   constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
 
@@ -271,12 +333,57 @@ export class RiservataComponent {
   
   
   //prova 3
+  checkArray: String[]=[]
   getForniture(){
     this.http.get<Fornitura[]>(Util.fornitureServerUrl).subscribe(result=>{
       this.forniture = result;
     })
   }
 
+  onCheckChange(event:any){
+    if(event.target.checked){
+      this.checkArray.push(event.target.value)
+    }
+    else{
+      console.log(event.target.value)
+      const index = this.checkArray.indexOf(event.target.value);
+      console.log(index)
+      if(index != -1){
+        this.checkArray.splice(index,1)
+      }
+    }
+    this.messageError="";
+    this.checkElimina=false;
+  }
+  creaFornitura(){
+    if(!this.creando){
+      this.forniture.push(new Fornitura())
+    }
+  
+    this.creando=true;
+  }
+
+  eliminaFornitura(){
+    if(this.checkArray.length==0){
+      this.messageError = "Errore! Seleziona prima le forniture da eliminare"
+      this.checkElimina = false;
+    }
+    else{
+      this.messageError = "Sei sicuro di volerle eliminare?"
+      this.checkElimina = true;
+    }
+  }
+  
+  annullaEliminazione(){
+    this.messageError = ""
+    this.checkElimina = false;
+
+  }
+  
+  confermaEliminazione(){
+    this.messageError = "Eliminati"
+    this.checkElimina = false;
+  }
   //prova 2
   getPellicole(){
     this.http.get<Pellicola[]>(Util.pellicoleServerUrl).subscribe(result=>{

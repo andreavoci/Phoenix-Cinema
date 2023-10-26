@@ -15,3 +15,14 @@ export interface Fornitura{
     stato:string;
     merci:Array<Merce>;
 }
+
+export class Fornitura{
+    public constructor();
+    public constructor(
+        fornitore?:Fornitore,
+        fattura?:Fattura,
+        tipo?:string,
+        stato?:string,
+        merci?:Array<Merce>
+    ) {}
+}
