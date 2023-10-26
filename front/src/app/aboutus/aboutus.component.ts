@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Util } from '../services/util';
 
 @Component({
   selector: 'app-about-us',
   template: `
-    <div id="aboutUsDiv" class="about-us-container">
+  <div id="aboutUsDiv" class="about-us-container">
       <div class="about-us-header">
         <h2>-About Us-</h2>
       </div>
@@ -36,6 +38,32 @@ import { Component } from '@angular/core';
             <strong>Giacomo</strong>
             <p> Con la sua dedizione e il suo impegno costante, Giacomo contribuisce in modo significativo a rendere questo cinema un luogo straordinario. La sua presenza rassicurante e la sua passione per l'arte cinematografica sono evidenti in tutto ciò che fa.</p>
           </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3 style="color: white;">Candidati per un Lavoro</h3>
+        <p style="color: white;">Siamo sempre alla ricerca di persone appassionate per unirsi al nostro team. Lavorare al Phoenix Cinema è un'opportunità unica per far parte del mondo del cinema. Candidati oggi e condividi la tua passione!</p>
+        <button (click)="openApplicationForm()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
+        <div *ngIf="showApplicationForm" class="application-form">
+          <form (submit)="submitApplication()">
+            <label for="jobSelect" style="color: white;">Seleziona un lavoro:</label>
+            <select id="jobSelect" name="jobTitle" [(ngModel)]="selectedJob">
+              <option value="Helpdesk">Helpdesk</option>
+              <option value="Operatore">Operatore</option>
+              <option value="Biglietteria">Biglietteria</option>
+              <option value="Proiezione">Proiezione</option>
+              <option value="Magazzino">Magazzino</option>
+              <option value="HR">HR</option>
+              <option value="Social Media Manager">Social Media Manager</option>
+            </select>
+            <label for="name" style="color: white;">Nome:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="applicantName">
+            <label for="email" style="color: white;">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="applicantEmail">
+            <label for="phone" style="color: white;">Numero di telefono:</label>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="applicantPhone">
+            <button type="submit" style="color: white;">Invia Candidatura</button>
+          </form>
         </div>
       </div>
       <div class="social-news-container" style="display: flex; justify-content: space-between;">
@@ -206,11 +234,23 @@ import { Component } from '@angular/core';
       color: white;
       cursor: pointer;
     }
+
+    .application-form {
+      margin-top: 20px;
+      text-align: center;
+    }
   `]
 })
 export class AboutUsComponent {
   subscriptionConfirmed: boolean = false;
   isEmailValid: boolean = true;
+  showApplicationForm: boolean = false;
+  selectedJob: string = "";
+  applicantName: string = "";
+  applicantEmail: string = "";
+  applicantPhone: string = "";
+
+  constructor(private http: HttpClient) { }
 
   subscribe(email: string) {
     if (this.validateEmail(email)) {
@@ -225,4 +265,25 @@ export class AboutUsComponent {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
+
+  openApplicationForm() {
+    this.showApplicationForm = true;
+  }
+
+  submitApplication() {
+    const applicationData = {
+      jobTitle: this.selectedJob,
+      name: this.applicantName,
+      email: this.applicantEmail,
+      phone: this.applicantPhone
+    };
+
+    this.http.post(Util.serverUrl+'/api/candidature/submit', applicationData)
+      .subscribe(response => {
+        console.log('Candidatura inviata con successo', response);
+      }, error => {
+        console.error("Errore nell'invio della candidatura", error);
+      });
+  }
 }
+
