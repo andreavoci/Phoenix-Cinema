@@ -22,11 +22,14 @@ public class CandidatureController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<?> submitCandidature(@Valid @RequestBody Candidature candidature, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body("Errore di validazione: " + result.getAllErrors());
-        }
-        Candidature savedCandidature = candidatureService.saveCandidature(candidature);
-        return ResponseEntity.ok("Candidatura salvata con successo");
+    public ResponseEntity<String> submitCandidature(@RequestBody CandidaturaBody body) {
+        return candidatureService.saveCandidature(body.jobTitle, body.name, body.email, body.phone);
+    }
+
+    static class CandidaturaBody{
+        public String jobTitle;
+        public String name;
+        public String email;
+        public String phone;
     }
 }

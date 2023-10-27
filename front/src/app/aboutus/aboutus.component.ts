@@ -45,7 +45,7 @@ import { Util } from '../services/util';
         <p style="color: white;">Siamo sempre alla ricerca di persone appassionate per unirsi al nostro team. Lavorare al Phoenix Cinema è un'opportunità unica per far parte del mondo del cinema. Candidati oggi e condividi la tua passione!</p>
         <button (click)="openApplicationForm()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
         <div *ngIf="showApplicationForm" class="application-form">
-          <form (submit)="submitApplication()">
+          <form #candidaturaForm="ngForm" (ngSubmit)="submitApplication(candidaturaForm.value)">
             <label for="jobSelect" style="color: white;">Seleziona un lavoro:</label>
             <select id="jobSelect" name="jobTitle" [(ngModel)]="selectedJob">
               <option value="Helpdesk">Helpdesk</option>
@@ -270,15 +270,15 @@ export class AboutUsComponent {
     this.showApplicationForm = true;
   }
 
-  submitApplication() {
-    const applicationData = {
-      jobTitle: this.selectedJob,
-      name: this.applicantName,
-      email: this.applicantEmail,
-      phone: this.applicantPhone
-    };
+  submitApplication(form: any) {
+    // const applicationData = {
+    //   jobTitle: this.selectedJob,
+    //   name: this.applicantName,
+    //   email: this.applicantEmail,
+    //   phone: this.applicantPhone
+    // };
 
-    this.http.post(Util.serverUrl+'/api/candidature/submit', applicationData)
+    this.http.post(Util.serverUrl+'/api/candidature/submit', form)
       .subscribe(response => {
         console.log('Candidatura inviata con successo', response);
       }, error => {
