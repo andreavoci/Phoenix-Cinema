@@ -2,11 +2,11 @@ package com.phoenix.phoenix.controller;
 
 import com.phoenix.phoenix.entity.Biglietto;
 import com.phoenix.phoenix.entity.Fornitura;
+import com.phoenix.phoenix.entity.Sala;
 import com.phoenix.phoenix.service.FornituraService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +22,16 @@ public class FornituraController {
     @GetMapping
     public List<Fornitura> getAll(){
         return service.getAll();
+    }
+
+    @PostMapping(path = "/create")
+    public ResponseEntity<String> create(@RequestBody Fornitura fornitura){
+        return service.create(fornitura);
+    }
+
+    @PostMapping(path = "/delete")
+    public ResponseEntity delete(@RequestBody List<Long> forniture){
+        return service.deleteFornitura(forniture);
     }
 
 }

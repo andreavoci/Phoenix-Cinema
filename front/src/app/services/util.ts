@@ -11,6 +11,7 @@ export namespace Util {
     export const ordiniServerUrl = 'http://localhost:8091/api/ordini';
     export const saleServerUrl = 'http://localhost:8091/api/sale';
     export const fornitureServerUrl = 'http://localhost:8091/api/forniture';
+    export const fornitoriServerUrl = 'http://localhost:8091/api/fornitori';
 
 }
 

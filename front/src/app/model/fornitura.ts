@@ -22,7 +22,6 @@ export class Fornitura{
         fornitore?:Fornitore,
         fattura?:Fattura,
         tipo?:string,
-        stato?:string,
         merci?:Array<Merce>
     ) {}
 }

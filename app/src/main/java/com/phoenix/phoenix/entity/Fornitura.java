@@ -5,8 +5,10 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class Fornitura {
     @ManyToOne
     private Fornitore fornitore;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Fattura fattura;
 
     private String tipo;
@@ -36,6 +38,6 @@ public class Fornitura {
 
     private String stato;
 
-    @OneToMany(mappedBy = "fornitura")
-    Collection<Merce> merci;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornitura")
+    private List<Merce> merci = new ArrayList<>();
 }

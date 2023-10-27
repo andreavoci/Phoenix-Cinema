@@ -30,4 +30,5 @@ public class Merce {
     @JoinColumn(name = "fornitura")
     @JsonIgnore
     private Fornitura fornitura;
+
 }
