@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { User } from "../model/user";
 import { Ordine } from '../model/ordine';
 import { AuthBody } from '../model/authbody';
+import { Dipendente } from '../model/dipendente';
 
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -96,6 +97,18 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 </div>
 <button class="logout-button" (click)="logout()">Logout</button>
   </ng-container>
+
+<ng-container *ngIf="user.ruolo == 'DIPENDENTE'">
+  <h3>NOME</h3>{{dipendente?.nome}}
+  <h3>COGNOME</h3>{{dipendente?.cognome}}
+  <h3>EMAIL</h3>{{dipendente?.userID?.email}}
+  <h3>CF</h3>{{dipendente?.cf}}
+  <h3>GENERE</h3>{{dipendente?.genere}}
+  <h3>DATA DI NASCITA</h3>{{dipendente?.data_nascita | date:'dd/MM/yyyy'}}
+  <h3>INDIRIZZO</h3>{{dipendente?.nome}}
+  <h3>TELEFONO</h3>{{dipendente?.telefono}}
+  <h3>MANSIONE</h3>{{dipendente?.mansione}}
+</ng-container>
   </div>
 
   `,
@@ -292,6 +305,7 @@ export class ProfileComponent implements OnInit {
   ordini: Ordine[] = [];
   posti: { numero: number, selezionato: boolean }[] = [];
   dateJSON: { [key: string]: Ordine[] } = {};
+  dipendente: Dipendente | null = null;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -306,6 +320,7 @@ export class ProfileComponent implements OnInit {
       console.log(result);
     });
     this.getOrdini();
+    this.getDipendente();
   }
 
   // toggleEdit(field: string) {
@@ -432,5 +447,12 @@ export class ProfileComponent implements OnInit {
     }
   }
     return posto;
+  }
+
+  getDipendente(){
+    this.http.get<Dipendente>(Util.dipendentiServerUrl+"/"+this.userId).subscribe(result=>{
+      this.dipendente=result;
+      console.log(result)
+    })
   }
 }

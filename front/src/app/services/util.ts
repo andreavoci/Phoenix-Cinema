@@ -12,7 +12,8 @@ export namespace Util {
     export const saleServerUrl = 'http://localhost:8091/api/sale';
     export const fornitureServerUrl = 'http://localhost:8091/api/forniture';
     export const fornitoriServerUrl = 'http://localhost:8091/api/fornitori';
-
+    export const candidatureServerUrl = 'http://localhost:8091/api/candidature';
+    export const dipendentiServerUrl = 'http://localhost:8091/api/dipendenti';
 }
 
 

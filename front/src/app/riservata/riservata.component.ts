@@ -11,6 +11,8 @@ import { Fornitore } from '../model/fornitore';
 import { Merce } from '../model/merce';
 import { NgForm } from '@angular/forms';
 import { Fattura } from '../model/fattura';
+import { Candidatura } from '../model/candidatura';
+import { Dipendente } from '../model/dipendente';
 
 @Component({
   selector: 'app-riservata',
@@ -26,6 +28,7 @@ import { Fattura } from '../model/fattura';
       <div *ngIf="type==2 ;then prova2"></div>
       <div *ngIf="type==3 ;then prova3"></div>
       <div *ngIf="type==4 ;then prova4"></div>
+      <div *ngIf="type==7 ;then prova7"></div>
       <div *ngIf="type==-1 ;then nochoice"></div>
     </div>
     <ng-template #prova0>
@@ -266,6 +269,105 @@ import { Fattura } from '../model/fattura';
       </div>
     </ng-template>
 
+    <ng-template #prova7>
+      VISUALIZZAZIONE CANDIDATURE
+      <div class="table-div">
+      <table>
+        <tr class="title">
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Mansione Richiesta</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+        <tr class="row" *ngFor="let c of candidature">
+          <td>{{c.id}}</td>
+          <td>{{c.name}}</td>
+          <td>{{c.jobTitle}}</td>
+          <td>{{c.email}}</td>
+          <td>{{c.phone}}</td>
+        </tr>
+      </table>
+      </div>
+
+      VISUALIZZAZIONE DIPENDENTI
+      <dialog #dialogo>
+      <div class="background-blur">
+          
+          <div class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+            <div class="navbar-popup">
+              <p class="title-popup">Inserisci Dipendente</p>
+              
+              <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogo.close();" >
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+              </button>
+            </div>
+            <!-- <p>Merci</p>
+            <input name="tipo">
+            <p>Fattura</p>
+            <input name="tipo"> -->
+          </div>
+      </div> 
+        <ng-template #dipendente>      
+          <form #dipendenti="ngForm" (ngSubmit)="creaDipendente()">
+            <br>
+            <p>Nome</p>
+            <input name="nome" ngModel (click)="errorPopup_animation('',false)">
+            <p>Tipo</p>
+            <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+            <p>Prezzo</p>
+            <input name="prezzo" ngModel (click)="errorPopup_animation('',false)">
+            <p>Quantità</p>
+            <input name="quantita" ngModel (click)="errorPopup_animation('',false)">
+            
+            <div class="footer-popup">
+              <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+              </button>
+            </div>         
+          </form>
+        </ng-template>
+      </dialog>
+
+      <div class="container-buttons">
+        <button class="item-button" style="background:green" (click)="dialogo.show();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
+        </button>
+        
+        <button class="item-button" style="background:red" (click)="eliminaFornitura();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
+        </button>
+        <p class="button-item">{{messageError}}</p>
+        <div *ngIf="checkElimina==true">
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazione()">Conferma</button>
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazione()">Annulla</button>
+        </div>
+      </div>
+
+      <div class="table-div">
+      <table>
+        <tr class="title">
+          <th></th>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+        <tr class="row" *ngFor="let d of dipendenti">
+          <td><input type="checkbox" [value]=d.id (change)="onCheckChange($event)" style="width:20px;height:20px"></td>
+          <td>{{d.id}}</td>
+          <td>{{d.nome}}</td>
+          <td>{{d.cognome}}</td>
+          <td>{{d.userID.email}}</td>
+          <td>{{d.telefono}}</td>
+          
+        </tr>
+      </table>
+      </div>
+    </ng-template>
+
       
     <ng-template #nochoice>
       <button type="button" class="button" routerLink="/riservata/0" (click)="res(0)">Prova 0</button>
@@ -457,10 +559,13 @@ export class RiservataComponent {
   pellicole: Pellicola[] = [];
   forniture: Fornitura[] = [];
   fornitori: Fornitore[] = [];
+  candidature: Candidatura[] = [];
+  dipendenti: Dipendente[] = [];
   checkElimina : boolean = false;
   errorPopup : HTMLElement|null=null;
   errorPopup_text = ""
   step_fornitura = 1
+  step_dipendenti = 1
   fornituraCreata : Fornitura | null  = null;
   merci: Merce[] = [];
   fornituraResponse="risultato";
@@ -479,6 +584,7 @@ export class RiservataComponent {
         this.getPellicole()
         this.getSale()
       }
+
       if(this.type==2){
         this.getPellicole()
       }
@@ -491,6 +597,11 @@ export class RiservataComponent {
       
       if(this.type==4){
         this.getSale()
+      }
+
+      if(this.type==7){
+        this.getCandidature()
+        this.getDipendenti()
       }
     }
     console.log(this.type)  
@@ -708,6 +819,24 @@ export class RiservataComponent {
 
   res(o:number){
       
+  }
+
+  getCandidature(){
+    this.http.get<Candidatura[]>(Util.candidatureServerUrl).subscribe(result=>{
+      this.candidature=result;
+      console.log(result)
+    })
+  }
+
+  creaDipendente() {
+
+  }
+
+  getDipendenti(){
+    this.http.get<Dipendente[]>(Util.dipendentiServerUrl).subscribe(result=>{
+      this.dipendenti=result;
+      console.log(result)
+    })
   }
   
 }

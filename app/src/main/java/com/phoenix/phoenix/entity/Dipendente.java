@@ -35,4 +35,15 @@ public class Dipendente {
 
     @Enumerated(EnumType.STRING)
     private Mansione mansione;
+
+    public Dipendente(User user, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono){
+        this.userID = user;
+        this.nome=nome;
+        this.cognome=cognome;
+        this.cf=cf;
+        this.genere=genere;
+        this.data_nascita=data_nascita;
+        this.indirizzo=indirizzo;
+        this.telefono=telefono;
+    }
 }

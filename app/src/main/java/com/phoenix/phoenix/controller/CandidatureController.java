@@ -6,10 +6,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/candidature")
@@ -25,6 +24,9 @@ public class CandidatureController {
     public ResponseEntity<String> submitCandidature(@RequestBody CandidaturaBody body) {
         return candidatureService.saveCandidature(body.jobTitle, body.name, body.email, body.phone);
     }
+
+    @GetMapping
+    public List<Candidature> getAll(){return candidatureService.getAll();}
 
     static class CandidaturaBody{
         public String jobTitle;
