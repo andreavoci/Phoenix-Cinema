@@ -308,14 +308,8 @@ import { Dipendente } from '../model/dipendente';
                 <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
               </button>
             </div>
-            <!-- <p>Merci</p>
-            <input name="tipo">
-            <p>Fattura</p>
-            <input name="tipo"> -->
-          </div>
-      </div> 
-        <ng-template #dipendente>      
-          <form #dipendenti="ngForm" (ngSubmit)="creaDipendente()">
+            <div>      
+          <form #dipendentiForm="ngForm" (ngSubmit)="creaDipendente()">
             <br>
             <p>Nome</p>
             <input name="nome" ngModel (click)="errorPopup_animation('',false)">
@@ -332,8 +326,10 @@ import { Dipendente } from '../model/dipendente';
               </button>
             </div>         
           </form>
-        </ng-template>
-      </dialog>
+        </div>
+      </div>
+    </div> 
+  </dialog>
 
       <div class="container-buttons">
         <button class="item-button" style="background:green" (click)="dialogo.show();">
@@ -570,7 +566,6 @@ export class RiservataComponent {
   errorPopup : HTMLElement|null=null;
   errorPopup_text = ""
   step_fornitura = 1
-  step_dipendenti = 1
   fornituraCreata : Fornitura | null  = null;
   merci: Merce[] = [];
   fornituraResponse="risultato";

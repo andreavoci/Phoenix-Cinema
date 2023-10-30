@@ -32,4 +32,11 @@ public class CandidatureService {
     public List<Candidature> getAll() {
         return candidatureRepository.findAll();
     }
+
+    public ResponseEntity<String> delete(List<Long> candidature) {
+        candidature.forEach(c -> {
+            candidatureRepository.deleteById(c);
+        });
+        return ResponseEntity.ok("Candidature eliminate!");
+    }
 }

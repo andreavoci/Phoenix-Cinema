@@ -25,6 +25,11 @@ public class CandidatureController {
         return candidatureService.saveCandidature(body.jobTitle, body.name, body.email, body.phone);
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteCandidature(@RequestBody List<Long> candidature) {
+        return candidatureService.delete(candidature);
+    }
+
     @GetMapping
     public List<Candidature> getAll(){return candidatureService.getAll();}
 

@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.service;
 
 import com.phoenix.phoenix.entity.Dipendente;
+import com.phoenix.phoenix.entity.Mansione;
 import com.phoenix.phoenix.entity.RuoloUtente;
 import com.phoenix.phoenix.entity.User;
 import com.phoenix.phoenix.repository.DipendenteRepository;
@@ -34,18 +35,26 @@ public class DipendenteService {
         return repository.findById(id).get();
     }
 
-    public ResponseEntity create(User user, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono){
-        Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
+    public ResponseEntity create(String email, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono, Mansione mansione){
+        Optional<User> userByEmail = userRepository.findUserByEmail(email);
         if(userByEmail.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found");
         }else{
-            user.setRuolo(RuoloUtente.DIPENDENTE);
-            Dipendente d = new Dipendente(user, nome, cognome, cf, genere, data_nascita, indirizzo, telefono);
+            userByEmail.get().setRuolo(RuoloUtente.DIPENDENTE);
+            Dipendente d = new Dipendente(userByEmail.get(), nome, cognome, cf, genere, data_nascita, indirizzo, telefono);
+            d.setMansione(mansione);
             return ResponseEntity.ok(repository.save(d));
         }
     }
 
     public Optional<Dipendente> getDipendenteByUser(User user) {
         return repository.findDipendentiByUser(user);
+    }
+
+    public ResponseEntity delete(List<Long> dipendenti) {
+        dipendenti.forEach(d -> {
+            repository.deleteById(d);
+        });
+        return ResponseEntity.ok("Dipendenti eliminati!");
     }
 }

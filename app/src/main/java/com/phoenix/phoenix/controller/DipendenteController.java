@@ -1,9 +1,12 @@
 package com.phoenix.phoenix.controller;
 
 import com.phoenix.phoenix.entity.Dipendente;
+import com.phoenix.phoenix.entity.Mansione;
 import com.phoenix.phoenix.entity.User;
 import com.phoenix.phoenix.service.DipendenteService;
 import com.phoenix.phoenix.service.UserService;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +36,24 @@ public class DipendenteController {
 
     @PostMapping(path = "/create")
     public ResponseEntity createDipendente(@RequestBody DipendenteBody body){
-        return service.create(body.user, body.nome, body.cognome, body.cf, body.genere, body.data_nascita, body.indirizzo, body.telefono);
+        return service.create(body.email, body.nome, body.cognome, body.cf, body.genere, body.data_nascita, body.indirizzo, body.telefono, body.mansione);
+    }
+
+    @PostMapping(path = "/delete")
+    public ResponseEntity deleteDipendente(@RequestBody List<Long> dipendenti) {
+        return service.delete(dipendenti);
     }
 }
 
 class DipendenteBody{
-    public User user;
+    public String email;
     public String nome;
     public String cognome;
     public String cf;
-    String genere;
+    public String genere;
     public Date data_nascita;
     public String indirizzo;
     public String telefono;
+    @Enumerated(EnumType.STRING)
+    public Mansione mansione;
 }
