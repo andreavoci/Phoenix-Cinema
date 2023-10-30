@@ -15,6 +15,7 @@ import { AcquistoComponent } from './acquisto/acquisto.component';
 import { AuthGuard } from './services/auth.guard';
 import { RegistrazioneComponent } from './registrazione/registrazione.component';
 import { ResFornitoreComponent } from './riservata/fornitore.component';
+import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,10 @@ const routes: Routes = [
   {
     path: 'riservato/fornitore',
     component: ResFornitoreComponent
+  },
+  {
+    path: 'riservato/biglietteria',
+    component: ResBiglietteriaComponent
   }
 ];
 

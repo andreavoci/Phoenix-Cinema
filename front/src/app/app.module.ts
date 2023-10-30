@@ -23,6 +23,7 @@ import { SharedService } from './services/shared.service';
 import { AuthGuard } from './services/auth.guard';
 import { RegistrazioneComponent } from './registrazione/registrazione.component';
 import { ResFornitoreComponent } from './riservata/fornitore.component';
+import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ResFornitoreComponent } from './riservata/fornitore.component';
     RiservataComponent,
     AcquistoComponent,
     RegistrazioneComponent,
-    ResFornitoreComponent
+    ResFornitoreComponent,
+    ResBiglietteriaComponent
   ],
   imports: [
     BrowserModule,
