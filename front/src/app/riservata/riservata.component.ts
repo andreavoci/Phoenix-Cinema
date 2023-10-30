@@ -100,7 +100,7 @@ import { Dipendente } from '../model/dipendente';
     
     <ng-template #prova3>
       VISUALIZZAZIONE FORNITURE
-      <dialog #dialogo>
+      <dialog #dialogo id="dialogo">
         <div class="background-blur">
           
           <div class="component-popup" style="width:auto;">
@@ -214,6 +214,11 @@ import { Dipendente } from '../model/dipendente';
         <button class="item-button" style="background:red" (click)="eliminaFornitura();">
           <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
         </button>
+
+        <button class="item-button" style="background:blue" (click)="modificaFornitura();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+        </button>
+
         <p class="button-item">{{messageError}}</p>
         <div *ngIf="checkElimina==true">
           <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazione()">Conferma</button>
@@ -569,6 +574,7 @@ export class RiservataComponent {
   fornituraCreata : Fornitura | null  = null;
   merci: Merce[] = [];
   fornituraResponse="risultato";
+  editing: boolean = false
   //-1:all  |  0:bho
   constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
   ngAfterViewInit() {
@@ -754,6 +760,26 @@ export class RiservataComponent {
     }
   }
   
+  modificaFornitura(){
+    if(this.fornitureSel.length==0){
+      this.editing=false
+      this.messageError = "Errore! Seleziona prima le forniture da modificare"
+    }
+    else if(this.fornitureSel.length>1) {
+      this.editing=false
+      this.messageError = "Errore! Seleziona una sola fornitura da modificare"
+    }
+    else{
+      this.editing=true
+
+      
+      let myDialog:any = <any>document.getElementById("dialogo");
+      myDialog.showModal();
+
+
+    }
+  }
+
   annullaEliminazione(){
     this.messageError = ""
     this.checkElimina = false;

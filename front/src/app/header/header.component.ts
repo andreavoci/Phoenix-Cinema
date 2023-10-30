@@ -28,7 +28,6 @@ import { User } from '../model/user';
       <a class="navbar-menu-icons" routerLink="/profilo" routerLinkActive="active">
         <span class="material-icons" style="font-size:30px;">account_circle</span>
       </a>
-      <a *ngIf="user?.ruolo=='DIPENDENTE'" class="navbar-menu-icons" routerLink="/riservata" routerLinkActive="active">AreaPersonale</a>
     </ng-template>  
     <ng-template #guest>
       <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
