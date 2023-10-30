@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { Candidatura } from "../model/candidatura";
 import { Dipendente } from "../model/dipendente";
 import { HttpClient, HttpResponse } from "@angular/common/http";
@@ -45,7 +45,7 @@ import { Mansione } from "../model/mansione";
     </div>
 
     VISUALIZZAZIONE DIPENDENTI
-    <dialog #dialogo>
+    <dialog #dialogoAdd>
     <div class="background-blur">
         
         <div class="component-popup" style="width:auto;">
@@ -53,7 +53,7 @@ import { Mansione } from "../model/mansione";
           <div class="navbar-popup">
             <p class="title-popup">Inserisci Dipendente</p>
             
-            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogo.close();" >
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAdd.close();" >
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
             </button>
           </div>
@@ -91,8 +91,54 @@ import { Mansione } from "../model/mansione";
   </div> 
 </dialog>
 
+<dialog #dialogoModifica>
+<div class="background-blur">
+        
+        <div class="component-popup" style="width:auto;">
+        <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Modifica Dipendente</p>
+            
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModifica.close();" >
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+          </div>
+          <div>      
+        <form #dipendentiForm="ngForm" (ngSubmit)="modificaDipendente()">
+          <br>
+          <p>Nome</p>
+          <input name="nome" ngModel [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <p>Cognome</p>
+          <input name="cognome" ngModel (click)="errorPopup_animation('',false)">
+          <p>Email</p>
+          <input name="email" ngModel (click)="errorPopup_animation('',false)">
+          <p>CF</p>
+          <input name="cf" ngModel (click)="errorPopup_animation('',false)">
+          <p>Genere</p>
+          <input name="genere" ngModel (click)="errorPopup_animation('',false)">
+          <p>Data di Nascita</p>
+          <input type="date" name="data" ngModel (click)="errorPopup_animation('',false)">
+          <p>Indirizzo</p>
+          <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
+          <p>Telefono</p>
+          <input name="telefono" ngModel (click)="errorPopup_animation('',false)">
+          <p>Mansione</p>
+          <select name="mansione" ngModel (click)="errorPopup_animation('',false)">
+            <option *ngFor="let mansione of mansioni" [ngValue]="mansione">{{mansione}}</option>
+          </select>
+          <div class="footer-popup">
+            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+            </button>
+          </div>         
+        </form>
+      </div>
+    </div>
+  </div> 
+</dialog>
+
     <div class="container-buttons">
-      <button class="item-button" style="background:green" (click)="dialogo.show();">
+      <button class="item-button" style="background:green" (click)="dialogoModifica.show();">
         <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
       </button>
       
@@ -305,6 +351,7 @@ import { Mansione } from "../model/mansione";
 })
 
 export class ResHrComponent{
+    @ViewChild("dialogoModifica") dialogoModifica: ElementRef | undefined;
     candidature: Candidatura[] = [];
     dipendenti: Dipendente[] = [];
     checkEliminaCand : boolean = false;
@@ -457,8 +504,14 @@ export class ResHrComponent{
         }
         else{
           this.editing=true
-          let myDialog:any = <any>document.getElementById("dialogo");
-          myDialog.showModal();
+          if (this.dialogoModifica) {
+            const dipendenteSelezionato = this.dipendenti.find((d) => d.id == this.dipendentiSel[0]);
+            console.log(dipendenteSelezionato);
+            if(dipendenteSelezionato){
+                this.dialogoModifica.nativeElement.querySelector("[name=nome]").value = dipendenteSelezionato.nome;
+                this.dialogoModifica.nativeElement.showModal();
+            }
+          }
         }
       }
     
