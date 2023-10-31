@@ -68,7 +68,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             </span>
           </div>
           <div style="height: 40%;flex-direction:row; padding:0px 5%;">
-            <button class="btn-operazione" >FORNITURA</button>
+            <button class="btn-operazione" [routerLink]="['../riservata/fornitura']">FORNITURA</button>
             <button class="btn-operazione" >...</button>
             <button class="btn-operazione" >...</button>
             <button class="btn-operazione" >...</button>

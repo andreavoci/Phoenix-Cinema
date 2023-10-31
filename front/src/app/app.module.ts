@@ -25,6 +25,7 @@ import { RegistrazioneComponent } from './registrazione/registrazione.component'
 import { ResFornitoreComponent } from './riservata/fornitore.component';
 import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
+import { ResFornituraComponent } from './riservata/fornitura.compontent';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ResHrComponent } from './riservata/hr.component';
     RegistrazioneComponent,
     ResFornitoreComponent,
     ResBiglietteriaComponent,
-    ResHrComponent
+    ResHrComponent,
+    ResFornituraComponent
   ],
   imports: [
     BrowserModule,
