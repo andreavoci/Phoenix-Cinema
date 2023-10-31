@@ -26,8 +26,6 @@ public class Fornitura {
     @OneToOne(cascade = CascadeType.ALL)
     private Fattura fattura;
 
-    private String tipo;
-
     private Date arrivo;
 
     private Date scadenza;
