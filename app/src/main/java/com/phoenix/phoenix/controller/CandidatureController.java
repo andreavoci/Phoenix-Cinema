@@ -1,7 +1,10 @@
 package com.phoenix.phoenix.controller;
 
 import com.phoenix.phoenix.entity.Candidature;
+import com.phoenix.phoenix.entity.Mansione;
 import com.phoenix.phoenix.service.CandidatureService;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,7 @@ public class CandidatureController {
 
     @PostMapping("/submit")
     public ResponseEntity<String> submitCandidature(@RequestBody CandidaturaBody body) {
-        return candidatureService.saveCandidature(body.jobTitle, body.name, body.email, body.phone);
+        return candidatureService.saveCandidature(body.jobTitle, body.name, body.surname, body.email, body.phone);
     }
 
     @PostMapping("/delete")
@@ -34,7 +37,9 @@ public class CandidatureController {
     public List<Candidature> getAll(){return candidatureService.getAll();}
 
     static class CandidaturaBody{
-        public String jobTitle;
+        @Enumerated(EnumType.STRING)
+        public Mansione jobTitle;
+        public String surname;
         public String name;
         public String email;
         public String phone;

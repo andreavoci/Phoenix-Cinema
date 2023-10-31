@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Util } from '../services/util';
+import { Mansione } from '../model/mansione';
 
 @Component({
   selector: 'app-about-us',
@@ -40,32 +41,36 @@ import { Util } from '../services/util';
           </div>
         </div>
       </div>
-      <div class="section">
-        <h3 style="color: white;">Candidati per un Lavoro</h3>
+      <br><br><br>
+        <div style="text-align: center;">
+        <h3 style="color: white; text-align: center;">Candidati per un Lavoro</h3>
+        </div>
+        <br><br>
         <p style="color: white;">Siamo sempre alla ricerca di persone appassionate per unirsi al nostro team. Lavorare al Phoenix Cinema è un'opportunità unica per far parte del mondo del cinema. Candidati oggi e condividi la tua passione!</p>
+        <br><br><br>
+        <div style="text-align: center;">
         <button (click)="openApplicationForm()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
+        </div>
+        <div class="section">
         <div *ngIf="showApplicationForm" class="application-form">
           <form #candidaturaForm="ngForm" (ngSubmit)="submitApplication(candidaturaForm.value)">
-            <label for="jobSelect" style="color: white;">Seleziona un lavoro:</label>
+            <label for="jobSelect" style="color: white;">Seleziona un lavoro: </label>
             <select id="jobSelect" name="jobTitle" [(ngModel)]="selectedJob">
-              <option value="Helpdesk">Helpdesk</option>
-              <option value="Operatore">Operatore</option>
-              <option value="Biglietteria">Biglietteria</option>
-              <option value="Proiezione">Proiezione</option>
-              <option value="Magazzino">Magazzino</option>
-              <option value="HR">HR</option>
-              <option value="Social Media Manager">Social Media Manager</option>
-            </select>
-            <label for="name" style="color: white;">Nome:</label>
-            <input type="text" id="name" name="name" [(ngModel)]="applicantName">
-            <label for="email" style="color: white;">Email:</label>
-            <input type="email" id="email" name="email" [(ngModel)]="applicantEmail">
-            <label for="phone" style="color: white;">Numero di telefono:</label>
-            <input type="tel" id="phone" name="phone" [(ngModel)]="applicantPhone">
+              <option *ngFor="let mansione of mansioni" [ngValue]="mansione">{{mansione}}</option>
+            </select><br><br>
+            <label for="name" style="color: white;">Nome:</label><br><br>
+            <input type="text" id="name" name="name" [(ngModel)]="applicantName"><br><br>
+            <label for="surname" style="color: white;">Cognome:</label><br><br>
+            <input type="text" id="surname" name="surname" [(ngModel)]="applicantSurname"><br><br>
+            <label for="email" style="color: white;">Email:</label><br><br>
+            <input type="email" id="email" name="email" [(ngModel)]="applicantEmail"><br><br>
+            <label for="phone" style="color: white;">Numero di telefono:</label><br><br>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="applicantPhone"><br><br>
             <button type="submit" style="color: white;">Invia Candidatura</button>
           </form>
         </div>
       </div>
+      <br><br><br>
       <div class="social-news-container" style="display: flex; justify-content: space-between;">
         <div class="newsletter-box column" style="flex: 1; text-align: center; background-color: white;">
           <h4 style="text-align: center;">Iscriviti alla Newsletter</h4>
@@ -110,6 +115,8 @@ import { Util } from '../services/util';
   styles: [`
     .about-us-container {
       display: flex;
+      background: rgb(250,108,20);
+      background: radial-gradient(circle, rgba(250,108,20,1) 0%, rgba(90,30,4,1) 100%);
       flex-direction: column;
       align-items: center;
       text-align: center;
@@ -247,10 +254,16 @@ export class AboutUsComponent {
   showApplicationForm: boolean = false;
   selectedJob: string = "";
   applicantName: string = "";
+  applicantSurname: string = "";
   applicantEmail: string = "";
   applicantPhone: string = "";
+  mansioni: string[] = this.enumValues(Mansione);
 
   constructor(private http: HttpClient) { }
+
+  enumValues(enumType: any): string[]{
+    return Object.keys(enumType).map(key => enumType[key]);
+}
 
   subscribe(email: string) {
     if (this.validateEmail(email)) {
@@ -278,7 +291,7 @@ export class AboutUsComponent {
     //   phone: this.applicantPhone
     // };
 
-    this.http.post(Util.serverUrl+'/api/candidature/submit', form)
+    this.http.post(Util.candidatureServerUrl+"/submit", form)
       .subscribe(response => {
         console.log('Candidatura inviata con successo', response);
       }, error => {

@@ -15,17 +15,23 @@ public class Candidature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "Il campo jobTitle è obbligatorio")
-    private String jobTitle;
+    @Enumerated(EnumType.STRING)
+    private Mansione jobTitle;
+
     @NotBlank(message = "Il campo name è obbligatorio")
     private String name;
+
+    @NotBlank(message = "Il campo name è obbligatorio")
+    private String surname;
+
     @Email(message = "L'indirizzo email deve essere valido")
     private String email;
+
     @NotBlank (message = "Il campo phone è obbligatorio")
     private String phone;
 
-    public Candidature(String jobTitle, String name, String email, String phone) {
-        this.jobTitle=jobTitle;
+    public Candidature(String name, String surname, String email, String phone) {
+        this.surname=surname;
         this.name=name;
         this.email=email;
         this.phone=phone;

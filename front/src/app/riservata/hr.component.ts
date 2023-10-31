@@ -29,6 +29,7 @@ import { Mansione } from "../model/mansione";
         <th></th>
         <th>ID</th>
         <th>Nome</th>
+        <th>Cognome</th>
         <th>Mansione Richiesta</th>
         <th>Email</th>
         <th>Phone</th>
@@ -37,6 +38,7 @@ import { Mansione } from "../model/mansione";
         <td><input type="checkbox" [value]=c.id (change)="onCheckChangeCand($event)" style="width:20px;height:20px"></td>
         <td>{{c.id}}</td>
         <td>{{c.name}}</td>
+        <td>{{c.surname}}</td>
         <td>{{c.jobTitle}}</td>
         <td>{{c.email}}</td>
         <td>{{c.phone}}</td>

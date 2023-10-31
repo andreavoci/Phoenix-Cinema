@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.service;
 
 import com.phoenix.phoenix.entity.Candidature;
+import com.phoenix.phoenix.entity.Mansione;
 import com.phoenix.phoenix.repository.CandidatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,11 @@ public class CandidatureService {
         this.candidatureRepository = candidatureRepository;
     }
 
-    public ResponseEntity<String> saveCandidature(String jobTitle, String name, String email, String phone) {
+    public ResponseEntity<String> saveCandidature(Mansione jobTitle, String surname, String name, String email, String phone) {
         Optional<Candidature> candidatura = candidatureRepository.findCandidatureByEmail(email);
         if(!candidatura.isPresent()){
-            Candidature c = new Candidature(jobTitle,name,email,phone);
+            Candidature c = new Candidature(surname,name,email,phone);
+            c.setJobTitle(jobTitle);
             candidatureRepository.save(c);
             return new ResponseEntity<String>("Candidatura salvata!", HttpStatus.OK);
         }
