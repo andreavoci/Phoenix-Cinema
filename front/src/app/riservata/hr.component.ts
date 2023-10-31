@@ -104,26 +104,26 @@ import { Mansione } from "../model/mansione";
             </button>
           </div>
           <div>      
-        <form #dipendentiForm="ngForm" (ngSubmit)="modificaDipendente()">
+        <form #dipendentiFormModifica="ngForm" (ngSubmit)="update(dipendentiFormModifica.value)">
           <br>
           <p>Nome</p>
-          <input name="nome" ngModel [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <input name="nome" ngModel [(ngModel)]="dipendenteSelezionato.nome" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Cognome</p>
-          <input name="cognome" ngModel (click)="errorPopup_animation('',false)">
+          <input name="cognome" ngModel [(ngModel)]="dipendenteSelezionato.cognome" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Email</p>
-          <input name="email" ngModel (click)="errorPopup_animation('',false)">
+          <input name="email" ngModel [(ngModel)]="emailValue" (click)="errorPopup_animation('',false)">
           <p>CF</p>
-          <input name="cf" ngModel (click)="errorPopup_animation('',false)">
+          <input name="cf" ngModel [(ngModel)]="dipendenteSelezionato.cf" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Genere</p>
-          <input name="genere" ngModel (click)="errorPopup_animation('',false)">
+          <input name="genere" ngModel [(ngModel)]="dipendenteSelezionato.genere" (click)="errorPopup_animation('',false)">
           <p>Data di Nascita</p>
-          <input type="date" name="data" ngModel (click)="errorPopup_animation('',false)">
+          <input type="date" name="data" [(ngModel)]="dipendenteSelezionato.data_nascita" ngModel (click)="errorPopup_animation('',false)">
           <p>Indirizzo</p>
-          <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
+          <input name="indirizzo" ngModel [(ngModel)]="dipendenteSelezionato.indirizzo" (click)="errorPopup_animation('',false)">
           <p>Telefono</p>
-          <input name="telefono" ngModel (click)="errorPopup_animation('',false)">
+          <input name="telefono" ngModel [(ngModel)]="dipendenteSelezionato.telefono" (click)="errorPopup_animation('',false)">
           <p>Mansione</p>
-          <select name="mansione" ngModel (click)="errorPopup_animation('',false)">
+          <select name="mansione" ngModel [(ngModel)]="dipendenteSelezionato.mansione" (click)="errorPopup_animation('',false)">
             <option *ngFor="let mansione of mansioni" [ngValue]="mansione">{{mansione}}</option>
           </select>
           <div class="footer-popup">
@@ -138,7 +138,7 @@ import { Mansione } from "../model/mansione";
 </dialog>
 
     <div class="container-buttons">
-      <button class="item-button" style="background:green" (click)="dialogoModifica.show();">
+      <button class="item-button" style="background:green" (click)="dialogoAdd.show();">
         <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
       </button>
       
@@ -180,7 +180,7 @@ import { Mansione } from "../model/mansione";
         <td>{{d.userID.email}}</td>
         <td>{{d.cf}}</td>
         <td>{{d.genere}}</td>
-        <td>{{d.data_nascita}}</td>
+        <td>{{d.data_nascita | date: "dd/MM/yyyy"}}</td>
         <td>{{d.indirizzo}}</td>
         <td>{{d.telefono}}</td>
         <td>{{d.mansione}}</td>
@@ -364,6 +364,8 @@ export class ResHrComponent{
     dipendentiSel: number[]=[]
     candidatiSel: number[]=[]
     mansioneSel: Mansione | null = null;
+    emailValue:string = "";
+    dipendenteSelezionato: any = {};
     mansioni: string[] = this.enumValues(Mansione)
 
     constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){
@@ -504,15 +506,24 @@ export class ResHrComponent{
         }
         else{
           this.editing=true
-          if (this.dialogoModifica) {
-            const dipendenteSelezionato = this.dipendenti.find((d) => d.id == this.dipendentiSel[0]);
-            console.log(dipendenteSelezionato);
-            if(dipendenteSelezionato){
-                this.dialogoModifica.nativeElement.querySelector("[name=nome]").value = dipendenteSelezionato.nome;
-                this.dialogoModifica.nativeElement.showModal();
-            }
+          // if (this.dialogoModifica) {
+          this.dipendenteSelezionato = this.dipendenti.find((d) => d.id == this.dipendentiSel[0]);
+          this.emailValue = this.dipendenteSelezionato.userID.email;
+          console.log(this.dipendenteSelezionato);
+          //   if(dipendenteSelezionato){
+          //       this.dialogoModifica.nativeElement.querySelector("[name=nome]").value = dipendenteSelezionato.nome;
+          //       this.dialogoModifica.nativeElement.showModal();
+          //   }
+          if(this.dialogoModifica){
+            this.dialogoModifica.nativeElement.showModal();
           }
         }
+      }
+
+      update(form:any){
+        this.http.post<Dipendente>(Util.dipendentiServerUrl+"/update",form).subscribe(result=>{
+          window.location.reload();
+        })
       }
     
       getDipendenti(){

@@ -47,6 +47,35 @@ public class DipendenteService {
         }
     }
 
+    public ResponseEntity update(String email, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono, Mansione mansione){
+        Optional<User> userByEmail = userRepository.findUserByEmail(email);
+        if(userByEmail.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found");
+        }else{
+            userByEmail.get().setEmail(email);
+            Optional<Dipendente> d = getDipendenteByUser(userByEmail.get());
+            System.out.println(d);
+            if(!mansione.equals(""))
+                d.get().setMansione(mansione);
+            if(!nome.equals(""))
+                d.get().setNome(nome);
+            if(!cognome.equals(""))
+                d.get().setCognome(cognome);
+            if(!cf.equals(""))
+                d.get().setCf(cf);
+            if(!genere.equals(""))
+                d.get().setGenere(genere);
+            if(!data_nascita.equals(""))
+                d.get().setData_nascita(data_nascita);
+            if(!indirizzo.equals(""))
+                d.get().setIndirizzo(indirizzo);
+            if(!telefono.equals(""))
+                d.get().setTelefono(telefono);
+            System.out.println(d);
+            return ResponseEntity.ok(repository.save(d.get()));
+        }
+    }
+
     public Optional<Dipendente> getDipendenteByUser(User user) {
         return repository.findDipendentiByUser(user);
     }
