@@ -12,7 +12,7 @@ import { Mansione } from "../model/mansione";
     template:`
     <div class="container">
         <br><br><br>
-    VISUALIZZAZIONE CANDIDATURE
+    <p class="titolo">VISUALIZZAZIONE CANDIDATURE</p>
     <div class="container-buttons">  
       <button class="item-button" style="background:red" (click)="eliminaCandidato();">
         <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
@@ -46,7 +46,7 @@ import { Mansione } from "../model/mansione";
     </table>
     </div>
 
-    VISUALIZZAZIONE DIPENDENTI
+    <p class="titolo">VISUALIZZAZIONE DIPENDENTI</p>
     <dialog #dialogoAdd>
     <div class="background-blur">
         
@@ -191,164 +191,8 @@ import { Mansione } from "../model/mansione";
     </table>
     </div>
   </div>`,
+  styleUrls: ["./riservata.css"],
     styles: [`
-    #error-popup{
-        display:flex; 
-        flex-direction:column;
-        position:fixed;
-        border-radius:10px 10px 0px 0px;
-        top: 0px;
-        left: 0;
-        width:100%;
-        height:40px;
-        font-size:11px;
-        
-        color:white;
-        background:red;
-        padding:2px;
-  
-        text-align:center;
-        /* justify-content:center; */
-        /* width:100%; */       
-        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-        
-        transition: top 0.5s ease;
-      }
-      .component-popup{
-        position: fixed;
-        border-radius:10px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 50px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        /* display: block; */   /* Assicura che il popup sia sopra lo sfondo sfocato */
-      }
-      .navbar-popup{
-        position:fixed;
-        border-radius:10px 10px 0px 0px;
-        background:black;
-        top: 0;
-        left: 0;
-        width:100%;
-        height:40px;
-        display:flex;
-        justify-content:flex-end;
-      }
-      .footer-popup{
-        position:fixed;
-        border-radius:0px 0px 10px 10px;
-        background:white;
-        bottom: 0;
-        left: 0;
-        width:100%;
-        display:flex;
-        justify-content:flex-end;
-  
-      }
-      .title-popup{
-        display:flex;
-        flex-direction:column;
-        color:white;
-        width:100%;
-        height:40px;
-        justify-content:center;
-        text-align:center;
-      }
-  
-        .container-buttons{
-          display:flex;
-          justify-content: flex-start;
-          align-items: center;
-          text-align:center;
-          width:100%;
-          height:40px;
-          margin:5px 0px 5px 0px;
-        }
-  
-        .item-button{
-          border:2px solid rgba(0,0,0,0.3);
-          border-radius:8px;
-          margin:0px 5px 0px 5px;
-          height:40px;
-          width:40px;
-          display: flex; 
-          color: white;
-          cursor:pointer;
-          text-align: center;
-          align-items: center;
-        }
-        .item-button:hover{
-          box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
-        }
-  
-        .background-blur {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%; /* Sostituisci 'sfondo.jpg' con il percorso dell'immagine di sfondo */
-            background-size: cover;
-            backdrop-filter: blur(5px);
-            z-index:1;/* Applica l'effetto di sfondo sfocato */
-          /* Assicura che lo sfondo sia dietro il popup */
-        }
-  
-      .container {
-        width: 100vw;
-        background: gray;
-        height: 100%;
-        min-height: calc(100vh - 80px);
-        display: flex;
-        overflow: auto;
-        align-items: center;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-  
-      
-  .table-div {
-    width: 100%;
-    height: 100%;
-  }
-  table {
-    /* table-layout:fixed; */
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .title {
-    background-color: #fa680c;
-    text-align: left;
-  }
-  
-  .title td, .title th {
-    border:3px solid black;
-    text-align: left;
-    padding: 8px;
-    white-space: nowrap; /* Evita la riduzione di spazi */
-    text-overflow: ellipsis; /* Tronca il testo e mostra "..." se è troppo lungo */
-    height: 20px;
-  }
-  .row td,.row th {
-    text-align: center;
-    
-    border-left:4px solid black;
-    border-right:4px solid black;
-    border-bottom:2px solid black;
-    padding: 8px;
-    white-space: nowrap; /* Evita la riduzione di spazi */
-        text-overflow: ellipsis; /* Tronca il testo e mostra "..." se è troppo lungo */
-        height: 20px;
-  }
-  
-  .row:nth-child(even) {
-    background-color: #fa8e4b;
-  }
-  .row:nth-child(odd) {
-    background-color: #faad7d;
-  }
   `]
 })
 

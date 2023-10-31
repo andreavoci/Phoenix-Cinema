@@ -18,7 +18,7 @@ import { Candidatura } from "../model/candidatura";
     template:`
     <div class="container">
     
-        <p style="color:white;font-size:25px;padding:10px">FORNITURE</p>
+        <p class="titolo">FORNITURE</p>
         <dialog #dialogo id="dialogo">
             <div class="background-blur">
                 

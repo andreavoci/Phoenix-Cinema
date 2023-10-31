@@ -13,7 +13,7 @@ import { Util } from "../services/util";
     <a style="color: azure; display: flex; height: 40px;">Oggi al cinema</a>
         <div class="container-film">
             <div *ngFor="let p of programm">
-            <a [routerLink]="[p.id]">
+            <a [routerLink]="['/pellicola', p.id]">
                 <img src="{{p.locandina}}">
                 <span class="actions">
                     <div class="center">

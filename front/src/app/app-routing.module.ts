@@ -17,7 +17,7 @@ import { RegistrazioneComponent } from './registrazione/registrazione.component'
 import { ResFornitoreComponent } from './riservata/fornitore.component';
 import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
-import { ResFornituraComponent } from './riservata/fornitura.compontent';
+import { ResFornituraComponent } from './riservata/fornitura.component';
 
 
 const routes: Routes = [

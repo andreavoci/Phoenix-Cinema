@@ -1,4 +1,8 @@
-
+.titolo{
+    color:white;
+    font-size: 25px;
+    padding: 10px;
+}
 #error-popup{
     display:flex; 
     flex-direction:column;
