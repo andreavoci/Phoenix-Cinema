@@ -20,7 +20,8 @@ public class Merce {
 
     private String nome;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoMerce tipo;
 
     private double prezzo;
 

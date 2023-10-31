@@ -2,8 +2,7 @@ package com.phoenix.phoenix.entity;
 
 public enum TipoFornitore {
     PELLICOLA,
-    BEVANDE,
-    CIBO,
+    ALIMENTARI,
     PULIZIA,
     ATTREZZATURA,
     IMBALLAGGI,
