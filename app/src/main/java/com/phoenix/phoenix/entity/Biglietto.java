@@ -28,6 +28,11 @@ public class Biglietto {
     @JsonIgnore
     private Ordine ordine;
 
+    @ManyToOne
+    @JoinColumn(name = "vendita_id")
+    @JsonIgnore
+    private Vendita vendita;
+
 
     public Biglietto(Programmazione programmazione, long posto, double costo) {
         this.programmazione = programmazione;

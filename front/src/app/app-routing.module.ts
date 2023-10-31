@@ -18,6 +18,7 @@ import { ResFornitoreComponent } from './riservata/fornitore.component';
 import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
 import { ResFornituraComponent } from './riservata/fornitura.component';
+import { ResProiezioneComponent } from './riservata/proiezione.component';
 
 
 const routes: Routes = [
@@ -92,6 +93,10 @@ const routes: Routes = [
   {
     path: 'riservato/fornitura',
     component: ResFornituraComponent
+  },
+  {
+    path: 'riservato/proiezione',
+    component: ResProiezioneComponent
   }
 ];
 
