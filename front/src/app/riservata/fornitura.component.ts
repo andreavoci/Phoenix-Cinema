@@ -89,7 +89,7 @@ import { Candidatura } from "../model/candidatura";
     </div>
     <ng-template #fornitura1>      
       <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
-        <div *ngIf="editing;then fornitura1_new;else fornitura1_edit"  >
+        <div *ngIf="fornituraModifica;then fornitura1_new;else fornitura1_edit"  >
           
         </div>
       </form>
@@ -108,12 +108,12 @@ import { Candidatura } from "../model/candidatura";
         </button>
       </div>
     </ng-template>
-    <ng-template #fornitura1_edit>
+    <ng-template #fornitura1_edit >
       <p>Fornitore</p>
       <select name="fornitore" ngModel (click)="errorPopup_animation('',false)">
           <option value="" disabled>Scegli un fornitore</option>
           
-          <option value="" >{{fornitureSel[0].fornitore.ragione_sociale}}</option>
+          <option value="" >{{fornituraModifica?.fornitore?.ragione_sociale}}</option>
           <option *ngFor="let f of fornitori" [ngValue]="f">{{f.ragione_sociale}}</option>
       </select>
       <p>Tipo</p>
@@ -343,7 +343,7 @@ export class ResFornituraComponent{
       this.messageError = "Errore! Seleziona una sola fornitura da modificare"
     }
     else{
-      this.fornituraModifica = this.forniture.find((f) => f.id === this.fornitureSel[0]);
+      this.fornituraModifica = this.forniture.find((f) => f.id == this.fornitureSel[0]) as Fornitura|null;
       let myDialog:any = <any>document.getElementById("popup");
       myDialog.showModal();
     }
