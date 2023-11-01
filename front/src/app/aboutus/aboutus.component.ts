@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Util } from '../services/util';
 import { Mansione } from '../model/mansione';
+import { AuthService } from '../services/auth.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-about-us',
@@ -48,10 +50,17 @@ import { Mansione } from '../model/mansione';
         <br><br>
         <p style="color: white;">Siamo sempre alla ricerca di persone appassionate per unirsi al nostro team. Lavorare al Phoenix Cinema è un'opportunità unica per far parte del mondo del cinema. Candidati oggi e condividi la tua passione!</p>
         <br><br><br>
-        <div style="text-align: center;">
-        <button (click)="openApplicationForm()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
+        <div>
+        <label for="jobSelect" style="color: white;">Seleziona un lavoro: </label>
+            <select id="jobSelect" name="jobTitle" [(ngModel)]="selectedJob">
+              <option *ngFor="let mansione of mansioni" [ngValue]="mansione">{{mansione}}</option>
+            </select>
         </div>
-        <div class="section">
+        <br>
+        <div style="text-align: center;">
+        <button (click)="submitApplication()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
+        </div>
+        <!-- <div class="section">
         <div *ngIf="showApplicationForm" class="application-form">
           <form #candidaturaForm="ngForm" (ngSubmit)="submitApplication(candidaturaForm.value)">
             <label for="jobSelect" style="color: white;">Seleziona un lavoro: </label>
@@ -69,7 +78,7 @@ import { Mansione } from '../model/mansione';
             <button type="submit" style="color: white;">Invia Candidatura</button>
           </form>
         </div>
-      </div>
+      </div> -->
       <br><br><br>
       <div class="social-news-container" style="display: flex; justify-content: space-between;">
         <div class="newsletter-box column" style="flex: 1; text-align: center; background-color: white;">
@@ -258,8 +267,25 @@ export class AboutUsComponent {
   applicantEmail: string = "";
   applicantPhone: string = "";
   mansioni: string[] = this.enumValues(Mansione);
+  userId = -1
+  user: User | null = null
 
   constructor(private http: HttpClient) { }
+
+  ngOnInit(): void{
+    if (AuthService.getToken('id')) {
+      this.userId = Number(AuthService.getToken('id'));
+    }
+    const authToken = AuthService.getToken("token");
+    this.getUser();
+  }
+
+  getUser(){
+    this.http.get<User>(Util.userServerUrl + "/" + this.userId).subscribe((result) => {
+      this.user = result;
+      console.log(result);
+    });
+  }
 
   enumValues(enumType: any): string[]{
     return Object.keys(enumType).map(key => enumType[key]);
@@ -283,14 +309,20 @@ export class AboutUsComponent {
     this.showApplicationForm = true;
   }
 
-  submitApplication(form: any) {
+  submitApplication() {
     // const applicationData = {
     //   jobTitle: this.selectedJob,
     //   name: this.applicantName,
     //   email: this.applicantEmail,
     //   phone: this.applicantPhone
     // };
-
+    const form = {
+      nome: this.user?.nome,
+      cognome: this.user?.cognome,
+      email: this.user?.email,
+      jobTitle: this.selectedJob
+    }
+    console.log(form);
     this.http.post(Util.candidatureServerUrl+"/submit", form)
       .subscribe(response => {
         console.log('Candidatura inviata con successo', response);

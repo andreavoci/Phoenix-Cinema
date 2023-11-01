@@ -41,19 +41,21 @@ public class DipendenteService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found");
         }else{
             userByEmail.get().setRuolo(RuoloUtente.DIPENDENTE);
+
             Dipendente d = new Dipendente(userByEmail.get(), nome, cognome, cf, genere, data_nascita, indirizzo, telefono);
             d.setMansione(mansione);
             return ResponseEntity.ok(repository.save(d));
         }
     }
 
-    public ResponseEntity update(String email, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono, Mansione mansione){
-        Optional<User> userByEmail = userRepository.findUserByEmail(email);
-        if(userByEmail.isEmpty()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email not found");
+    public ResponseEntity update(String email, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono, Mansione mansione, Long userID){
+        Optional<User> userById = userRepository.findById(userID);
+        if(userById.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
         }else{
-            userByEmail.get().setEmail(email);
-            Optional<Dipendente> d = getDipendenteByUser(userByEmail.get());
+            userById.get().setEmail(email);
+            userRepository.save(userById.get());
+            Optional<Dipendente> d = getDipendenteByUser(userById.get());
             System.out.println(d);
             if(!mansione.equals(""))
                 d.get().setMansione(mansione);

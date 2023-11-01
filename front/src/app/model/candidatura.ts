@@ -4,5 +4,4 @@ export interface Candidatura{
     surname:string;
     name:string;
     email:string;
-    phone:string;
 }

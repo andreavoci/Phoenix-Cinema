@@ -41,7 +41,8 @@ public class DipendenteController {
 
     @PostMapping(path = "/update")
     public ResponseEntity updateDipendente(@RequestBody DipendenteBody body){
-        return service.update(body.email, body.nome, body.cognome, body.cf, body.genere, body.data, body.indirizzo, body.telefono, body.mansione);
+        System.out.println(body.email+","+ body.nome+","+body.cognome+","+body.cf+","+body.genere+","+ body.data+","+ body.indirizzo+","+body.telefono+","+body.mansione+","+body.userID);
+        return service.update(body.email, body.nome, body.cognome, body.cf, body.genere, body.data, body.indirizzo, body.telefono, body.mansione, body.userID);
     }
 
     @PostMapping(path = "/delete")
@@ -61,4 +62,5 @@ class DipendenteBody{
     public String telefono;
     @Enumerated(EnumType.STRING)
     public Mansione mansione;
+    public long userID;
 }

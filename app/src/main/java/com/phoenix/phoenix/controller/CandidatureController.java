@@ -25,7 +25,7 @@ public class CandidatureController {
 
     @PostMapping("/submit")
     public ResponseEntity<String> submitCandidature(@RequestBody CandidaturaBody body) {
-        return candidatureService.saveCandidature(body.jobTitle, body.name, body.surname, body.email, body.phone);
+        return candidatureService.saveCandidature(body.nome, body.cognome, body.email, body.jobTitle);
     }
 
     @PostMapping("/delete")
@@ -37,11 +37,10 @@ public class CandidatureController {
     public List<Candidature> getAll(){return candidatureService.getAll();}
 
     static class CandidaturaBody{
+        public String nome;
+        public String cognome;
+        public String email;
         @Enumerated(EnumType.STRING)
         public Mansione jobTitle;
-        public String surname;
-        public String name;
-        public String email;
-        public String phone;
     }
 }

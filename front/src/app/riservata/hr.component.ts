@@ -32,7 +32,6 @@ import { Mansione } from "../model/mansione";
         <th>Cognome</th>
         <th>Mansione Richiesta</th>
         <th>Email</th>
-        <th>Phone</th>
       </tr>
       <tr class="row" *ngFor="let c of candidature">
         <td><input type="checkbox" [value]=c.id (change)="onCheckChangeCand($event)" style="width:20px;height:20px"></td>
@@ -41,7 +40,6 @@ import { Mansione } from "../model/mansione";
         <td>{{c.surname}}</td>
         <td>{{c.jobTitle}}</td>
         <td>{{c.email}}</td>
-        <td>{{c.phone}}</td>
       </tr>
     </table>
     </div>
@@ -128,6 +126,8 @@ import { Mansione } from "../model/mansione";
           <select name="mansione" ngModel [(ngModel)]="dipendenteSelezionato.mansione" (click)="errorPopup_animation('',false)">
             <option *ngFor="let mansione of mansioni" [ngValue]="mansione">{{mansione}}</option>
           </select>
+          <p>userID</p>
+          <input name="userID" ngModel [(ngModel)]="userIDValue" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
@@ -186,7 +186,6 @@ import { Mansione } from "../model/mansione";
         <td>{{d.indirizzo}}</td>
         <td>{{d.telefono}}</td>
         <td>{{d.mansione}}</td>
-        
       </tr>
     </table>
     </div>
@@ -211,11 +210,11 @@ export class ResHrComponent{
     candidatiSel: number[]=[]
     mansioneSel: Mansione | null = null;
     emailValue:string = "";
+    userIDValue:number = -1;
     dipendenteSelezionato: any = {};
     mansioni: string[] = this.enumValues(Mansione)
 
-    constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){
-    }
+    constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
     
     ngAfterViewInit() {
         this.errorPopup = document.getElementById("error-popup")
@@ -320,6 +319,7 @@ export class ResHrComponent{
     getCandidature(){
         this.http.get<Candidatura[]>(Util.candidatureServerUrl).subscribe(result=>{
           this.candidature=result;
+          this.candidature=this.candidature.sort((a, b) => a.id - b.id);
           console.log(result)
         })
       }
@@ -352,14 +352,9 @@ export class ResHrComponent{
         }
         else{
           this.editing=true
-          // if (this.dialogoModifica) {
           this.dipendenteSelezionato = this.dipendenti.find((d) => d.id == this.dipendentiSel[0]);
           this.emailValue = this.dipendenteSelezionato.userID.email;
-          console.log(this.dipendenteSelezionato);
-          //   if(dipendenteSelezionato){
-          //       this.dialogoModifica.nativeElement.querySelector("[name=nome]").value = dipendenteSelezionato.nome;
-          //       this.dialogoModifica.nativeElement.showModal();
-          //   }
+          this.userIDValue = this.dipendenteSelezionato.userID.id;
           if(this.dialogoModifica){
             this.dialogoModifica.nativeElement.showModal();
           }
@@ -367,6 +362,10 @@ export class ResHrComponent{
       }
 
       update(form:any){
+        // const postForm = {
+        //   form: form,
+        //   id: this.dipendenteSelezionato.userID.id
+        // };
         this.http.post<Dipendente>(Util.dipendentiServerUrl+"/update",form).subscribe(result=>{
           window.location.reload();
         })
@@ -375,6 +374,7 @@ export class ResHrComponent{
       getDipendenti(){
         this.http.get<Dipendente[]>(Util.dipendentiServerUrl).subscribe(result=>{
           this.dipendenti=result;
+          this.dipendenti = this.dipendenti.sort((a, b) => a.id - b.id);
           console.log(result)
         })
       }

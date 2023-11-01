@@ -45,4 +45,11 @@ public class ProgrammazioneService {
         return ResponseEntity.ok(repository.save(p));
 //        return ResponseEntity.ok("ok");
     }
+
+    public ResponseEntity delete(List<Long> programmazioni) {
+        programmazioni.forEach(p -> {
+            repository.deleteById(p);
+        });
+        return ResponseEntity.ok("Candidature eliminate!");
+    }
 }

@@ -87,10 +87,6 @@ const routes: Routes = [
     component: ResBiglietteriaComponent
   },
   {
-    path: 'riservato/hr',
-    component: ResHrComponent
-  },
-  {
     path: 'riservato/fornitura',
     component: ResFornituraComponent
   },

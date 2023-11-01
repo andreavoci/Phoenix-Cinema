@@ -23,6 +23,9 @@ public class ProgrammazioneController {
     @PostMapping(path = "/create")
     public ResponseEntity create(@RequestBody Programmazione programmazione){return service.create(programmazione);}
 
+    @PostMapping(path = "/delete")
+    public ResponseEntity<String> delete(@RequestBody List<Long> programmazioni){return service.delete(programmazioni);}
+
     @GetMapping("/{id}")
     public List<Programmazione> getAllFromPellicola(@PathVariable("id") long pellicola){return service.getAllFromPellicola(pellicola);}
 

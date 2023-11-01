@@ -20,6 +20,9 @@ export namespace Util {
         if(ruolo=="DIRETTORE"){
             return ["fornitura","fornitore","inventario","fatture"]
         }
+        else if(ruolo=="BIGLIETTERIA"){
+            return ["hr"]
+        }
         return []
     }
 

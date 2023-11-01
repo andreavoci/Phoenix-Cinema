@@ -27,14 +27,10 @@ public class Candidature {
     @Email(message = "L'indirizzo email deve essere valido")
     private String email;
 
-    @NotBlank (message = "Il campo phone è obbligatorio")
-    private String phone;
-
-    public Candidature(String name, String surname, String email, String phone) {
+    public Candidature(String name, String surname, String email) {
         this.surname=surname;
         this.name=name;
         this.email=email;
-        this.phone=phone;
     }
 
 }

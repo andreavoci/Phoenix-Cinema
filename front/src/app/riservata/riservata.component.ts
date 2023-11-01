@@ -20,7 +20,7 @@ import { Dipendente } from '../model/dipendente';
     <div class="container">
     <p *ngIf="type==null" id="msg404">NON VALIDO</p>
     <app-fornitura *ngIf="type=='fornitura'"></app-fornitura>
-
+    <app-hr *ngIf="type=='hr'"></app-hr>
     </div>    
   `,
   styleUrls: ["./riservata.css"],

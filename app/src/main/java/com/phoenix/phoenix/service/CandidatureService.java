@@ -20,10 +20,10 @@ public class CandidatureService {
         this.candidatureRepository = candidatureRepository;
     }
 
-    public ResponseEntity<String> saveCandidature(Mansione jobTitle, String surname, String name, String email, String phone) {
+    public ResponseEntity<String> saveCandidature(String nome, String cognome, String email, Mansione jobTitle) {
         Optional<Candidature> candidatura = candidatureRepository.findCandidatureByEmail(email);
         if(!candidatura.isPresent()){
-            Candidature c = new Candidature(surname,name,email,phone);
+            Candidature c = new Candidature(cognome,nome,email);
             c.setJobTitle(jobTitle);
             candidatureRepository.save(c);
             return new ResponseEntity<String>("Candidatura salvata!", HttpStatus.OK);
