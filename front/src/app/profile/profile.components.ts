@@ -68,14 +68,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             </span>
           </div>
           <div style="height: 40%;flex-direction:row; padding:0px 5%;">
-            <button class="btn-operazione" [routerLink]="['../riservata/fornitura']">FORNITURA</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
-            <button class="btn-operazione" >...</button>
+            <button *ngFor="let pg of pagineGestione" class="btn-operazione" [routerLink]="['../riservata/'+pg]">{{pg.toUpperCase()}}</button>
           </div>
 
         </div> 
@@ -178,6 +171,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         display:flex;
       }
       .btn-operazione{
+        cursor:pointer;
         justify-content:center;
         text-align:center;
         background: white;
@@ -221,6 +215,7 @@ export class ProfileComponent implements OnInit {
   userId = -1
   user : User | null = null
   dipendente : Dipendente | null = null
+  pagineGestione : string[] = [];
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -228,8 +223,9 @@ export class ProfileComponent implements OnInit {
       this.userId = Number(AuthService.getToken('id'));
     }
     const authToken = AuthService.getToken("token");
-
+    
     this.getUser();
+
   }
   getUser(){
     this.http.get<User>(Util.userServerUrl + "/" + this.userId).subscribe((result) => {
@@ -245,8 +241,11 @@ export class ProfileComponent implements OnInit {
     this.http.get<Dipendente>(Util.dipendentiServerUrl+"/"+this.userId).subscribe(result=>{
       this.dipendente=result;
       console.log(result)
-    })
+        this.pagineGestione = Util.getPagineGestione(result.mansione)
+        console.log(this.pagineGestione)
+      })
   }
+
   logout(){
     console.log("delete")
 
