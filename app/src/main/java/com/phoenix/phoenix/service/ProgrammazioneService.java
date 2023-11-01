@@ -50,6 +50,6 @@ public class ProgrammazioneService {
         programmazioni.forEach(p -> {
             repository.deleteById(p);
         });
-        return ResponseEntity.ok("Candidature eliminate!");
+        return ResponseEntity.ok("Programmazioni eliminate!");
     }
 }

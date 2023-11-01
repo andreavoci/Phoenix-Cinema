@@ -29,8 +29,7 @@ public class Pellicola {
 
     private int durata;
 
-    @Enumerated(EnumType.STRING)
-    private MovieGenre genere;
+    private String generi;
 
     private String trama;
 
@@ -48,12 +47,12 @@ public class Pellicola {
 
     private Date fine_noleggio;
 
-    public Pellicola(String titolo, Fornitura fornitura, Date data_uscita, int durata, MovieGenre genere, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
+    public Pellicola(String titolo, Fornitura fornitura, Date data_uscita, int durata, String genere, String trama, int pegi, String regista, String attori, String locandina, String trailer, double prezzo_noleggio, Date noleggio){
         this.titolo=titolo;
         this.fornitura=fornitura;
         this.data_uscita=data_uscita;
         this.durata=durata;
-        this.genere=genere;
+        this.generi=genere;
         this.trama=trama;
         this.pegi=pegi;
         this.regista=regista;

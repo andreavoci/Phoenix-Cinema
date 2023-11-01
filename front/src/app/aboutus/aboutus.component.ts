@@ -58,7 +58,7 @@ import { User } from '../model/user';
         </div>
         <br>
         <div style="text-align: center;">
-        <button (click)="submitApplication()" style="color: white; width: 200px;" *ngIf="!showApplicationForm">Candidati</button>
+        <button (click)="submitApplication()" style="color: white; width: 200px;">Candidati</button>
         </div>
         <!-- <div class="section">
         <div *ngIf="showApplicationForm" class="application-form">
@@ -310,12 +310,7 @@ export class AboutUsComponent {
   }
 
   submitApplication() {
-    // const applicationData = {
-    //   jobTitle: this.selectedJob,
-    //   name: this.applicantName,
-    //   email: this.applicantEmail,
-    //   phone: this.applicantPhone
-    // };
+    if(this.user){
     const form = {
       nome: this.user?.nome,
       cognome: this.user?.cognome,
@@ -329,6 +324,9 @@ export class AboutUsComponent {
       }, error => {
         console.error("Errore nell'invio della candidatura", error);
       });
+  }else{
+    window.location.href = '/login'
   }
+}
 }
 

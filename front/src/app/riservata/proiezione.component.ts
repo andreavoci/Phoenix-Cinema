@@ -5,6 +5,9 @@ import { ActivatedRoute } from "@angular/router";
 import { Programmazione } from "../model/programmazione";
 import { Posto } from "../model/posto";
 import { Util } from "../services/util";
+import { Pellicola } from "../model/pellicola";
+import { Sala } from "../model/sala";
+import { Fornitura } from "../model/fornitura";
 
 @Component({
     selector: 'app-proiezione',
@@ -18,72 +21,60 @@ import { Util } from "../services/util";
         <div class="component-popup" style="width:auto;">
         <p id="error-popup">{{errorPopup_text}}</p>
           <div class="navbar-popup">
-            <p class="title-popup">Inserisci Dipendente</p>
+            <p class="title-popup">Inserisci Programmazione</p>
             
             <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAddProg.close();" >
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
             </button>
           </div>
           <div>      
-        <form #dipendentiForm="ngForm" (ngSubmit)="creaProgrammazione(dipendentiForm.value)">
+        <form #programmazioneForm="ngForm" (ngSubmit)="creaProgrammazione(programmazioneForm.value)">
           <br>
-          <p>Nome</p>
-          <input name="nome" ngModel (click)="errorPopup_animation('',false)">
-          <p>Cognome</p>
-          <input name="cognome" ngModel (click)="errorPopup_animation('',false)">
-          <p>Email</p>
-          <input name="email" ngModel (click)="errorPopup_animation('',false)">
-          <p>CF</p>
-          <input name="cf" ngModel (click)="errorPopup_animation('',false)">
-          <p>Genere</p>
-          <input name="genere" ngModel (click)="errorPopup_animation('',false)">
-          <p>Data di Nascita</p>
-          <input type="date" name="data" ngModel (click)="errorPopup_animation('',false)">
-          <p>Indirizzo</p>
-          <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
-          <p>Telefono</p>
-          <input name="telefono" ngModel (click)="errorPopup_animation('',false)">
+          <br>
+          <p>Pellicola</p>
+          <select name="pellicola" ngModel [(ngModel)]="programmazioneSelezionata.pellicola"  (click)="errorPopup_animation('',false)">
+            <option *ngFor="let p of pellicole" [ngValue]="p">{{p.titolo}}</option>
+          </select>         
+          <p>Sala</p>
+          <select name="sala" ngModel [(ngModel)]="programmazioneSelezionata.sala"  (click)="errorPopup_animation('',false)">
+            <option *ngFor="let s of sale" [ngValue]="s">{{s.nome}}</option>
+          </select>
+          <p>Prezzo</p>
+          <input name="prezzo" ngModel [(ngModel)]="programmazioneSelezionata.prezzo"  (click)="errorPopup_animation('',false)">
+          <p>Orario</p>
+          <input type="datetime-local" name="orario" ngModel [(ngModel)]="programmazioneSelezionata.orario"  (click)="errorPopup_animation('',false)">
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
             </button>
-          </div>         
+          </div>        
         </form>
       </div>
     </div>
   </div> 
 </dialog>
 
-<dialog #dialogoModifica>
+<dialog #dialogoModificaProg>
 <div class="background-blur">
         
         <div class="component-popup" style="width:auto;">
         <p id="error-popup">{{errorPopup_text}}</p>
           <div class="navbar-popup">
-            <p class="title-popup">Modifica Dipendente</p>
+            <p class="title-popup">Modifica Programmazione</p>
             
-            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModifica.close();" >
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModificaProg.close();" >
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
             </button>
           </div>
           <div>      
-        <form #dipendentiFormModifica="ngForm" (ngSubmit)="update(dipendentiFormModifica.value)">
+        <form #programmazioneFormModifica="ngForm" (ngSubmit)="updatePellicola(programmazioneFormModifica.value)">
           <br>
-          <p>Nome</p>
-          <input name="nome" ngModel [(ngModel)]="programmazioneSelezionata.nome" [readOnly]="true" (click)="errorPopup_animation('',false)">
-          <p>Cognome</p>
-          <input name="cognome" ngModel [(ngModel)]="programmazioneSelezionata.cognome" [readOnly]="true" (click)="errorPopup_animation('',false)">
-          <p>CF</p>
-          <input name="cf" ngModel [(ngModel)]="programmazioneSelezionata.cf" [readOnly]="true" (click)="errorPopup_animation('',false)">
-          <p>Genere</p>
-          <input name="genere" ngModel [(ngModel)]="programmazioneSelezionata.genere" (click)="errorPopup_animation('',false)">
-          <p>Data di Nascita</p>
-          <input type="date" name="data" [(ngModel)]="programmazioneSelezionata.data_nascita" ngModel (click)="errorPopup_animation('',false)">
-          <p>Indirizzo</p>
-          <input name="indirizzo" ngModel [(ngModel)]="programmazioneSelezionata.indirizzo" (click)="errorPopup_animation('',false)">
-          <p>Telefono</p>
-          <input name="telefono" ngModel [(ngModel)]="programmazioneSelezionata.telefono" (click)="errorPopup_animation('',false)">
-          
+          <p>ID Pellicola</p>
+          <input name="pellicola" ngModel [(ngModel)]="programmazioneSelezionata.pellciola" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <p>Sala</p>
+          <input name="sala" ngModel [(ngModel)]="programmazioneSelezionata.sala" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <p>Orario</p>
+          <input type="datetime" name="orario" ngModel [(ngModel)]="programmazioneSelezionata.orario" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
@@ -124,14 +115,137 @@ import { Util } from "../services/util";
         <th>Sala</th>
         <th>Spettatori</th>
         <th>Orario</th>
+        <th>Durata</th>
+        <th>Prezzo</th>
       </tr>
       <tr class="row" *ngFor="let pr of programmazioni">
-        <td><input type="checkbox" [value]=pr.id (change)="onCheckChangeProg($event)" style="width:20px;height:20px"></td>
+        <td><input type="checkbox" [value]=pr.id (change)="onCheckChangeProg($event)" style="width:20px;height:20px" *ngIf="getPostiOccupati(pr.posti)==0"></td>
         <td>{{pr.id}}</td>
         <td>{{pr.pellicola.titolo}}</td>
         <td>{{pr.sala.nome}}</td>
-        <td>{{getPostiOccupati(pr.posti)}}</td>
-        <td>{{pr.orario | date: "dd/MM/yyyy"}}</td>        
+        <td>{{getPostiOccupati(pr.posti)}} / {{pr.sala.capienza}}</td>
+        <td>{{pr.orario | date: "dd/MM/yyyy HH:mm"}}</td> 
+        <td>{{pr.pellicola.durata}} min</td>
+        <td>{{pr.prezzo | currency: 'EUR'}}</td>       
+      </tr>
+    </table>
+    </div>
+    
+    <p class="titolo">VISUALIZZAZIONE PELLICOLE</p>
+    <dialog #dialogoAddPell>
+            <div class="background-blur">
+        
+        <div class="component-popup" style="width:auto;">
+        <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Inserisci Pellicole</p>
+            
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAddPell.close();" >
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+          </div>
+          <div>      
+        
+      </div>
+    </div>
+  </div> 
+</dialog>
+<dialog #dialogoModificaPellicola>
+<div class="background-blur">
+        
+        <div class="component-popup" style="width:auto;">
+        <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Modifica Pellicole</p>
+            
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModificaPellicola.close();" >
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+          </div>
+          <div>      
+          <form #pellicoleForm="ngForm" (ngSubmit)="updatePellicola(pellicoleForm.value)">
+          <br>
+          <p>ID</p>
+          <input name="id_pellicola" ngModel [(ngModel)]="pellicolaSelezionata.id" (click)="errorPopup_animation('',false)">
+          <p>Titolo</p>
+          <input name="titolo" ngModel [(ngModel)]="pellicolaSelezionata.titolo" (click)="errorPopup_animation('',false)">
+          <p>Data Uscita</p>
+          <input type="date" name="data" ngModel [(ngModel)]="pellicolaSelezionata.data_uscita" (click)="errorPopup_animation('',false)">
+          <p>Durata</p>
+          <input name="durata" ngModel [(ngModel)]="pellicolaSelezionata.durata" (click)="errorPopup_animation('',false)">
+          <p>Generi</p>
+          <input name="generi" ngModel [(ngModel)]="pellicolaSelezionata.generi" (click)="errorPopup_animation('',false)">
+          <p>Pegi</p>
+          <input name="pegi" ngModel [(ngModel)]="pellicolaSelezionata.pegi" (click)="errorPopup_animation('',false)">
+          <p>Trama</p>
+          <input name="trama" ngModel [(ngModel)]="pellicolaSelezionata.trama" (click)="errorPopup_animation('',false)">
+          <p>Regista</p>
+          <input name="regista" ngModel [(ngModel)]="pellicolaSelezionata.regista" (click)="errorPopup_animation('',false)">
+          <p>Attori</p>
+          <input name="attori" ngModel [(ngModel)]="pellicolaSelezionata.attori" (click)="errorPopup_animation('',false)">
+          <p>Trailer</p>
+          <input name="trailer" ngModel [(ngModel)]="pellicolaSelezionata.trailer" (click)="errorPopup_animation('',false)">
+          <p>Locandina</p>
+          <input name="locandina" ngModel [(ngModel)]="pellicolaSelezionata.locandina" (click)="errorPopup_animation('',false)">
+          <p>Fornitura</p>
+          <input name="id_fornitura" ngModel [(ngModel)]="idFornituraPell" (click)="errorPopup_animation('',false)">
+          <div class="footer-popup">
+            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+            </button>
+          </div>         
+        </form>
+      </div>
+    </div>
+  </div> 
+</dialog>
+    <div class="container-buttons">
+      <button class="item-button" style="background:red" (click)="eliminaPellicola();">
+        <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
+      </button>
+
+      <button class="item-button" style="background:blue" (click)="modificaPellicola();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+        </button>
+
+      <p class="button-item">{{messageErrorPellicola}}</p>
+      <div *ngIf="checkEliminaPellicola==true">
+        <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazionePellicola()">Conferma</button>
+        <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazionePellicola()">Annulla</button>
+      </div>
+    </div>
+
+    <div class="table-div">
+    <table>
+      <tr class="title">
+        <th></th>
+        <th>ID</th>
+        <th>Titolo</th>
+        <th>Data Uscita</th>
+        <th>Durata</th>
+        <th>Generi</th>
+        <th>Pegi</th>
+        <th>Regista</th>
+        <th>Attori</th>
+        <th>Prezzo Noleggio</th>
+        <th>Trama</th>
+        <th>Fine Noleggio</th>
+        <th>ID Fornitura</th>
+      </tr>
+      <tr class="row" *ngFor="let pe of pellicole">
+        <td><input type="checkbox" [value]=pe.id (change)="onCheckChangePell($event)" style="width:20px;height:20px"></td>
+        <td>{{pe.id}}</td>
+        <td>{{pe.titolo}}</td>
+        <td>{{pe.data_uscita | date:"dd/MM/yyyy"}}</td>
+        <td>{{pe.durata}}min</td>
+        <td>{{pe.generi}}</td>
+        <td>{{pe.pegi}}</td>
+        <td>{{pe.regista}}</td>
+        <td>{{pe.attori}}</td>
+        <td>{{pe.prezzo_noleggio | currency: 'EUR'}}</td>
+        <td>{{pe.trama}}</td>
+        <td>{{pe.fine_noleggio | date: "dd/MM/yyyy"}}</td>
+        <!-- <td>{{pe.fornitura.id}}</td>    -->
       </tr>
     </table>
     </div>
@@ -142,15 +256,24 @@ import { Util } from "../services/util";
 })
 
 export class ResProiezioneComponent{
-    @ViewChild("dialogoModifica") dialogoModificaProg: ElementRef | undefined;
+    @ViewChild("dialogoModificaProg") dialogoModificaProg: ElementRef | undefined;
+    @ViewChild("dialogoModificaPellicola") dialogoModificaPellicola: ElementRef | undefined;
     checkEliminaProg : boolean = false;
+    checkEliminaPellicola : boolean = false;
     errorPopup : HTMLElement|null=null;
     errorPopup_text = "";
     messageErrorProg = "";
-    editingProg: boolean = false
+    editingProg: boolean = false;
+    messageErrorPellicola = "";
+    editingPell: boolean = false;
     programmazioneSel: number[]=[]
+    pellicoleSel: number[]=[]
     programmazioni: Programmazione[] = []
+    sale: Sala[] = []
+    pellicole: Pellicola[] = []
     programmazioneSelezionata: any = {}
+    pellicolaSelezionata: any = {}
+    idFornituraPell:number = -1;
     
     constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
 
@@ -160,18 +283,16 @@ export class ResProiezioneComponent{
 
     ngOnInit(): void {
         this.getProgrammazioni()
+        this.getPellicole()
+        this.getSale()
     }
 
-    onCheckChangeProg(event:any){
-        if(event.target.checked){
-          this.programmazioneSel.push(event.target.value)
-        }
-        else{
-          this.programmazioneSel = this.programmazioneSel.filter(pr=>pr !== event.target.value)
-        }
-        this.messageErrorProg="";
-        this.checkEliminaProg=false;
-      }
+    getSale(){
+        this.http.get<Sala[]>(Util.saleServerUrl).subscribe(result =>{
+            this.sale=result;
+            this.sale=this.sale.sort((a,b) => a.id - b.id);
+        })
+    }
 
       errorPopup_animation(text:string,visible:boolean){
     
@@ -186,45 +307,53 @@ export class ResProiezioneComponent{
         }
       }
 
+      //PROGRAMMAZIONI
+
       annullaEliminazioneProgrammazione(){
         this.messageErrorProg= ""
         this.checkEliminaProg = false;
-    
       }
       
       confermaEliminazioneProgrammazione(){
         this.messageErrorProg = "Eliminate"
-        
-        this.http.post<HttpResponse<String>>(Util.programmazioniServerUrl+"/delete",this.programmazioneSel).subscribe(
-          success => {
+        this.http.post<HttpResponse<String>>(Util.programmazioniServerUrl+"/delete",this.programmazioneSel).subscribe(result=>{
             window.location.reload()
-          },
-          error => {
-          }
-        )
+        });
         this.checkEliminaProg = false;
+      }
+
+      onCheckChangeProg(event:any){
+        if(event.target.checked){
+          this.programmazioneSel.push(event.target.value)
+        }
+        else{
+          this.programmazioneSel = this.programmazioneSel.filter(pr=>pr !== event.target.value)
+        }
+        this.messageErrorProg="";
+        this.checkEliminaProg=false;
       }
 
     getProgrammazioni(){
         this.http.get<Programmazione[]>(Util.programmazioniServerUrl).subscribe(result=>{
             this.programmazioni=result;
+            this.programmazioni=this.programmazioni.sort((a, b) => a.id - b.id);
             console.log(this.programmazioni)
         })
     }
 
     creaProgrammazione(form: any) {
         this.http.post<Programmazione>(Util.programmazioniServerUrl+"/create",form).subscribe(result=>{
-            console.log(result)
+            window.location.reload();
         })
     }
 
     eliminaProgrammazione(){
         if(this.programmazioneSel.length==0){
-            this.messageErrorProg = "Errore! Seleziona prima i dipendenti da eliminare"
+            this.messageErrorProg = "Errore! Seleziona prima le programmazioni da eliminare"
             this.checkEliminaProg = false;
           }
           else{
-            this.messageErrorProg = "Sei sicuro di volerli eliminare?"
+            this.messageErrorProg = "Sei sicuro di volerle eliminare?"
             this.checkEliminaProg = true;
           }
     }
@@ -232,11 +361,11 @@ export class ResProiezioneComponent{
     modificaProgrammazione(){
         if(this.programmazioneSel.length==0){
             this.editingProg=false
-            this.messageErrorProg = "Errore! Seleziona prima i dipendenti da modificare"
+            this.messageErrorProg = "Errore! Seleziona prima le programmazioni da modificare"
           }
           else if(this.programmazioneSel.length>1) {
             this.editingProg=false
-            this.messageErrorProg = "Errore! Seleziona un solo dipendente da modificare"
+            this.messageErrorProg = "Errore! Seleziona una sola programmazione da modificare"
           }
           else{
             this.editingProg=true
@@ -247,8 +376,83 @@ export class ResProiezioneComponent{
           }
     }
 
-    update(form:any){
+    updateProgrammazione(form:any){
         this.http.post<Programmazione>(Util.programmazioniServerUrl+"/update",form).subscribe(result=>{
+          window.location.reload();
+        })
+    }
+    
+    //PELLICOLE
+
+    getPellicole(){
+        this.http.get<Pellicola[]>(Util.pellicoleServerUrl).subscribe(result =>{
+            this.pellicole=result;
+            this.pellicole=this.pellicole.sort((a, b) => a.id - b.id);
+            console.log(this.pellicole)
+        })
+    }
+
+    creaPellicola(form: any){
+
+    }
+
+      onCheckChangePell(event:any){
+        if(event.target.checked){
+          this.pellicoleSel.push(event.target.value)
+        }
+        else{
+          this.pellicoleSel = this.pellicoleSel.filter(pe=>pe !== event.target.value)
+        }
+        this.messageErrorPellicola="";
+        this.checkEliminaPellicola=false;
+      }
+
+    eliminaPellicola(){
+        if(this.pellicoleSel.length==0){
+            this.messageErrorPellicola = "Errore! Seleziona prima le pellicole da eliminare"
+            this.checkEliminaPellicola = false;
+          }
+          else{
+            this.messageErrorPellicola = "Sei sicuro di volerle eliminare?"
+            this.checkEliminaPellicola = true;
+          }
+    }
+
+    modificaPellicola(){
+        if(this.pellicoleSel.length==0){
+            this.editingPell=false
+            this.messageErrorPellicola = "Errore! Seleziona prima le pellicole da modificare"
+          }
+          else if(this.pellicoleSel.length>1) {
+            this.editingPell=false
+            this.messageErrorPellicola = "Errore! Seleziona una sola pellicola da modificare"
+          }
+          else{
+            this.editingPell=true
+            this.pellicolaSelezionata = this.pellicole.find((pe) => pe.id == this.pellicoleSel[0]);
+            this.idFornituraPell=this.pellicolaSelezionata.fornitura.id;
+            if(this.dialogoModificaPellicola){
+              this.dialogoModificaPellicola.nativeElement.showModal();
+            }
+          }
+    }
+
+    annullaEliminazionePellicola(){
+        this.messageErrorPellicola= ""
+        this.checkEliminaPellicola = false;
+    }
+
+    confermaEliminazionePellicola(){
+        this.messageErrorPellicola = "Eliminate"
+        this.http.post<HttpResponse<String>>(Util.pellicoleServerUrl+"/delete",this.pellicoleSel).subscribe(result=>{
+            window.location.reload()
+        })
+        this.checkEliminaPellicola = false;
+    }
+
+    updatePellicola(form:any){
+        console.log(form);
+        this.http.post<Pellicola>(Util.pellicoleServerUrl+"/update",form).subscribe(result=>{
           window.location.reload();
         })
     }
