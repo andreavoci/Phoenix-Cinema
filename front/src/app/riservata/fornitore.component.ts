@@ -246,9 +246,10 @@ modificaFornitore() {
   }
 }
 update(form:any){
-  window.location.reload();
+  form['id']=this.fornitoriSel[0]
+  console.log(form)
   this.http.post<Fornitore>(Util.fornitoriServerUrl+"/update",form).subscribe(result=>{
-    
+    window.location.reload();
   })
 }
 getFornitori() {

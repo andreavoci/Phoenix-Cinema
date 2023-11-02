@@ -30,6 +30,11 @@ public class FornitoreController {
         return service.getAll();
     }
 
+    @PostMapping(path = "/update")
+    public ResponseEntity updateDipendente(@RequestBody FornitoreBody body){
+        return service.update(body.id,body.ragione_sociale,body.tipo, body.indirizzo, body.telefono, body.email);
+    }
+
 
     @PostMapping(path = "/delete")
     public ResponseEntity deleteFornitore(@RequestBody List<Long> fornitori) {
@@ -44,4 +49,6 @@ class FornitoreBody{
 
     public String email;
     public String telefono;
+
+    public long id;
 }
