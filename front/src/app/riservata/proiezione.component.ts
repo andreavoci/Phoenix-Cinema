@@ -230,7 +230,7 @@ import { Fornitura } from "../model/fornitura";
         <th>Prezzo Noleggio</th>
         <th>Trama</th>
         <th>Fine Noleggio</th>
-        <th>ID Fornitura</th>
+        <!-- <th>ID Fornitura</th> -->
       </tr>
       <tr class="row" *ngFor="let pe of pellicole">
         <td><input type="checkbox" [value]=pe.id (change)="onCheckChangePell($event)" style="width:20px;height:20px"></td>
