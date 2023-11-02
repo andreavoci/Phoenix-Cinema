@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,4 +40,7 @@ public class Fornitura {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornitura")
     private List<Merce> merci = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fornitura")
+    private List<Pellicola> pellicole = new ArrayList<>();
 }

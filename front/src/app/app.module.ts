@@ -27,6 +27,8 @@ import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
 import { ResFornituraComponent } from './riservata/fornitura.component';
 import { ResProiezioneComponent } from './riservata/proiezione.component';
+import { InventoryComponent } from './riservata/inventario.component';
+import { ResMagazziniereComponent } from './riservata/magazziniere.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { ResProiezioneComponent } from './riservata/proiezione.component';
     ResBiglietteriaComponent,
     ResHrComponent,
     ResFornituraComponent,
-    ResProiezioneComponent
+    ResProiezioneComponent,
+    InventoryComponent,
+    ResMagazziniereComponent
   ],
   imports: [
     BrowserModule,

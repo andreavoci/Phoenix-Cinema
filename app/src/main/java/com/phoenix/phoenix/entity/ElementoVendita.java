@@ -28,10 +28,7 @@ public class ElementoVendita implements Serializable {
 
     private double costo;
 
-
 }
-
-
 
 //convertitore
 class ElementoVenditaConverter implements AttributeConverter<Collection<ElementoVendita>, String> {

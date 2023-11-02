@@ -25,7 +25,7 @@ public class Merce {
 
     private double prezzo;
 
-    private int quantità;
+    private int quantita;
 
     @ManyToOne
     @JoinColumn(name = "fornitura")

@@ -19,6 +19,8 @@ import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
 import { ResFornituraComponent } from './riservata/fornitura.component';
 import { ResProiezioneComponent } from './riservata/proiezione.component';
+import { InventoryComponent } from './riservata/inventario.component';
+import { ResMagazziniereComponent } from './riservata/magazziniere.component';
 
 
 const routes: Routes = [
@@ -93,6 +95,14 @@ const routes: Routes = [
   {
     path: 'riservato/proiezione',
     component: ResProiezioneComponent
+  },
+  {
+    path: 'riservato/inventario',
+    component: InventoryComponent
+  },
+  {
+    path: 'riservato/magazziniere',
+    component: ResMagazziniereComponent
   }
 ];
 

@@ -14,6 +14,7 @@ export namespace Util {
     export const fornitoriServerUrl = 'http://localhost:8091/api/fornitori';
     export const candidatureServerUrl = 'http://localhost:8091/api/candidature';
     export const dipendentiServerUrl = 'http://localhost:8091/api/dipendenti';
+    export const inventarioServerUrl = 'http://localhost:8091/api/inventario';
 
     
     export function getPagineGestione(ruolo: string): string[] {
