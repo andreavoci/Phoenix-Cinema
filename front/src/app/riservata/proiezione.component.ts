@@ -166,11 +166,11 @@ import { Fornitura } from "../model/fornitura";
           <form #pellicoleForm="ngForm" (ngSubmit)="updatePellicola(pellicoleForm.value)">
           <br>
           <p>ID</p>
-          <input name="id_pellicola" ngModel [(ngModel)]="pellicolaSelezionata.id" (click)="errorPopup_animation('',false)">
+          <input name="id_pellicola" ngModel [(ngModel)]="pellicolaSelezionata.id" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Titolo</p>
           <input name="titolo" ngModel [(ngModel)]="pellicolaSelezionata.titolo" (click)="errorPopup_animation('',false)">
           <p>Data Uscita</p>
-          <input type="date" name="data" ngModel [(ngModel)]="pellicolaSelezionata.data_uscita" (click)="errorPopup_animation('',false)">
+          <input type="date" name="data" ngModel [(ngModel)]="pellicolaSelezionata.data_uscita" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Durata</p>
           <input name="durata" ngModel [(ngModel)]="pellicolaSelezionata.durata" (click)="errorPopup_animation('',false)">
           <p>Generi</p>
@@ -188,7 +188,7 @@ import { Fornitura } from "../model/fornitura";
           <p>Locandina</p>
           <input name="locandina" ngModel [(ngModel)]="pellicolaSelezionata.locandina" (click)="errorPopup_animation('',false)">
           <p>Fornitura</p>
-          <input name="id_fornitura" ngModel [(ngModel)]="idFornituraPell" (click)="errorPopup_animation('',false)">
+          <input name="id_fornitura" ngModel [(ngModel)]="idFornituraPell" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
@@ -249,31 +249,160 @@ import { Fornitura } from "../model/fornitura";
       </tr>
     </table>
     </div>
+
+            <p class="titolo">VISUALIZZAZIONE SALE CINEMATOGRAFICHE</p>
+            <dialog #dialogoAddSala>
+            <div class="background-blur">
+        
+        <div class="component-popup" style="width:auto;">
+        <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Inserisci Sala</p>
+            
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAddSala.close();" >
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+          </div>
+          <div>     
+        <form #salaForm="ngForm" (ngSubmit)="creaSala(salaForm.value)">
+          <br>
+          <br>
+          <p>Nome</p>
+          <input name="nome" ngModel [(ngModel)]="salaSelezionata.nome"  (click)="errorPopup_animation('',false)">     
+          <p>Capienza</p>
+          <input name="capienza" ngModel [(ngModel)]="salaSelezionata.capienza"  (click)="errorPopup_animation('',false)">
+          <div class="footer-popup">
+            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+            </button>
+          </div>        
+        </form>
+      </div>
+    </div>
+  </div> 
+</dialog>
+
+<dialog #dialogoModificaSala>
+<div class="background-blur">
+        
+        <div class="component-popup" style="width:auto;">
+        <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Modifica Sala</p>
+            
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModificaSala.close();" >
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+          </div>
+          <div>      
+        <form #salaFormModifica="ngForm" (ngSubmit)="updateSala(salaFormModifica.value)">
+          <br>
+          <p>Nome</p>
+          <input name="nome" ngModel [(ngModel)]="salaSelezionata.nome"  (click)="errorPopup_animation('',false)">     
+          <p>Capienza</p>
+          <input name="capienza" ngModel [(ngModel)]="salaSelezionata.capienza"  (click)="errorPopup_animation('',false)">
+          <div class="footer-popup">
+            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+            </button>
+          </div>         
+        </form>
+      </div>
+    </div>
+  </div> 
+</dialog>
+
+    <div class="container-buttons">
+      <button class="item-button" style="background:green" (click)="dialogoAddSala.show();">
+        <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
+      </button>
+      
+      <button class="item-button" style="background:red" (click)="eliminaSala();">
+        <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
+      </button>
+
+      <button class="item-button" style="background:blue" (click)="modificaSala();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+        </button>
+
+      <p class="button-item">{{messageErrorSala}}</p>
+      <div *ngIf="checkEliminaSala==true">
+        <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazioneSala()">Conferma</button>
+        <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazioneSala()">Annulla</button>
+      </div>
+    </div>
+
+    <div class="table-div">
+    <table>
+      <tr class="title">
+        <th></th>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Capienza</th>
+      </tr>
+      <tr class="row" *ngFor="let s of sale">
+        <td><input type="checkbox" [value]=s.id (change)="onCheckChangeSala($event)" style="width:20px;height:20px"></td>
+        <td>{{s.id}}</td>
+        <td>{{s.nome}}</td>
+        <td>{{s.capienza}}</td>  
+      </tr>
+    </table>
+    </div>
+    <p class="titolo">NOW PLAYING</p>
+    <div class="container-film">
+            <div *ngFor="let pr of programmazioni">
+              <p *ngIf="pr.orario == this.dataCorrente">ciao</p>
+            </div>
         </div>
+    </div>
     `,
     styleUrls: ["./riservata.css"],
-    styles: [``]
+    styles: [`
+    .container-film {
+            flex-flow: row wrap;
+            flex: 0 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        a{
+            flex: 0 0 calc(25% - 1em);
+            margin: 5px 10px;
+            position: relative;
+            display: inline-block;
+            max-width:200px;
+            width:100%;
+            height:100%;
+        }`]
 })
 
 export class ResProiezioneComponent{
     @ViewChild("dialogoModificaProg") dialogoModificaProg: ElementRef | undefined;
     @ViewChild("dialogoModificaPellicola") dialogoModificaPellicola: ElementRef | undefined;
+    @ViewChild("dialogoModificaSala") dialogoModificaSala: ElementRef | undefined;
     checkEliminaProg : boolean = false;
     checkEliminaPellicola : boolean = false;
+    checkEliminaSala : boolean = false;
     errorPopup : HTMLElement|null=null;
     errorPopup_text = "";
     messageErrorProg = "";
     editingProg: boolean = false;
     messageErrorPellicola = "";
     editingPell: boolean = false;
+    messageErrorSala = "";
+    editingSala: boolean = false;
     programmazioneSel: number[]=[]
     pellicoleSel: number[]=[]
+    saleSel: number[]=[]
     programmazioni: Programmazione[] = []
     sale: Sala[] = []
     pellicole: Pellicola[] = []
     programmazioneSelezionata: any = {}
     pellicolaSelezionata: any = {}
     idFornituraPell:number = -1;
+    salaSelezionata: any = {};
+    dataCorrente: Date = new Date();
     
     constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
 
@@ -285,13 +414,6 @@ export class ResProiezioneComponent{
         this.getProgrammazioni()
         this.getPellicole()
         this.getSale()
-    }
-
-    getSale(){
-        this.http.get<Sala[]>(Util.saleServerUrl).subscribe(result =>{
-            this.sale=result;
-            this.sale=this.sale.sort((a,b) => a.id - b.id);
-        })
     }
 
       errorPopup_animation(text:string,visible:boolean){
@@ -381,6 +503,11 @@ export class ResProiezioneComponent{
           window.location.reload();
         })
     }
+
+    getPostiOccupati(posti: Array<Posto>):number{
+      const occupati: Posto[] = posti.filter(posto => posto.stato === 'OCCUPATO');
+      return occupati.length;
+  }
     
     //PELLICOLE
 
@@ -457,8 +584,90 @@ export class ResProiezioneComponent{
         })
     }
 
-    getPostiOccupati(posti: Array<Posto>):number{
-        const occupati: Posto[] = posti.filter(posto => posto.stato === 'OCCUPATO');
-        return occupati.length;
+
+    //SLE
+
+    getSale(){
+      this.http.get<Sala[]>(Util.saleServerUrl).subscribe(result =>{
+          this.sale=result;
+          this.sale=this.sale.sort((a,b) => a.id - b.id);
+      })
+  }
+
+  creaSala(form: any){
+    this.http.post<Sala>(Util.saleServerUrl+"/create",form).subscribe(result=>{
+      window.location.reload()
+    })
+  }
+
+    onCheckChangeSala(event:any){
+      if(event.target.checked){
+        this.saleSel.push(event.target.value)
+      }
+      else{
+        this.saleSel = this.saleSel.filter(sa=>sa !== event.target.value)
+      }
+      this.messageErrorSala="";
+      this.checkEliminaSala=false;
     }
+
+  eliminaSala(){
+      if(this.saleSel.length==0){
+          this.messageErrorSala = "Errore! Seleziona prima le sale da eliminare"
+          this.checkEliminaSala = false;
+        }
+        else{
+          this.messageErrorSala = "Sei sicuro di volerle eliminare?"
+          this.checkEliminaSala = true;
+        }
+  }
+
+  modificaSala(){
+      if(this.saleSel.length==0){
+          this.editingSala=false
+          this.messageErrorSala = "Errore! Seleziona prima le sale da modificare"
+        }
+        else if(this.saleSel.length>1) {
+          this.editingSala=false
+          this.messageErrorSala = "Errore! Seleziona una sola sala da modificare"
+        }
+        else{
+          this.editingSala=true
+          this.salaSelezionata = this.sale.find((sa) => sa.id == this.saleSel[0]);
+          if(this.dialogoModificaSala){
+            this.dialogoModificaSala.nativeElement.showModal();
+          }
+        }
+  }
+
+  annullaEliminazioneSala(){
+      this.messageErrorSala= ""
+      this.checkEliminaSala = false;
+  }
+
+  confermaEliminazioneSala(){
+      this.messageErrorSala = "Eliminate"
+      this.http.post<HttpResponse<String>>(Util.saleServerUrl+"/delete",this.saleSel).subscribe(result=>{
+          window.location.reload()
+      })
+      this.checkEliminaSala = false;
+  }
+
+  updateSala(form:any){
+      form ["id"] = this.saleSel[0]
+      console.log(form);
+      this.http.post<Pellicola>(Util.saleServerUrl+"/update",form).subscribe(result=>{
+        window.location.reload();
+      })
+  }
+
+  //NOWPLAYING
+
+  isToday(dataPr: Date, dataCorrente: Date):boolean{
+    return(
+      dataPr.getDate()===dataCorrente.getDate()&&
+      dataPr.getMonth()===dataCorrente.getMonth()&&
+      dataPr.getFullYear()===dataCorrente.getFullYear()
+    );
+  }
 }

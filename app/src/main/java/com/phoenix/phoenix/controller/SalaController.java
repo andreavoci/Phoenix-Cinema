@@ -30,4 +30,12 @@ public class SalaController {
         return service.create(sala);
     }
 
+    @PostMapping(path = "/update")
+    public ResponseEntity update(@RequestBody Sala sala){ return service.update(sala); }
+
+    @PostMapping(path = "/delete")
+    public ResponseEntity delete(@RequestBody List<Long> sale){
+        return service.delete(sale);
+    }
+
 }
