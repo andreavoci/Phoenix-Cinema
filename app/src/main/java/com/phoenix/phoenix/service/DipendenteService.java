@@ -42,7 +42,7 @@ public class DipendenteService {
         }else{
             userByEmail.get().setRuolo(RuoloUtente.DIPENDENTE);
 
-            Dipendente d = new Dipendente(userByEmail.get(), nome, cognome, cf, genere, data_nascita, indirizzo, telefono);
+            Dipendente d = new Dipendente(userByEmail.get(), cf, genere, data_nascita, indirizzo, telefono);
             d.setMansione(mansione);
             return ResponseEntity.ok(repository.save(d));
         }
@@ -54,15 +54,13 @@ public class DipendenteService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
         }else{
             userById.get().setEmail(email);
+            userById.get().setNome(nome);
+            userById.get().setCognome(cognome);
             userRepository.save(userById.get());
             Optional<Dipendente> d = getDipendenteByUser(userById.get());
             System.out.println(d);
             if(!mansione.equals(""))
                 d.get().setMansione(mansione);
-            if(!nome.equals(""))
-                d.get().setNome(nome);
-            if(!cognome.equals(""))
-                d.get().setCognome(cognome);
             if(!cf.equals(""))
                 d.get().setCf(cf);
             if(!genere.equals(""))

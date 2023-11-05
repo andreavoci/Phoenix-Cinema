@@ -586,7 +586,7 @@ export class ResProiezioneComponent{
     }
 
 
-    //SLE
+    //SALE
 
     getSale(){
       this.http.get<Sala[]>(Util.saleServerUrl).subscribe(result =>{
