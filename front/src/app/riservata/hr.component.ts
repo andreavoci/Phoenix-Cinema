@@ -60,10 +60,6 @@ import { Mansione } from "../model/mansione";
           <div>      
         <form #dipendentiForm="ngForm" (ngSubmit)="creaDipendente(dipendentiForm.value)">
           <br>
-          <p>Nome</p>
-          <input name="nome" ngModel (click)="errorPopup_animation('',false)">
-          <p>Cognome</p>
-          <input name="cognome" ngModel (click)="errorPopup_animation('',false)">
           <p>Email</p>
           <input name="email" ngModel (click)="errorPopup_animation('',false)">
           <p>CF</p>
@@ -107,9 +103,9 @@ import { Mansione } from "../model/mansione";
         <form #dipendentiFormModifica="ngForm" (ngSubmit)="update(dipendentiFormModifica.value)">
           <br>
           <p>Nome</p>
-          <input name="nome" ngModel [(ngModel)]="dipendenteSelezionato.nome" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <input name="nome" ngModel [(ngModel)]="nameValue" (click)="errorPopup_animation('',false)">
           <p>Cognome</p>
-          <input name="cognome" ngModel [(ngModel)]="dipendenteSelezionato.cognome" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <input name="cognome" ngModel [(ngModel)]="cognomeValue" (click)="errorPopup_animation('',false)">
           <p>Email</p>
           <input name="email" ngModel [(ngModel)]="emailValue" (click)="errorPopup_animation('',false)">
           <p>CF</p>
@@ -177,8 +173,8 @@ import { Mansione } from "../model/mansione";
       <tr class="row" *ngFor="let d of dipendenti">
         <td><input type="checkbox" [value]=d.id (change)="onCheckChangeDip($event)" style="width:20px;height:20px"></td>
         <td>{{d.id}}</td>
-        <td>{{d.nome}}</td>
-        <td>{{d.cognome}}</td>
+        <td>{{d.userID.nome}}</td>
+        <td>{{d.userID.cognome}}</td>
         <td>{{d.userID.email}}</td>
         <td>{{d.cf}}</td>
         <td>{{d.genere}}</td>
@@ -210,6 +206,8 @@ export class ResHrComponent{
     candidatiSel: number[]=[]
     mansioneSel: Mansione | null = null;
     emailValue:string = "";
+    nameValue:string = "";
+    cognomeValue:string = "";
     userIDValue:number = -1;
     dipendenteSelezionato: any = {};
     mansioni: string[] = this.enumValues(Mansione)
@@ -354,6 +352,8 @@ export class ResHrComponent{
           this.editing=true
           this.dipendenteSelezionato = this.dipendenti.find((d) => d.id == this.dipendentiSel[0]);
           this.emailValue = this.dipendenteSelezionato.userID.email;
+          this.nameValue = this.dipendenteSelezionato.userID.nome;
+          this.cognomeValue = this.dipendenteSelezionato.userID.cognome;
           this.userIDValue = this.dipendenteSelezionato.userID.id;
           if(this.dialogoModifica){
             this.dialogoModifica.nativeElement.showModal();

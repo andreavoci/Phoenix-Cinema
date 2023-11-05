@@ -19,10 +19,6 @@ public class Dipendente {
     @JoinColumn(name = "user_id")
     private User userID;
 
-    private String nome;
-
-    private String cognome;
-
     private String cf;
 
     private String genere;
@@ -36,10 +32,8 @@ public class Dipendente {
     @Enumerated(EnumType.STRING)
     private Mansione mansione;
 
-    public Dipendente(User user, String nome, String cognome, String cf, String genere, Date data_nascita, String indirizzo, String telefono){
+    public Dipendente(User user, String cf, String genere, Date data_nascita, String indirizzo, String telefono){
         this.userID = user;
-        this.nome=nome;
-        this.cognome=cognome;
         this.cf=cf;
         this.genere=genere;
         this.data_nascita=data_nascita;
