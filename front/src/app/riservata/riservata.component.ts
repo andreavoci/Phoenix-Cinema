@@ -18,9 +18,16 @@ import { Dipendente } from '../model/dipendente';
   selector: 'app-riservata',
   template: `
     <div class="container">
-    <p *ngIf="type==null" id="msg404">NON VALIDO</p>
-    <app-fornitura *ngIf="type=='fornitura'"></app-fornitura>
-    <app-hr *ngIf="type=='hr'"></app-hr>
+      <p *ngIf="type==null" id="msg404">NON VALIDO</p>
+
+      <app-fornitura *ngIf="type=='fornitura'"></app-fornitura>
+      <app-resfornitore *ngIf="type=='fornitore'"></app-resfornitore>
+      <app-biglietteria *ngIf="type=='biglietteria'"></app-biglietteria>
+      <app-magazziniere *ngIf="type=='magazziniere'"></app-magazziniere>
+      <app-inventario *ngIf="type=='inventario'"></app-inventario>
+      <app-respellicola *ngIf="type=='pellicola'"></app-respellicola>
+      <app-proiezione *ngIf="type=='proiezione'"></app-proiezione>
+      <app-hr *ngIf="type=='hr'"></app-hr>
     </div>    
   `,
   styleUrls: ["./riservata.css"],

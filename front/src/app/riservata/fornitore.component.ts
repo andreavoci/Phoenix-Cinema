@@ -6,119 +6,118 @@ import { Fornitore } from "../model/fornitore";
 import { Util } from "../services/util";
 
 @Component({
-  selector: 'app-fornitore',
+  selector: 'app-resfornitore',
   template: `
-    <div class="container">
-      <br><br><br>
+  <div class="container">
       <p class="titolo">VISUALIZZAZIONE FORNITORI</p>
        <!-- Dialogo per l'aggiunta di un fornitore -->
-    <dialog #dialogoAdd>
-  <div class="background-blur">
-    <div class="component-popup" style="width:auto;">
-      <p id="error-popup">{{errorPopup_text}}</p>
-      <div class="navbar-popup">
-        <p class="title-popup">Inserisci Fornitore</p>
-        <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAdd.close();">
-          <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
-        </button>
-      </div>
-      <div>
-        <form #fornitoriForm="ngForm" (ngSubmit)="creaFornitore(fornitoriForm.value)">
-          <br>
-          <p>Ragione Sociale</p>
-          <input name="ragione_sociale" ngModel (click)="errorPopup_animation('',false)">
-          <p>Tipo</p>
-          <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
-          <p>Indirizzo</p>
-          <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
-          <p>Telefono</p>
-          <input name="telefono" ngModel (click)="errorPopup_animation('',false)">
-          <p>Email</p>
-          <input name="email" ngModel (click)="errorPopup_animation('',false)">
-          <div class="footer-popup">
-            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
-              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+      <dialog #dialogoAdd>
+      <div class="background-blur">
+        <div class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Inserisci Fornitore</p>
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoAdd.close();">
+              <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
             </button>
           </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</dialog>
-<dialog #dialogoModifica>
-  <div class="background-blur">
-    <div class="component-popup" style="width:auto;">
-      <p id="error-popup">{{errorPopup_text}}</p>
-      <div class="navbar-popup">
-        <p class="title-popup">Modifica Fornitore</p>
-        <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModifica.close();">
-          <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
-        </button>
-      </div>
-      <div>
-        <form #fornitoriFormModifica="ngForm" (ngSubmit)="update(fornitoriFormModifica.value)">
-          <br>
-          <p>Ragione Sociale</p>
-          <input name="ragione_sociale" ngModel [(ngModel)]="fornitoreSelezionato.ragione_sociale" (click)="errorPopup_animation('',false)">
-          <p>Tipo</p>
-          <input name="tipo" ngModel [(ngModel)]="fornitoreSelezionato.tipo" (click)="errorPopup_animation('',false)">
-          <p>Indirizzo</p>
-          <input name="indirizzo" ngModel [(ngModel)]="fornitoreSelezionato.indirizzo" (click)="errorPopup_animation('',false)">
-          <p>Telefono</p>
-          <input name="telefono" ngModel [(ngModel)]="fornitoreSelezionato.telefono" (click)="errorPopup_animation('',false)">
-          <p>Email</p>
-          <input name="email" ngModel [(ngModel)]="fornitoreSelezionato.email" (click)="errorPopup_animation('',false)">
-          <div class="footer-popup">
-            <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
-              <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
-            </button>
+          <div>
+            <form #fornitoriForm="ngForm" (ngSubmit)="creaFornitore(fornitoriForm.value)">
+              <br>
+              <p>Ragione Sociale</p>
+              <input name="ragione_sociale" ngModel (click)="errorPopup_animation('',false)">
+              <p>Tipo</p>
+              <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+              <p>Indirizzo</p>
+              <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
+              <p>Telefono</p>
+              <input name="telefono" ngModel (click)="errorPopup_animation('',false)">
+              <p>Email</p>
+              <input name="email" ngModel (click)="errorPopup_animation('',false)">
+              <div class="footer-popup">
+                <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+                  <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
+      </div>
+      </dialog>
+      <dialog #dialogoModifica>
+        <div class="background-blur">
+          <div class="component-popup" style="width:auto;">
+            <p id="error-popup">{{errorPopup_text}}</p>
+            <div class="navbar-popup">
+              <p class="title-popup">Modifica Fornitore</p>
+              <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="dialogoModifica.close();">
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+              </button>
+            </div>
+            <div>
+              <form #fornitoriFormModifica="ngForm" (ngSubmit)="update(fornitoriFormModifica.value)">
+                <br>
+                <p>Ragione Sociale</p>
+                <input name="ragione_sociale" ngModel [(ngModel)]="fornitoreSelezionato.ragione_sociale" (click)="errorPopup_animation('',false)">
+                <p>Tipo</p>
+                <input name="tipo" ngModel [(ngModel)]="fornitoreSelezionato.tipo" (click)="errorPopup_animation('',false)">
+                <p>Indirizzo</p>
+                <input name="indirizzo" ngModel [(ngModel)]="fornitoreSelezionato.indirizzo" (click)="errorPopup_animation('',false)">
+                <p>Telefono</p>
+                <input name="telefono" ngModel [(ngModel)]="fornitoreSelezionato.telefono" (click)="errorPopup_animation('',false)">
+                <p>Email</p>
+                <input name="email" ngModel [(ngModel)]="fornitoreSelezionato.email" (click)="errorPopup_animation('',false)">
+                <div class="footer-popup">
+                  <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+                    <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </dialog>
+      <div class="container-buttons">
+        <button class="item-button" style="background:green" (click)="dialogoAdd.show();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
+        </button>
+        <button class="item-button" style="background:red" (click)="eliminaFornitore();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
+        </button>
+        <button class="item-button" style="background:blue" (click)="modificaFornitore();">
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+        </button>
+        <p class="button-item">{{messageErrorForn}}</p>
+        <div *ngIf="checkEliminaForn == true">
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazioneFornitore()">Conferma</button>
+          <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazioneFornitore()">Annulla</button>
       </div>
     </div>
-  </div>
-</dialog>
-<div class="container-buttons">
-  <button class="item-button" style="background:green" (click)="dialogoAdd.show();">
-    <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
-  </button>
-  <button class="item-button" style="background:red" (click)="eliminaFornitore();">
-    <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
-  </button>
-  <button class="item-button" style="background:blue" (click)="modificaFornitore();">
-    <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
-  </button>
-  <p class="button-item">{{messageErrorForn}}</p>
-  <div *ngIf="checkEliminaForn == true">
-    <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="confermaEliminazioneFornitore()">Conferma</button>
-    <button class="button-item" style="padding: 2px 6px 2px 6px;margin-left:5px;" (click)="annullaEliminazioneFornitore()">Annulla</button>
-  </div>
-</div>
 
-<div class="table-div">
-  <table>
-    <tr class="title">
-      <th></th>
-      <th>ID</th>
-      <th>Ragione Sociale</th>
-      <th>Tipo</th>
-      <th>Indirizzo</th>
-      <th>Email</th>
-      <th>Telefono</th>
-    </tr>
-    <tr class="row" *ngFor="let fornitore of fornitori">
-      <td><input type="checkbox" [value]="fornitore.id" (change)="onCheckChangeFor($event)"
-      style="width:20px;height:20px"></td>
-      <td>{{fornitore.id}}</td>
-      <td>{{fornitore.ragione_sociale}}</td>
-      <td>{{fornitore.tipo}}</td>
-      <td>{{fornitore.indirizzo}}</td>
-      <td>{{fornitore.email}}</td>
-      <td>{{fornitore.telefono}}</td>
-    </tr>
-  </table>
-</div> 
-</div>
+    <div class="table-div">
+      <table>
+        <tr class="title">
+          <th></th>
+          <th>ID</th>
+          <th>Ragione Sociale</th>
+          <th>Tipo</th>
+          <th>Indirizzo</th>
+          <th>Email</th>
+          <th>Telefono</th>
+        </tr>
+        <tr class="row" *ngFor="let fornitore of fornitori">
+          <td><input type="checkbox" [value]="fornitore.id" (change)="onCheckChangeFor($event)"
+          style="width:20px;height:20px"></td>
+          <td>{{fornitore.id}}</td>
+          <td>{{fornitore.ragione_sociale}}</td>
+          <td>{{fornitore.tipo}}</td>
+          <td>{{fornitore.indirizzo}}</td>
+          <td>{{fornitore.email}}</td>
+          <td>{{fornitore.telefono}}</td>
+        </tr>
+      </table>
+    </div> 
+  </div>
 
 `,
   styleUrls: ["./riservata.css"],

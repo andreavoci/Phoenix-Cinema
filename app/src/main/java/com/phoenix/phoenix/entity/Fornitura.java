@@ -23,6 +23,7 @@ public class Fornitura {
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "fornitore")
     private Fornitore fornitore;
 
     @OneToOne(cascade = CascadeType.ALL)

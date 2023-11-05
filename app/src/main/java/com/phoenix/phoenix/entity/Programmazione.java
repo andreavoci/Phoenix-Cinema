@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -25,10 +26,11 @@ public class Programmazione {
     private Sala sala;
 
     @Convert(converter = PostoConverter.class)
+    @Column(columnDefinition = "text")
     private Collection<Posto> posti;
 
     private double prezzo;
 
-    private Date orario;
+    private LocalDateTime orario;
 
 }

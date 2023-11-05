@@ -31,7 +31,27 @@ public class PellicolaService {
         });
         return ResponseEntity.ok("Pellicole eliminate!");
     }
-
+    public ResponseEntity update(Pellicola editedPellicola){
+        Optional<Pellicola> pellicolaOpt = repository.findById(editedPellicola.getId());
+        if(pellicolaOpt.isPresent()){
+            if(editedPellicola.getTitolo()!=null) pellicolaOpt.get().setTitolo(editedPellicola.getTitolo());
+            if(editedPellicola.getFornitura()!=null) pellicolaOpt.get().setFornitura(editedPellicola.getFornitura());
+            if(editedPellicola.getData_uscita()!=null) pellicolaOpt.get().setData_uscita(editedPellicola.getData_uscita());
+            if(editedPellicola.getDurata()!=0) pellicolaOpt.get().setDurata(editedPellicola.getDurata());
+            if(editedPellicola.getGeneri()!=null) pellicolaOpt.get().setGeneri(editedPellicola.getGeneri());
+            if(editedPellicola.getTrama()!=null) pellicolaOpt.get().setTrama(editedPellicola.getTrama());
+            if(editedPellicola.getPegi()!=0) pellicolaOpt.get().setPegi(editedPellicola.getPegi());
+            if(editedPellicola.getRegista()!=null) pellicolaOpt.get().setRegista(editedPellicola.getRegista());
+            if(editedPellicola.getAttori()!=null) pellicolaOpt.get().setAttori(editedPellicola.getAttori());
+            if(editedPellicola.getPrezzo_noleggio()!=0) pellicolaOpt.get().setPrezzo_noleggio(editedPellicola.getPrezzo_noleggio());
+            if(editedPellicola.getLocandina()!=null) pellicolaOpt.get().setLocandina(editedPellicola.getLocandina());
+            if(editedPellicola.getTrailer()!=null) pellicolaOpt.get().setTrailer(editedPellicola.getTrailer());
+            if(editedPellicola.getFine_noleggio()!=null) pellicolaOpt.get().setFine_noleggio(editedPellicola.getFine_noleggio());
+            repository.save(pellicolaOpt.get());
+            return ResponseEntity.ok("Pellicola modificata!");
+        }
+        return ResponseEntity.badRequest().body("Pellicola inesistente!");
+    }
     public ResponseEntity update(Long pellicolaID, String titolo, Date dataUscita, int durata, String generi, int pegi, String trama, String regista, String attori, String trailer, String locandina, long fornituraID) {
         Optional<Pellicola> pellicola = repository.findById(pellicolaID);
         if(pellicola.isPresent()){

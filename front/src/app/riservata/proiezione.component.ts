@@ -74,7 +74,7 @@ import { Fornitura } from "../model/fornitura";
           <p>Sala</p>
           <input name="sala" ngModel [(ngModel)]="programmazioneSelezionata.sala" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <p>Orario</p>
-          <input type="datetime" name="orario" ngModel [(ngModel)]="programmazioneSelezionata.orario" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <input type="datetime-local" name="orario" ngModel [(ngModel)]="programmazioneSelezionata.orario" [readOnly]="true" (click)="errorPopup_animation('',false)">
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
@@ -464,6 +464,7 @@ export class ResProiezioneComponent{
     }
 
     creaProgrammazione(form: any) {
+      console.log(form)
         this.http.post<Programmazione>(Util.programmazioniServerUrl+"/create",form).subscribe(result=>{
             window.location.reload();
         })

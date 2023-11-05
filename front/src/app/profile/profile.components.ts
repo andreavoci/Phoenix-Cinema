@@ -18,7 +18,7 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     <ng-component *ngIf="dipendente;then riservato;else utente"></ng-component>
       
 
-      <ng-template #riservato >
+      <ng-template #riservato>
         <div class="container" *ngIf="dipendente && user">
         <div class="container-l">
           

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class Fornitore {
     private String email;
 
     private String telefono;
+
 
     public Fornitore(String ragione_sociale, TipoFornitore tipo, String indirizzo, String telefono,String email){
 

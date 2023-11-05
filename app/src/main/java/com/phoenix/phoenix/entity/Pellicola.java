@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Pellicola {
 
     @ManyToOne
     @JoinColumn(name = "id_fornitura")
+    @JsonIgnore
     private Fornitura fornitura;
 
     private Date data_uscita;

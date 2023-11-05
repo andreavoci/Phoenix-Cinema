@@ -4,13 +4,12 @@ import com.phoenix.phoenix.entity.Posto;
 import com.phoenix.phoenix.entity.Programmazione;
 import com.phoenix.phoenix.repository.ProgrammazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class ProgrammazioneService {
@@ -23,10 +22,11 @@ public class ProgrammazioneService {
 
     public List<Programmazione> getAll(){return repository.findAll();}
 
+    public List<Programmazione> getAllValid(){return repository.findProgrammazioneFromDate(LocalDateTime.now());}
+
     public List<Programmazione> getAllFromPellicola(long pellicola){return repository.findProgrammazioneByPellicolaId(pellicola);}
 
     public ResponseEntity create(Programmazione programmazione){
-
         Collection<Posto> posti = new ArrayList<>();
         int codice = 65;
         int indice = 1;

@@ -18,7 +18,7 @@ public class ProgrammazioneController {
     public ProgrammazioneController(ProgrammazioneService service){this.service=service;}
 
     @GetMapping
-    public List<Programmazione> getAll(){return service.getAll();}
+    public List<Programmazione> getAll(){return service.getAllValid();}
 
     @PostMapping(path = "/create")
     public ResponseEntity create(@RequestBody Programmazione programmazione){return service.create(programmazione);}

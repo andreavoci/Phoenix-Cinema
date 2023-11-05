@@ -16,3 +16,12 @@ export interface Pellicola{
     trama:string;
     fine_noleggio:Date;
 }
+
+export class Pellicola{
+    constructor(
+        public titolo:string,
+        public data_uscita:Date,
+        public fine_noleggio:Date,
+        public prezzo_noleggio:number
+    ) {}
+}

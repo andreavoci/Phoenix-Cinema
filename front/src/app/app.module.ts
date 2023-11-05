@@ -29,6 +29,7 @@ import { ResFornituraComponent } from './riservata/fornitura.component';
 import { ResProiezioneComponent } from './riservata/proiezione.component';
 import { InventoryComponent } from './riservata/inventario.component';
 import { ResMagazziniereComponent } from './riservata/magazziniere.component';
+import { ResPellicolaComponent } from './riservata/pellicola.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ResMagazziniereComponent } from './riservata/magazziniere.component';
     ResFornituraComponent,
     ResProiezioneComponent,
     InventoryComponent,
-    ResMagazziniereComponent
+    ResMagazziniereComponent,
+    ResPellicolaComponent
   ],
   imports: [
     BrowserModule,

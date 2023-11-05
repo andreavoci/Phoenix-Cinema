@@ -34,6 +34,9 @@ public class FornituraService {
         fornitura.getMerci().forEach(m->{
             m.setFornitura(fornitura);
         });
+        fornitura.getPellicole().forEach(p->{
+            p.setFornitura(fornitura);
+        });
         fornitura.setStato("ORDINATA");
         repository.save(fornitura);
 

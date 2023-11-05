@@ -33,8 +33,9 @@ public class PellicolaController {
     public ResponseEntity create(@RequestBody Pellicola pellicola){return service.create(pellicola);}
 
     @PostMapping(path = "/update")
-    public ResponseEntity update(@RequestBody PellicolaBody body){
-        return service.update(body.id_pellicola,body.titolo, body.data, body.durata, body.generi, body.pegi, body.trama, body.regista, body.attori, body.trailer, body.locandina, body.id_fornitura);
+    public ResponseEntity update(@RequestBody Pellicola pellicola){
+        return service.update(pellicola);
+//        return service.update(body.id_pellicola,body.titolo, body.data, body.durata, body.generi, body.pegi, body.trama, body.regista, body.attori, body.trailer, body.locandina, body.id_fornitura);
     }
 
     @PostMapping(path = "/delete")

@@ -79,30 +79,6 @@ const routes: Routes = [
   {
     path: 'registrazione',
     component: RegistrazioneComponent
-  },
-  {
-    path: 'riservato/fornitore',
-    component: ResFornitoreComponent
-  },
-  {
-    path: 'riservato/biglietteria',
-    component: ResBiglietteriaComponent
-  },
-  {
-    path: 'riservato/fornitura',
-    component: ResFornituraComponent
-  },
-  {
-    path: 'riservato/proiezione',
-    component: ResProiezioneComponent
-  },
-  {
-    path: 'riservato/inventario',
-    component: InventoryComponent
-  },
-  {
-    path: 'riservato/magazziniere',
-    component: ResMagazziniereComponent
   }
 ];
 

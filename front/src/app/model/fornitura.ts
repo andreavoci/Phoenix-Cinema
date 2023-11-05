@@ -1,6 +1,7 @@
 import { Fattura } from "./fattura";
 import { Fornitore } from "./fornitore";
 import { Merce } from "./merce";
+import { Pellicola } from "./pellicola";
 
 export interface Fornitura{
     id:number;
@@ -14,6 +15,7 @@ export interface Fornitura{
     quantita:number;
     stato:string;
     merci:Array<Merce>;
+    pellicole:Array<Pellicola>;
 }
 
 export class Fornitura{

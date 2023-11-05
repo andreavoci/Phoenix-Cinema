@@ -17,7 +17,6 @@ import { Candidatura } from "../model/candidatura";
     selector: 'app-fornitura',
     template:`
     <div class="container">
-    
       <p class="titolo">FORNITURE</p>
       <dialog #popup id="popup">
         <div class="background-blur">
@@ -67,8 +66,8 @@ import { Candidatura } from "../model/candidatura";
             <th>Fattura</th>
             <th>Tipo</th>
             <th>Prezzo</th>
-            <th>Quantità</th>
             <th>Merci</th>
+            <th>Pellicole</th>
             <th>Arrivo</th>
             <th>Scadenza</th>
           </tr>
@@ -79,8 +78,8 @@ import { Candidatura } from "../model/candidatura";
             <td><span *ngIf="f.fattura">{{f.fattura.id}}</span></td>
             <td>{{f.tipo}}</td>
             <td>{{f.prezzo}}</td>
-            <td>{{f.quantita}}</td>
             <td><span *ngIf="f.merci">[{{f.merci.length}}]</span></td>
+            <td><span *ngIf="f.pellicole">[{{f.pellicole.length}}]</span></td>
             <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
             <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
           </tr>
@@ -88,41 +87,44 @@ import { Candidatura } from "../model/candidatura";
       </div>
     </div>
     <ng-template #fornitura1>      
-      <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
-        <div *ngIf="fornituraModifica;then fornitura1_new;else fornitura1_edit"  >
+        <div *ngIf="fornituraModifica;then fornitura1_edit;else fornitura1_new">
           
         </div>
-      </form>
     </ng-template>
     <ng-template #fornitura1_new>
+      <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
       <p>Fornitore</p>
       <select name="fornitore" ngModel (click)="errorPopup_animation('',false)">
           <option value="" disabled>scegli un fornitore</option>
           <option *ngFor="let f of fornitori" [ngValue]="f">{{f.ragione_sociale}}</option>
       </select>
-      <p>Tipo</p>
-      <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+      
+      <!-- <input name="tipo" ngModel (click)="errorPopup_animation('',false)"> -->
       <div class="footer-popup">
         <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
           <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
         </button>
       </div>
+      </form>
     </ng-template>
+    
     <ng-template #fornitura1_edit >
+      <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
       <p>Fornitore</p>
       <select name="fornitore" ngModel (click)="errorPopup_animation('',false)">
           <option value="" disabled>Scegli un fornitore</option>
           
-          <option value="" >{{fornituraModifica?.fornitore?.ragione_sociale}}</option>
           <option *ngFor="let f of fornitori" [ngValue]="f">{{f.ragione_sociale}}</option>
       </select>
       <p>Tipo</p>
       <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+      
       <div class="footer-popup">
         <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
           <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
         </button>
       </div>
+      </form>
     </ng-template>
     <ng-template #fornitura2>      
       <form #fornitura2="ngForm" (ngSubmit)="creaFornitura(3,merci)">
@@ -150,13 +152,39 @@ import { Candidatura } from "../model/candidatura";
         </div>         
       </form>
     </ng-template>
+    
     <ng-template #fornitura3>      
-      <form #fornitura3="ngForm" (ngSubmit)="creaFornitura(4,fornitura3.value)">
-        <p>Fattura</p><br>
+      <form #fornitura3="ngForm" (ngSubmit)="creaFornitura(4,merci)">
+        <div style="display:flex;align-items:center;height:35px;"><p>Pellicola</p>
+          <p>[{{pellicole.length}}]</p>
+          <button type="button" class="item-button" style="margin:5px;background:orange;width:20px;height:20px;" (click)="errorPopup_animation('',false);creaPellicola(fornitura3)">
+              <span class="material-icons" style="font-size:14px;color:white;width:100%;">add</span>
+          </button>
+        </div>
+        <div *ngFor="let p of pellicole">{{p|json}}</div>
+        <br>
+        <p>Titolo</p>
+        <input name="titolo" ngModel (click)="errorPopup_animation('',false)">
+        <p>Data uscita</p>
+        <input type="date" name="data_uscita" ngModel (click)="errorPopup_animation('',false)">
+        <p>Data fine noleggio</p>
+        <input type="date" name="fine_noleggio" ngModel (click)="errorPopup_animation('',false)">
+        <p>Prezzo noleggio</p>
+        <input name="prezzo_noleggio" ngModel (click)="errorPopup_animation('',false)">
         
-        <p>Importo</p>
+        <div class="footer-popup">
+          <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+            <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+          </button>
+        </div>         
+      </form>
+    </ng-template>
+    <ng-template #fornitura4>      
+      <form #fornitura4="ngForm" (ngSubmit)="creaFornitura(5,fornitura4.value)">
+        
+        <p>Importo Fattura</p>
         <input name="importo" ngModel (click)="errorPopup_animation('',false)">
-        <p>Emissione</p>
+        <p>Emissione Fattura</p>
         <input type="date" name="emissione" ngModel (click)="errorPopup_animation('',false)">
         
         <div class="footer-popup">
@@ -167,8 +195,8 @@ import { Candidatura } from "../model/candidatura";
       </form>
     </ng-template>
 
-    <ng-template #fornitura4>      
-      <form #fornitura4="ngForm" (ngSubmit)="creaFornitura(5,fornitura4.value)">
+    <ng-template #fornitura5>      
+      <form #fornitura5="ngForm" (ngSubmit)="creaFornitura(6,fornitura5.value)">
         <p>{{fornituraResponse}}</p><br>
         
         <div class="footer-popup">
@@ -187,6 +215,7 @@ export class ResFornituraComponent{
   forniture: Fornitura[] = [];
   fornitori: Fornitore[] = [];
   merci: Merce[] = [];
+  pellicole: Pellicola[] = [];
   fornitureSel: number[]=[]
   fornituraCreata : Fornitura | null  = null;
   
@@ -248,11 +277,28 @@ export class ResFornituraComponent{
   creaMerce(form:any){
     if(form as NgForm){
       const merce = form.value;
-      if(merce.nome=="" || merce.tipo=="" || merce.prezzo=="" || merce.quantita==""){
+      console.log(merce)
+      // if(merce.nome=="" || merce.tipo=="" || merce.prezzo=="" || merce.quantita=="" ||merce.nome==null || merce.tipo==null || merce.prezzo==null || merce.quantita==null){
+        if(!merce.nome || !merce.tipo || !merce.prezzo || !merce.quantita ){
         this.errorPopup_animation("non puoi lasciare campi vuoti, completali",true)
       }
       else{
         this.merci.push(new Merce(merce.nome,merce.tipo,merce.prezzo,merce.quantita))
+        form.resetForm()
+      }
+    }
+  }
+  creaPellicola(form:any){
+    console.log(form)
+    if(form as NgForm){
+      const pellicola = form.value;
+      console.log(pellicola)
+      // if(merce.nome=="" || merce.tipo=="" || merce.prezzo=="" || merce.quantita=="" ||merce.nome==null || merce.tipo==null || merce.prezzo==null || merce.quantita==null){
+        if(!pellicola.titolo || !pellicola.data_uscita || !pellicola.fine_noleggio || !pellicola.prezzo_noleggio ){
+        this.errorPopup_animation("non puoi lasciare campi vuoti, completali",true)
+      }
+      else{
+        this.pellicole.push(new Pellicola(pellicola.titolo,pellicola.data_uscita,pellicola.fine_noleggio,pellicola.prezzo_noleggio))
         form.resetForm()
       }
     }
@@ -278,18 +324,25 @@ export class ResFornituraComponent{
     }
     else if(step==3){
       console.log(form)
-      if(form.length==0){
-        this.errorPopup_animation("Devi aggiungere almeno una merce! usa il pulsante [+]",true)
+      // if(form.length==0){
+      //   this.errorPopup_animation("Devi aggiungere almeno una merce! usa il pulsante [+]",true)
+      // }
+      // else{
+      if(this.fornituraCreata){
+        console.log(step);
+        this.fornituraCreata.merci=this.merci;
+        this.step_fornitura=step;
       }
-      else{
-        if(this.fornituraCreata){
-          console.log(step);
-          this.fornituraCreata.merci=this.merci;
-          this.step_fornitura=step;
-        }
-      }
+      // }
     }
     else if(step==4){
+      if(this.fornituraCreata){
+        console.log(step);
+        this.fornituraCreata.pellicole=this.pellicole;
+        this.step_fornitura=step;
+      }
+    }
+    else if(step==5){
       console.log(form)
       if(form.importo=="" || form.emissione==""){
         this.errorPopup_animation("non puoi lasciare campi vuoti, completali",true)
@@ -317,7 +370,7 @@ export class ResFornituraComponent{
       }
     }
     
-    else if(step==5){
+    else if(step==6){
       window.location.reload()
     }
   }
