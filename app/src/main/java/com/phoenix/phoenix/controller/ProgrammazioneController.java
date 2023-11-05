@@ -18,17 +18,17 @@ public class ProgrammazioneController {
     public ProgrammazioneController(ProgrammazioneService service){this.service=service;}
 
     @GetMapping
-    public List<Programmazione> getAll(){return service.getAllValid();}
+    public List<Programmazione> getProgrammazioni(){return service.getAllValid();}
 
     @PostMapping(path = "/create")
-    public ResponseEntity create(@RequestBody Programmazione programmazione){return service.create(programmazione);}
+    public ResponseEntity creaProgrammazione(@RequestBody Programmazione programmazione){return service.create(programmazione);}
 
     @PostMapping(path = "/delete")
-    public ResponseEntity<String> delete(@RequestBody List<Long> programmazioni){return service.delete(programmazioni);}
+    public ResponseEntity<String> rimuoviProgrammazioni(@RequestBody List<Long> programmazioni){return service.delete(programmazioni);}
 
     @GetMapping("/{id}")
     public List<Programmazione> getAllFromPellicola(@PathVariable("id") long pellicola){return service.getAllFromPellicola(pellicola);}
 
     @GetMapping("/{id}/acquisto")
-    public Optional<Programmazione> get(@PathVariable("id") Long id){return service.getById(id);}
+    public Optional<Programmazione> getProgrammazioneSingola(@PathVariable("id") Long id){return service.getById(id);}
 }

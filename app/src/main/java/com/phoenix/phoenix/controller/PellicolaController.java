@@ -30,16 +30,16 @@ public class PellicolaController {
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity create(@RequestBody Pellicola pellicola){return service.create(pellicola);}
+    public ResponseEntity creaPellicola(@RequestBody Pellicola pellicola){return service.create(pellicola);}
 
     @PostMapping(path = "/update")
-    public ResponseEntity update(@RequestBody Pellicola pellicola){
+    public ResponseEntity modificaPellicola(@RequestBody Pellicola pellicola){
         return service.update(pellicola);
 //        return service.update(body.id_pellicola,body.titolo, body.data, body.durata, body.generi, body.pegi, body.trama, body.regista, body.attori, body.trailer, body.locandina, body.id_fornitura);
     }
 
     @PostMapping(path = "/delete")
-    public ResponseEntity delete(@RequestBody List<Long> pellicole){return service.delete(pellicole);}
+    public ResponseEntity rimuoviPellicola(@RequestBody List<Long> pellicole){return service.delete(pellicole);}
 }
 
 class PellicolaBody{

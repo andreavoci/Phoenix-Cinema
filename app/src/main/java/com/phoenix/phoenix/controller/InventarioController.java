@@ -21,7 +21,7 @@ public class InventarioController {
     private final InventarioService service;
 
     @PostMapping(path = "/delete")
-    public ResponseEntity delete(@RequestBody List<Long> merce){
+    public ResponseEntity rimuoviMerci(@RequestBody List<Long> merce){
         return service.deletemerce(merce);
     }
 

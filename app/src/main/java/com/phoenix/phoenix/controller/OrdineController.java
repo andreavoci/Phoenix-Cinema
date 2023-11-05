@@ -19,6 +19,6 @@ public class OrdineController {
     public OrdineController(OrdineService service){this.service=service;}
 
     @PostMapping
-    public List<Ordine> getAll(@RequestBody AuthBody<String> authBody){return service.getAll(authBody);}
+    public List<Ordine> getOrdini(@RequestBody AuthBody<String> authBody){return service.getAll(authBody);}
 
 }

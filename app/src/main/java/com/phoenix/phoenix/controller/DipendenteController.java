@@ -26,7 +26,7 @@ public class DipendenteController {
     public DipendenteController(DipendenteService service){ this.service=service;}
 
     @GetMapping
-    public List<Dipendente> getAll(){return service.getAll();}
+    public List<Dipendente> getDipendenti(){return service.getAll();}
 
     @GetMapping(path = "/{id}")
     public Optional<Dipendente> getDipendenteByUser(@PathVariable("id") Long userID){
@@ -40,13 +40,13 @@ public class DipendenteController {
     }
 
     @PostMapping(path = "/update")
-    public ResponseEntity updateDipendente(@RequestBody DipendenteBody body){
+    public ResponseEntity modificaDipendente(@RequestBody DipendenteBody body){
         System.out.println(body.email+","+ body.nome+","+body.cognome+","+body.cf+","+body.genere+","+ body.data+","+ body.indirizzo+","+body.telefono+","+body.mansione+","+body.userID);
         return service.update(body.email, body.nome, body.cognome, body.cf, body.genere, body.data, body.indirizzo, body.telefono, body.mansione, body.userID);
     }
 
     @PostMapping(path = "/delete")
-    public ResponseEntity deleteDipendente(@RequestBody List<Long> dipendenti) {
+    public ResponseEntity rimuoviDipendenti(@RequestBody List<Long> dipendenti) {
         return service.delete(dipendenti);
     }
 }

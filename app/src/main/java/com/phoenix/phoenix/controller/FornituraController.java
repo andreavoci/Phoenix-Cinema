@@ -21,17 +21,17 @@ public class FornituraController {
 
 
     @GetMapping
-    public List<Fornitura> getAll(){
+    public List<Fornitura> getForniture(){
         return service.getAll();
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity<String> create(@RequestBody Fornitura fornitura){
+    public ResponseEntity<String> creaFornitura(@RequestBody Fornitura fornitura){
         return service.create(fornitura);
     }
 
     @PostMapping(path = "/delete")
-    public ResponseEntity delete(@RequestBody List<Long> forniture){
+    public ResponseEntity rimuoviForniture(@RequestBody List<Long> forniture){
         return service.deleteFornitura(forniture);
     }
 

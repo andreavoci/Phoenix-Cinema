@@ -20,21 +20,21 @@ public class SalaController {
     }
 
     @GetMapping
-    public List<Sala> getAll(){
+    public List<Sala> getSale(){
         return service.getAll();
     }
 
 
     @PostMapping(path = "/create")
-    public ResponseEntity create(@RequestBody Sala sala){
+    public ResponseEntity creaSala(@RequestBody Sala sala){
         return service.create(sala);
     }
 
     @PostMapping(path = "/update")
-    public ResponseEntity update(@RequestBody Sala sala){ return service.update(sala); }
+    public ResponseEntity modificaSala(@RequestBody Sala sala){ return service.update(sala); }
 
     @PostMapping(path = "/delete")
-    public ResponseEntity delete(@RequestBody List<Long> sale){
+    public ResponseEntity rimuoviSale(@RequestBody List<Long> sale){
         return service.delete(sale);
     }
 

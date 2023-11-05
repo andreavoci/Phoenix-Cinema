@@ -26,12 +26,12 @@ public class BigliettoController {
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity create(@RequestBody Biglietto biglietto){
+    public ResponseEntity creaTicket(@RequestBody Biglietto biglietto){
         return service.create(biglietto);
     }
 
     @DeleteMapping(path = "/delete/{biglietto}")
-    public ResponseEntity delete(@PathVariable("biglietto") Long id){
+    public ResponseEntity rimuoviTicket(@PathVariable("biglietto") Long id){
         return service.delete(id);
     }
 

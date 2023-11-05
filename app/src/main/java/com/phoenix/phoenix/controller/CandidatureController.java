@@ -24,17 +24,17 @@ public class CandidatureController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<String> submitCandidature(@RequestBody CandidaturaBody body) {
+    public ResponseEntity<String> inviaCandidatura(@RequestBody CandidaturaBody body) {
         return candidatureService.saveCandidature(body.nome, body.cognome, body.email, body.jobTitle);
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteCandidature(@RequestBody List<Long> candidature) {
+    public ResponseEntity<String> rimuoviCandidatura(@RequestBody List<Long> candidature) {
         return candidatureService.delete(candidature);
     }
 
     @GetMapping
-    public List<Candidature> getAll(){return candidatureService.getAll();}
+    public List<Candidature> getCandidature(){return candidatureService.getAll();}
 
     static class CandidaturaBody{
         public String nome;
