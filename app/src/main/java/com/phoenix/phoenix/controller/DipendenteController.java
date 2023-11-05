@@ -41,7 +41,6 @@ public class DipendenteController {
 
     @PostMapping(path = "/update")
     public ResponseEntity modificaDipendente(@RequestBody DipendenteBody body){
-        System.out.println(body.email+","+ body.nome+","+body.cognome+","+body.cf+","+body.genere+","+ body.data+","+ body.indirizzo+","+body.telefono+","+body.mansione+","+body.userID);
         return service.update(body.email, body.nome, body.cognome, body.cf, body.genere, body.data, body.indirizzo, body.telefono, body.mansione, body.userID);
     }
 
