@@ -9,19 +9,20 @@ import { Router } from '@angular/router';
   template: `
   <div class="container">
     <div *ngIf="token != null; else elseBlock"> 
-      <h1>ACCESSO GIA' EFFETTUATO</h1>
-      <button (click)="logout()" type="submit" class="button">Logout</button>
+      <p style="color:white">error</p>
     </div>
     <ng-template #elseBlock>
-      <div id="userDiv"> 
-        <br><br><br>LOGIN
+      <br><br><br><br><br><br>
+      <div class="container-form"> 
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+          <p id="title">LOGIN</p><br>
           <input type="text" name="email" ngModel placeholder="email"><br><br>
           <input type="password" name="password" ngModel placeholder="password"><br><br>
-          <b><p style="color:red;weight:bold" id="loginform-error"><p></b>
+          <b><p style="color:black;weight:bold" id="loginform-error"><p></b>
           <button type="submit">Login</button>
         </form>
-        <p>Non sei registrato? Registrati <a href="/registrazione">QUI</a></p>
+        <br>
+        <p style="font-size:12px;color:white;">Non sei registrato? Registrati <a href="/registrazione">QUI</a></p>
       </div>
     </ng-template>
   </div>
@@ -30,19 +31,51 @@ import { Router } from '@angular/router';
     `
     .container{
       width: 100%;
-      background: gray;
       height: 100%;
       min-height: calc(100vh - 80px);
+      backdrop-filter: blur(5px);
+      z-index:1;
       display: flex;
       overflow: auto;
       align-items: center;
       flex-direction: column;
       justify-content: flex-start;
     }
-    .button{
-      font-size:24px;
-      padding:10px 15px;
+    .container-form{
+      display:flex;
+      padding:20px 30px 10px 30px;
+      border-radius:20px;
+      border:3px solid white;
+      flex-direction:column;
+      background: rgba(250,108,20,1);
+      justify-content:space-between;
+      align-items:center;
+      text-align:center;
     }
+    #title{
+      font-size:28px;
+      font-weight:bold;
+      color:white;
+    }
+    input{
+      border-radius:10px;
+      border:1px solid black;
+      font-size:20px;
+      text-align:center;
+    }
+    button{
+      font-size:16px;
+      padding:5px 15px;
+      border-radius:10px;
+      background:white;
+      border:2px solid black;
+    }
+    button:hover{
+      cursor:pointer;
+      color:white;
+      background:gray;
+    }
+
     `,
   ]
 })
@@ -53,8 +86,9 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.token = AuthService.getToken("token")
-    console.log(this.token)
-    console.log(AuthService.getToken("id"))
+    if(this.token){
+      this.router.navigate(['/profilo']);
+    }
   }
 
   login(form: any){

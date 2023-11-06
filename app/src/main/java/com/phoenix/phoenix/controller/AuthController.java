@@ -23,7 +23,7 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody LoginBody body){return service.login(body.email, body.password);}
 
     @PostMapping(path = "/register")
-    public ResponseEntity<String> register(@RequestBody LoginBody body){return service.register(body.email, body.password);}
+    public ResponseEntity<String> register(@RequestBody RegisterBody body){return service.register(body.nome, body.cognome,body.email, body.password);}
 
 //    public User saveCustomer(User savedUser) {
 //        return service.saveCustomer(savedUser);
@@ -31,6 +31,12 @@ public class AuthController {
 }
 
 class LoginBody {
+    public String email;
+    public String password;
+}
+class RegisterBody {
+    public String nome;
+    public String cognome;
     public String email;
     public String password;
 }

@@ -26,10 +26,10 @@ public class AuthService {
         this.repository = repository;
     }
 
-    public ResponseEntity<String> register(String email, String password){
+    public ResponseEntity<String> register(String nome, String cognome, String email, String password){
         Optional<User> userByEmail = repository.findUserByEmail(email);
         if(! userByEmail.isPresent()){
-            User user = new User(email, encoder.encode(password));
+            User user = new User(nome,cognome,email, encoder.encode(password));
             user.setRuolo(RuoloUtente.CLIENTE);
             repository.save(user);
             String token = Util.generateToken();

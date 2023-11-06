@@ -39,7 +39,7 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email taken");
         }
         else{
-            User u = new User(user.getEmail(), encoder.encode(user.getPassword()));
+            User u = new User(user.getNome(),user.getCognome(),user.getEmail(), encoder.encode(user.getPassword()));
             return ResponseEntity.ok(repository.save(user));
         }
     }
