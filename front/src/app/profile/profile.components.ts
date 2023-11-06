@@ -109,9 +109,9 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             </span>
           </div>
           <div style="display:flex;height: 60%;flex-direction:column; padding:0px 5%;align-items:center;">
-            <button class="btn-operazione" style="width: 80%;">CARRELLO</button>
-            <button class="btn-operazione" style="width: 80%;">ORDNI</button>
-            <button class="btn-operazione" style="width: 80%;">BIGLIETTI</button>
+            <button class="btn-operazione" style="width: 80%;" routerLink="/carrello">CARRELLO</button>
+            <button class="btn-operazione" style="width: 80%;" routerLink="/ordini">ORDNI</button>
+            <!-- <button class="btn-operazione" style="width: 80%;">BIGLIETTI</button> -->
           </div>
 
         </div> 
