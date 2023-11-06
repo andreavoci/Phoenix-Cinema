@@ -14,7 +14,6 @@ import { User } from '../model/user';
         </a>
       </div>
       <div class="navbar-menu">
-        <a class="navbar-menu-item" routerLink="/pellicola" routerLinkActive="active">pellicole</a>
         <a class="navbar-menu-item" routerLink="/about-us" routerLinkActive="active">About Us</a>
         <a class="navbar-menu-icons" routerLink="/carrello" routerLinkActive="active">
         <span class="material-icons" style="font-size:30px;">shopping_cart</span>
@@ -30,7 +29,9 @@ import { User } from '../model/user';
       </a>
     </ng-template>  
     <ng-template #guest>
-      <a class="navbar-menu-item" routerLink="/login" routerLinkActive="active">Login</a>
+      <a class="navbar-menu-icons" routerLink="/login" routerLinkActive="active">
+        <span class="material-icons" style="font-size:30px;">account_circle</span>
+      </a>    
     </ng-template>
   `,
   styles: [

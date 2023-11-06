@@ -22,7 +22,10 @@ public class PellicolaController {
     public PellicolaController(PellicolaService service){ this.service=service;}
 
     @GetMapping
-    public List<Pellicola> getAllMovies(){return service.getAllMovies();}
+    public List<Pellicola> getAllMovies(){
+        List<Pellicola> pell = service.getAllMovies();
+        System.out.println(pell.get(0).getFornitura().getFornitore());
+        return service.getAllMovies();}
 
     @GetMapping("/{id}")
     public Pellicola getPellicola(@PathVariable("id") Long id){

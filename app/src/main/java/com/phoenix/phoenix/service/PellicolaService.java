@@ -33,6 +33,7 @@ public class PellicolaService {
     }
     public ResponseEntity update(Pellicola editedPellicola){
         Optional<Pellicola> pellicolaOpt = repository.findById(editedPellicola.getId());
+        System.out.println(editedPellicola);
         if(pellicolaOpt.isPresent()){
             if(editedPellicola.getTitolo()!=null) pellicolaOpt.get().setTitolo(editedPellicola.getTitolo());
             if(editedPellicola.getFornitura()!=null) pellicolaOpt.get().setFornitura(editedPellicola.getFornitura());
@@ -47,6 +48,8 @@ public class PellicolaService {
             if(editedPellicola.getLocandina()!=null) pellicolaOpt.get().setLocandina(editedPellicola.getLocandina());
             if(editedPellicola.getTrailer()!=null) pellicolaOpt.get().setTrailer(editedPellicola.getTrailer());
             if(editedPellicola.getFine_noleggio()!=null) pellicolaOpt.get().setFine_noleggio(editedPellicola.getFine_noleggio());
+//            System.out.println(pellicolaOpt.get().getDurata());
+//
             repository.save(pellicolaOpt.get());
             return ResponseEntity.ok("Pellicola modificata!");
         }

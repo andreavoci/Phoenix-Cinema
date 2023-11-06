@@ -18,8 +18,15 @@ public class FornituraService {
 
     @Autowired
     private FornituraRepository repository;
+
     @Autowired
     private InventarioRepository inventarioRepository;
+
+    @Autowired
+    private ProgrammazioneRepository programmazioneRepository;
+
+    @Autowired
+    private ProgrammazioneService programmazioneService;
 
 
     @Autowired
@@ -43,7 +50,17 @@ public class FornituraService {
         return ResponseEntity.ok("Fornitura creata correttamente");
     }
     public ResponseEntity deleteFornitura(List<Long> forniture) {
-        forniture.forEach(f -> {
+        forniture.forEach
+                (f -> {
+            Optional<Fornitura> fornituraOpt = repository.findById(f);
+            if(fornituraOpt.isPresent()){
+                fornituraOpt.get().getPellicole().forEach(pellicola -> {
+                    List<Programmazione> programmazioni = programmazioneRepository.findProgrammazioneByPellicolaId(pellicola.getId());
+                    programmazioni.forEach(programmazione -> {
+                        programmazioneRepository.delete(programmazione);
+                    });
+                });
+            }
             repository.deleteById(f);
         });
         return ResponseEntity.ok("Cancellata correttamente");

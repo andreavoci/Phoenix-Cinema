@@ -23,7 +23,7 @@ public class Pellicola {
     private String titolo;
 
     @ManyToOne
-    @JoinColumn(name = "id_fornitura")
+    @JoinColumn(name = "fornitura")
     @JsonIgnore
     private Fornitura fornitura;
 
@@ -33,6 +33,7 @@ public class Pellicola {
 
     private String generi;
 
+    @Column(columnDefinition = "text")
     private String trama;
 
     private int pegi;

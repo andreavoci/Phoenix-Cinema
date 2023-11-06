@@ -40,11 +40,11 @@ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
           <div class="block" style="justify-content:start;height: auto;">
             <span class="info-row">
               <p class="label">Nome<p>
-              <p class="info">{{dipendente.nome}}<p>
+              <p class="info">{{user.nome}}<p>
             </span>
             <span class="info-row">
               <p class="label">Cognome<p>
-              <p class="info">{{dipendente.cognome}}<p>
+              <p class="info">{{user.cognome}}<p>
             </span>
             <span class="info-row">
               <p class="label">Email<p>

@@ -18,7 +18,7 @@ export namespace Util {
 
     export function getPagineGestione(ruolo: string): string[] {
         if(ruolo=="DIRETTORE"){
-            return ["fornitura","fornitore","inventario","fatture"]
+            return ["fornitura","fornitore","inventario","fatture","proiezione"]
         }
         else if(ruolo=="HR"){
             return ["hr"]

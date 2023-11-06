@@ -34,6 +34,7 @@ import { Candidatura } from "../model/candidatura";
             <div *ngIf="step_fornitura==2 ;then fornitura2"></div>
             <div *ngIf="step_fornitura==3 ;then fornitura3"></div>
             <div *ngIf="step_fornitura==4 ;then fornitura4"></div>
+            <div *ngIf="step_fornitura==5 ;then fornitura5"></div>
           </div>
         </div>
       </dialog>
