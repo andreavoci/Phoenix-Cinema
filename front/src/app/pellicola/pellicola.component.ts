@@ -28,7 +28,7 @@ import { Util } from "../services/util";
     <a style="color: azure; display: flex; height: 40px;">Prossimamente</a>
     <div class="container-film">
         <div *ngFor="let p of nuove">
-        <a [routerLink]="[p.id]">
+        <a [routerLink]="['/pellicola', p.id]">
             <img src="{{p.locandina}}">
             <span class="actions">
                 <div class="center">
