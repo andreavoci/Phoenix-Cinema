@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div class="center">
       <h1>PHOENIX CINEMA</h1>
       <!-- <button [routerLink]="['/pellicola']">In programmazione</button> -->
-      <br><br><br>
+      
       <app-pellicola></app-pellicola>
     </div>
   `,

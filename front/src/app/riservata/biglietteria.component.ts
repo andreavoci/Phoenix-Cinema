@@ -57,7 +57,7 @@ import { Programmazione } from "../model/programmazione";
             </div>
             <div style="background:rgba(255,255,255,0.6);width:auto;" class="divider">
                 <div *ngIf="programmazioneSelezionata && postiAggiunti && getKeys(postiAggiunti).length != 0" class="informazioni">
-                    <div><p class="resoconto-posto" *ngFor="let p of postiAggiunti | keyvalue">{{p.value[0]}} :   {{ p.value[1]=='normale' ? programmazioneSelezionata.prezzo : programmazioneSelezionata.prezzo*0.75}} €</p></div>
+                    <div><p class="resoconto-posto" *ngFor="let p of postiAggiunti | keyvalue">{{p.value[0]}} :   {{ p.value[1]=='normale' ? programmazioneSelezionata.prezzo : calcolaRidotto(programmazioneSelezionata)}} €</p></div>
                     <div>
                         <p style="font-weight:bold;">Totale : {{totalCost}}€</p>
                         <button class="button-checkout" (click)="checkout()">checkout</button>
@@ -382,9 +382,10 @@ export class ResBiglietteriaComponent{
                     this.totalCost+=this.programmazioneSelezionata.prezzo;
                 }
                 else{
-                    this.totalCost+=this.programmazioneSelezionata.prezzo*0.75;
+                    this.totalCost+=this.calcolaRidotto(this.programmazioneSelezionata);
                 }
             }
+            this.totalCost = Number(this.totalCost.toFixed(2))
         }
     }
 
@@ -438,6 +439,9 @@ export class ResBiglietteriaComponent{
             //     e.classList.add("button-clicked")
             // }
         });
+    }
+    calcolaRidotto(programmazione:Programmazione){
+        return Number((programmazione.prezzo*0.75).toFixed(2))
     }
     checkout(){
         

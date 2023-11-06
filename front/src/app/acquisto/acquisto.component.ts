@@ -12,8 +12,8 @@ import { AuthBody } from '../model/authbody';
 @Component({
   selector: 'app-acquisto',
   template: `
-    <br>
-    <div *ngIf="programmazioneSelezionata"> 
+    <div class="container" *ngIf="programmazioneSelezionata"> 
+      <br>
       <div class="titolo">
         <h1>{{programmazioneSelezionata.pellicola.titolo}} </h1>
         <p>{{programmazioneSelezionata.orario | date:"dd/MM/yyyy [HH:mm]"}}</p>
@@ -22,7 +22,7 @@ import { AuthBody } from '../model/authbody';
           <button class="acquista" (click)="addToCart()">ACQUISTA</button><br>
         </div>
       </div>
-      <div class="container">
+      <div style="display:flex">
         <div class="sala">
           <div class="posti">
             <button class="posto"
@@ -36,7 +36,7 @@ import { AuthBody } from '../model/authbody';
             </button>
           </div>
         </div>
-        <div class="informazioni" style="color: white">
+        <div class="informazioni" style="color: black">
           <h3>Posti selezionati:</h3>
           <p style="font-size:15px;font-weight:bold;"*ngFor="let p of postiAggiunti | keyvalue">[ {{p.value}} ] - {{programmazioneSelezionata.prezzo}}€</p>
           
@@ -47,7 +47,9 @@ import { AuthBody } from '../model/authbody';
   `,
   styles: [`
     .container{
-      display:flex;
+      height: 100%;
+      min-height: calc(100vh - 80px);
+      background:rgba(255,255,255,0.5);
     }
     img{
       width:40px;
@@ -80,7 +82,7 @@ import { AuthBody } from '../model/authbody';
       margin:5px 15px;
     }
     .total-cost{
-      color:white;
+      color:black;
       font-weight:bold;
       font-size:20px;
       padding:0px 15px;
@@ -92,20 +94,25 @@ import { AuthBody } from '../model/authbody';
       border-radius:5px;
       font-weight:bold;
       font-size:15px;
-      color:white;
+      color:black;
       background:rgba(250,108,20,1);
     }
-
+    .sala{
+      width:80%;
+      display:flex;
+      flex-direction:column;
+    }
     .posti {
       display: grid;
-      grid-template-columns: repeat(10, minmax(45px, 1fr));
+      grid-template-columns: repeat(10, minmax(45px, 50px));
       gap: 1px;
       border: none;
-      background-color: #fff;
+      background-color: rgba(255,255,255,0);
       padding: 5px;
       flex-basis: calc(20% - 10px);
       margin:10px 10px 0px 25px;
       
+      justify-content:center;
     }
 
     .posto {
@@ -137,6 +144,8 @@ import { AuthBody } from '../model/authbody';
       flex-direction:column;
       justify-content: center;
       align-items: center;
+      padding:10px;
+      width:20%;
       height: 100% /* Regola l'altezza desiderata */
     }
 

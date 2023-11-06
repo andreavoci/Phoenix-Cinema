@@ -8,5 +8,6 @@ public enum Mansione {
     PROIEZIONE,
     MAGAZZINO,
     HR,
+    CONTABILE,
     SOCIALMEDIAMANAGER
 }
