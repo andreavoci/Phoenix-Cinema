@@ -23,7 +23,7 @@ public class Fornitura {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "fornitore")
+    @JoinColumn(name = "fornitore_id")
     private Fornitore fornitore;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -187,8 +187,8 @@ import { Fornitura } from "../model/fornitura";
           <input name="trailer" ngModel [(ngModel)]="pellicolaSelezionata.trailer" (click)="errorPopup_animation('',false)">
           <p>Locandina</p>
           <input name="locandina" ngModel [(ngModel)]="pellicolaSelezionata.locandina" (click)="errorPopup_animation('',false)">
-          <p>Fornitura</p>
-          <input name="id_fornitura" ngModel [(ngModel)]="idFornituraPell" [readOnly]="true" (click)="errorPopup_animation('',false)">
+          <!-- <p>Fornitura</p>
+          <input name="id_fornitura" ngModel [(ngModel)]="idFornituraPell" [readOnly]="true" (click)="errorPopup_animation('',false)"> -->
           <div class="footer-popup">
             <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
               <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>

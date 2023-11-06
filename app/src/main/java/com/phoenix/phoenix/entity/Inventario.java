@@ -19,6 +19,7 @@ public class Inventario {
         this.prezzo = prezzo;
         this.quantitaInStock = quantitaInStock;
         this.quantitaEsposta = quantitaEsposta;
+        this.quantitaTot = this.quantitaEsposta + this.quantitaInStock;
     }
 
     @Id
@@ -35,6 +36,8 @@ public class Inventario {
     private int quantitaInStock;//quantitaTot= quantitaInStock + quantitaEsposta
 
     private int quantitaEsposta;
+
+    private int quantitaTot;
 
 }
 
