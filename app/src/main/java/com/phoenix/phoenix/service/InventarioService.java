@@ -1,6 +1,7 @@
 package com.phoenix.phoenix.service;
 
 import com.phoenix.phoenix.entity.Fornitura;
+import com.phoenix.phoenix.entity.Inventario;
 import com.phoenix.phoenix.repository.InventarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,7 @@ public class InventarioService {
         });
         return ResponseEntity.ok("Cancellata correttamente");
     }
+
+    public List<Inventario> getAll() {return repository.findAll();}
 }
 

@@ -29,6 +29,9 @@ public class Ordine {
 
     private Date data;
 
+    @OneToOne
+    private Reso reso;
+
     public Ordine(User cliente, List<Biglietto> biglietti, double sconto, Date data) {
         this.cliente = cliente;
         this.biglietti = biglietti;

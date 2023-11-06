@@ -85,6 +85,7 @@ public class FornituraService {
             for(Inventario i: inventario){
                 if(merce.getNome().equals(i.getNome())) {
                     i.setQuantitaInStock(merce.getQuantita() + i.getQuantitaInStock());
+                    i.setQuantitaTot(i.getQuantitaInStock() + i.getQuantitaEsposta());
                     trovato = true;
                 }
 

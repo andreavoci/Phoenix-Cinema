@@ -4,61 +4,74 @@ import { RiservataComponent } from './riservata.component';
 import { Util } from '../services/util';
 import { Fornitura } from '../model/fornitura';
 import { Merce } from '../model/merce';
+import { Inventario } from '../model/inventario';
 @Component({
   selector: 'app-magazziniere',
   template: `
   <div class="container">
     <br><br><br>
-    <p class="titolo">VISUALIZZAZIONE FORNITURE</p>
-    <div class="table-div">
-      <table>
-        <tr class="title">
-          <th></th>
-          <th>Id</th>
-          <th>Prezzo</th>
-          <th>Quantità</th>
-          <th>Scadenza</th>
-          <th>Fornitore</th>
-          <th>Stato</th>
-          <th>Data Arrivo</th>
-        </tr>
-        <tr class="row" *ngFor="let fornitura of forniture" >
+    <p class="titolo">VISUALIZZAZIONE FORNITURE ORDINATE</p>
+      <div class="table-div">
+        <table>
+          <tr class="title">
+            <th></th>
+            <th>ID</th>
+            <th>Fornitore</th>
+            <th>Fattura</th>
+            <th>Tipo</th>
+            <th>Prezzo</th>
+            <th>Merci</th>
+            <th>Pellicole</th>
+            <th>Arrivo</th>
+            <th>Scadenza</th>
+          </tr>
+          <tr class="row" *ngFor="let f of forniture">
           <td>
-            <div *ngIf="!fornitura.arrivo">
-              <button class="item-button" style="background:green" (click)="inviaDataArrivo(fornitura.id);">
+            <div *ngIf="!f.arrivo">
+              <button class="item-button" style="background:green" (click)="inviaDataArrivo(f.id);">
                 <span class="material-icons" style="font-size:20px;color:white;width:20px;height:20px;">add</span>
               </button>
             </div>
           </td>
-          <td>{{fornitura.id}}</td>
-          <td>{{fornitura.prezzo | currency:'EUR'}}</td>
-          <td>{{fornitura.quantita}}</td>
-          <td>{{fornitura.scadenza | date: 'dd/MM/yyyy'}}</td>
-          <td>{{fornitura.fornitore}}</td>
-          <td>{{fornitura.stato}}</td>
-          <td>{{fornitura.arrivo | date: 'dd/MM/yyyy'}}</td>
-        </tr>
-      </table>
+            <td>{{f.id}}</td>
+            <td><span *ngIf="f.fornitore">{{f.fornitore.ragione_sociale}}</span></td>
+            <td><span *ngIf="f.fattura">{{f.fattura.id}}</span></td>
+            <td>{{f.tipo}}</td>
+            <td>{{f.prezzo}}</td>
+            <td><span *ngIf="f.merci">[{{f.merci.length}}]</span></td>
+            <td><span *ngIf="f.pellicole">[{{f.pellicole.length}}]</span></td>
+            <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
+            <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
+          </tr>
+        </table>
+    </div>
+    <br><br><br>
+    <p class="titolo">VISUALIZZAZIONE INVENTARIO</p>
+      <div class="table-div">
+        <table>
+          <tr class="title">
+            <th></th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Prezzo</th>
+            <th>Stock</th>
+            <th>Esposta</th>
+            <th>Totale</th>
+          </tr>
+          <tr class="row" *ngFor="let i of inventario">
+            <td></td>
+            <td>{{i.id}}</td>
+            <td>{{i.nome}}</td>
+            <td>{{i.tipo}}</td>
+            <td>{{i.prezzo}}</td>
+            <td>{{i.quantitaInStock}}</td>
+            <td>{{i.quantitaEsposta}}</td>
+            <td>{{i.quantitaTot}}</td>
+          </tr>
+        </table>
     </div>
 
-    <div class="table-div">
-      <table>
-        <tr class="title">
-          <th></th>
-          <th>Nome</th>
-          <th>Tipo</th>
-          <th>Prezzo</th>
-          <th>Quantità</th>
-        </tr>
-        <tr class="row" *ngFor="let m of  merci">
-          <td><input type="checkbox" [value]="m.id" (change)="onCheckChangeFornitura($event)" style="width:20px;height:20px"></td>
-          <td>{{m.nome}}</td>
-          <td>{{m.tipo}}</td>
-          <td>{{m.prezzo}}</td>
-          <td>{{m.quantita}}</td>
-        </tr>
-      </table>
-    </div>
   </div>
   `,
   styleUrls: ["./riservata.css"],
@@ -82,7 +95,7 @@ export class ResMagazziniereComponent {
   dataArrivo: string | null = null; 
   forniture : Fornitura[] = [];
   selectedForniture: any = {};
-  merci: Merce[] = []
+  inventario: Inventario[] = []
 
   constructor(private http: HttpClient){
   }
@@ -118,10 +131,9 @@ export class ResMagazziniereComponent {
 
   inviaDataArrivo(id: number) {
       this.selectedForniture = this.forniture.find((f)=>f.id == id);
+      this.http.post(Util.fornitureServerUrl + '/setDataArrivo', this.selectedForniture).subscribe((response) => { 
+      });
       window.location.reload()
-      this.http.post(Util.fornitureServerUrl + '/setDataArrivo', this.selectedForniture).subscribe((response) => {
-        
-    });
   }
   
   getForniture() {
@@ -143,11 +155,11 @@ export class ResMagazziniereComponent {
   isFornituraSelected(fornitura: Fornitura): boolean {
     console.log(this.selectedForniture)
     return this.selectedForniture.includes(fornitura);
-  }
+  }  
   getMerce() {
-    this.http.get<Merce[]>('http://localhost:8091/api/merce').subscribe(result=>{
-      this.merci=result;
-      console.log(this.forniture)
+    this.http.get<Inventario[]>('http://localhost:8091/api/inventario').subscribe(result=>{
+      this.inventario=result;
+      console.log(this.inventario)
     })
   }
   
