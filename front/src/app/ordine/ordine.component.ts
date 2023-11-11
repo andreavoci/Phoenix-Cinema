@@ -32,7 +32,7 @@ import { Reso } from '../model/reso';
          <p>{{getPosti(o)}}</p>
      </section>
      <section class="content-annulla" >
-      <button (click)="annullaOrdine(o)">annulla</button>
+      <button (click)="annullaOrdine(o)" *ngIf="o.biglietti[0].programmazione.orario < this.oggi">Rimborso</button>
      </section>
     </div>
  </div>
@@ -211,6 +211,7 @@ export class OrdineComponent {
   resi: Reso[] = [];
   ordini: Ordine[] = [];
   id:number = -1;
+  oggi: Date = new Date();
 
   ngOnInit(): void {
     // Recupera il parametro 'id' dall'URL

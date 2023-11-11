@@ -214,6 +214,8 @@ export class AcquistoComponent {
         
         this.router.navigate(['/carrello']);
       })
+      }else{
+        this.router.navigate(['/login']);
       }
     }
   }

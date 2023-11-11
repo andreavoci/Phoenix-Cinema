@@ -1,22 +1,24 @@
 package com.phoenix.phoenix.service;
 
-import com.phoenix.phoenix.entity.Biglietto;
-import com.phoenix.phoenix.entity.Ordine;
-import com.phoenix.phoenix.entity.Reso;
-import com.phoenix.phoenix.repository.OrdineRepository;
-import com.phoenix.phoenix.repository.ResoRepository;
-import com.phoenix.phoenix.repository.SalaRepository;
+import com.phoenix.phoenix.entity.*;
+import com.phoenix.phoenix.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ResoService {
     private ResoRepository repository;
+    @Autowired
     private OrdineRepository ordineRepository;
+    @Autowired
+    private BigliettoRepository bigliettoRepository;
+    @Autowired
+    private ProgrammazioneRepository programmazioneRepository;
 
     @Autowired
     public ResoService(ResoRepository repository){ this.repository = repository; }
@@ -35,7 +37,21 @@ public class ResoService {
             Reso r = resoById.get();
             r.setStato("ACCETTATO");
             Ordine ordine = r.getOrdine();
-            List<Biglietto> biglietti = ordine.getBiglietti();
+            List<Biglietto> bigliettiOrdine = bigliettoRepository.findBigliettoByOrdine(ordine);
+            Programmazione programmazione;
+            for(Biglietto b : bigliettiOrdine){
+                b.setOrdine(null);
+                long postoID = b.getPosto();
+                programmazione = b.getProgrammazione();
+                Collection<Posto> posti = programmazione.getPosti();
+                for (Posto p : posti){
+                    if(p.getId()==postoID){
+                        p.setStato("LIBERO");
+                    }
+                }
+                programmazioneRepository.save(programmazione);
+                bigliettoRepository.delete(b);
+            }
             return ResponseEntity.ok(repository.save(r));
         }
     }

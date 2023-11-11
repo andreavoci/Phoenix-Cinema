@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Ordine {
     private Date data;
 
     @OneToOne
+    @JsonIgnore
     private Reso reso;
 
     public Ordine(User cliente, List<Biglietto> biglietti, Date data) {
