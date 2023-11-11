@@ -29,8 +29,8 @@ public class VenditaController {
     @PostMapping(path = "/create")
     public ResponseEntity aggiungiVendita(@RequestBody VenditaBody body) { return this.service.create(body.userID, body.biglietti, body.elementi);}
 
-    @PostMapping(path = "/delete")
-    public ResponseEntity rimuoviVendita(@RequestBody Long id){ return service.delete(id);}
+//    @PostMapping(path = "/delete")
+//    public ResponseEntity rimuoviVendita(@RequestBody Long id){ return service.delete(id);}
 }
 
 class VenditaBody{
