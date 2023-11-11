@@ -44,18 +44,3 @@ public class PellicolaController {
     @PostMapping(path = "/delete")
     public ResponseEntity rimuoviPellicola(@RequestBody List<Long> pellicole){return service.delete(pellicole);}
 }
-
-class PellicolaBody{
-    public long id_pellicola;
-    public String titolo;
-    public Date data;
-    public int durata;
-    public String generi;
-    public int pegi;
-    public String trama;
-    public String regista;
-    public String attori;
-    public String trailer;
-    public String locandina;
-    public long id_fornitura;
-}
