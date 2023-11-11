@@ -10,11 +10,11 @@ import { User } from '../model/user';
   template: `
   <div id="aboutUsDiv" class="about-us-container">
       <div class="about-us-header">
-        <h2>-About Us-</h2>
+        <h2>About Us</h2>
       </div>
       <div class="section">
         <div class="description">
-          <strong>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2012 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</strong>
+          <strong>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2006 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</strong>
           <strong>Abbiamo plasmato una destinazione cinematografica che celebra il potere delle storie. Ogni visita al Phoenix Cinema è un viaggio attraverso mondi fantastici, un'opportunità per ridere, piangere e condividere emozioni uniche sul grande schermo.</strong>
           <strong>Le nostre strutture di alta qualità, la vasta selezione di film e l'impegno costante per l'innovazione ci rendono una presenza ineguagliabile nella comunità di Rende e oltre.</strong>
           <strong>Il nostro cinema è il luogo ideale per serate speciali con amici e familiari. Organizziamo eventi speciali, proiezioni private e molto altro ancora. Siamo qui per soddisfare le vostre esigenze specifiche e per condividere la magia delle storie e il potere delle immagini in movimento.</strong>

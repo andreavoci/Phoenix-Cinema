@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthBody } from '../model/authbody';
 import { Util } from '../services/util';
 import { Programmazione } from '../model/programmazione';
+import { Reso } from '../model/reso';
 
 @Component({
   selector: 'app-ordine',
@@ -31,7 +32,7 @@ import { Programmazione } from '../model/programmazione';
          <p>{{getPosti(o)}}</p>
      </section>
      <section class="content-annulla" >
-      <button>annulla</button>
+      <button (click)="annullaOrdine(o)">annulla</button>
      </section>
  </div>
   `,
@@ -240,4 +241,15 @@ export class OrdineComponent {
      }
        return posto;
      }
+
+  annullaOrdine(o:Ordine){
+    var form:any = {
+      'ordine' : o,
+      'data' : new Date(),
+      'stato' : "RICHIESTO"
+    }
+    this.http.post<Reso>(Util.resiServerUrl+'/create',form).subscribe(result=>{
+      console.log(result)
+    })
+  }
 }
