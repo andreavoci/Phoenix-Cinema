@@ -22,21 +22,21 @@ import { User } from '../model/user';
       </div>
       <div class="section">
         <div class="member">
-          <img src="https://giornaledellospettacolo.globalist.it/wp-content/uploads/2017/12/0004C26D-aldo-baglio-a-autore-e-interprete-del-film-ma-non-regista.jpg" alt="Aldo Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/17/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6576_500x500.jpg" alt="Aldo Image" class="member-image">
           <div class="member-description">
             <strong>Aldo</strong>
             <p> è il cuore pulsante di Phoenix Cinema. La sua visione e passione per il cinema hanno dato vita a questa avventura straordinaria. Aldo è il creatore di opportunità e il motore di questa esperienza cinematografica unica.</p>
           </div>
         </div>
         <div class="member">
-          <img src="https://cdn.calciomercato.com/images/2020-04/cosi.la.vita.460x340.jpg" alt="Giovanni Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/16/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6554_500X500.jpg" alt="Giovanni Image" class="member-image">
           <div class="member-description">
             <strong>Giovanni</strong>
             <p> è la mente strategica dietro il successo di Phoenix Cinema. Il suo impegno nel garantire un ambiente di lavoro stimolante è fondamentale per il benessere dei dipendenti e la qualità dell'esperienza offerta al pubblico.</p>
           </div>
         </div>
         <div class="member">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh7RgVhQZvp4GAF4OrdSEtae4w7bD4ShDFUA&usqp=CAU" alt="Giacomo Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/13/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6536_LD_quad.jpg" alt="Giacomo Image" class="member-image">
           <div class="member-description">
             <strong>Giacomo</strong>
             <p> Con la sua dedizione e il suo impegno costante, Giacomo contribuisce in modo significativo a rendere questo cinema un luogo straordinario. La sua presenza rassicurante e la sua passione per l'arte cinematografica sono evidenti in tutto ciò che fa.</p>
