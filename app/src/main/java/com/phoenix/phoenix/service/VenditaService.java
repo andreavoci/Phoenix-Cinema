@@ -56,7 +56,9 @@ public class VenditaService {
                     if(p.getId()==posto)
                         p.setStato("OCCUPATO");
                 }
+                programmazione.setPosti(posti);
                 programmazioneRepository.save(programmazione);
+                b.setProgrammazione(programmazione);
                 b.setVendita(vendita);
                 bigliettoRepository.save(b);
             }
@@ -83,4 +85,11 @@ public class VenditaService {
         }
         return ResponseEntity.badRequest().body("Vendita non registrata!");
     }
+
+//    public ResponseEntity delete(Long id) {
+//        Optional<Vendita> venditaDB = repository.findById(id);
+//        if(venditaDB.isPresent()){
+//
+//        }
+//    }
 }
