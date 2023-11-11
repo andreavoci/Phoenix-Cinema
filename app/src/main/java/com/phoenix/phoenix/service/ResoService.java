@@ -1,6 +1,9 @@
 package com.phoenix.phoenix.service;
 
+import com.phoenix.phoenix.entity.Biglietto;
+import com.phoenix.phoenix.entity.Ordine;
 import com.phoenix.phoenix.entity.Reso;
+import com.phoenix.phoenix.repository.OrdineRepository;
 import com.phoenix.phoenix.repository.ResoRepository;
 import com.phoenix.phoenix.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import java.util.Optional;
 @Service
 public class ResoService {
     private ResoRepository repository;
+    private OrdineRepository ordineRepository;
 
     @Autowired
     public ResoService(ResoRepository repository){ this.repository = repository; }
@@ -30,6 +34,8 @@ public class ResoService {
         }else {
             Reso r = resoById.get();
             r.setStato("ACCETTATO");
+            Ordine ordine = r.getOrdine();
+            List<Biglietto> biglietti = ordine.getBiglietti();
             return ResponseEntity.ok(repository.save(r));
         }
     }

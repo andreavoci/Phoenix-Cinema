@@ -10,7 +10,7 @@ import { Util } from "../services/util";
     template: `
        <div class="container">
         <br><br><br>
-    <p class="titolo">VISUALIZZAZIONE CANDIDATURE</p>
+    <p class="titolo">VISUALIZZAZIONE RICHIESTE DI RESO</p>
     <div class="table-div">
     <table>
       <tr class="title">
@@ -28,7 +28,7 @@ import { Util } from "../services/util";
                     <span class="material-icons" style="font-size:10px;color:white;width:100%;">done</span>
                   </button>
                   
-                  <button class="item-button" style="background:red;width:25px;height:25px;margin:1px;" (click)="rimuovi(r.id)" *ngIf="r.stato == 'ACCETTATO'">
+                  <button class="item-button" style="background:red;width:25px;height:25px;margin:1px;" (click)="rimuovi(r.id)" *ngIf="r.stato != 'ACCETTATO'">
                     <span class="material-icons" style="font-size:10px;color:white;width:100%;">delete</span>
                   </button>
                 </div>

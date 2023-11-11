@@ -20,7 +20,7 @@ import { Reso } from '../model/reso';
       </div>
   
    <div class="row" *ngFor="let o of ordini">
-  
+    <div class="ordine" *ngIf="!getResoOrdine(o.id)">
      <div class="date">
        <p>{{o.biglietti[0].programmazione.orario | date:'ccc'}}</p>
        <p>{{o.biglietti[0].programmazione.orario | date:'dd'}}</p>
@@ -34,6 +34,7 @@ import { Reso } from '../model/reso';
      <section class="content-annulla" >
       <button (click)="annullaOrdine(o)">annulla</button>
      </section>
+    </div>
  </div>
   `,
   styles: [
@@ -207,6 +208,7 @@ import { Reso } from '../model/reso';
 export class OrdineComponent {
   constructor(private http: HttpClient,private route: ActivatedRoute){}
 
+  resi: Reso[] = [];
   ordini: Ordine[] = [];
   id:number = -1;
 
@@ -215,10 +217,11 @@ export class OrdineComponent {
     if (AuthService.getToken('id')){
       this.id = Number(AuthService.getToken('id'));
     }    
-    this.getCart(); 
+    this.getOrdini(); 
+    this.getResi();
   }
 
-  getCart():void{
+  getOrdini():void{
     var authbody:AuthBody = new AuthBody(this.id,"empty");
     console.log(authbody);
     this.http.post<Ordine[]>(Util.ordiniServerUrl,authbody).subscribe(result=>{
@@ -226,6 +229,22 @@ export class OrdineComponent {
       this.ordini = result;
     })
 
+  }
+
+  getResi(){
+    this.http.get<Reso[]>(Util.resiServerUrl).subscribe(result=>{
+      this.resi=result;
+    })
+  }
+
+  getResoOrdine(id:number): boolean{
+    var trovato: boolean = false;
+      this.resi.forEach(r => {
+        if(r.ordine.id == id){
+          trovato=true;
+      }
+    });
+    return trovato;
   }
 
   getPosti(o:Ordine): string{

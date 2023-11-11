@@ -153,7 +153,7 @@ public class CarrelloService {
         if(optUser.isPresent()) {
             Optional<Carrello> optCarrello = repository.findCartByUserID(optUser.get());
             if (optCarrello.isPresent()) {
-                Ordine newOrdine = new Ordine(optUser.get(),new ArrayList<>(),optCarrello.get().getSconto(),Calendar.getInstance().getTime());
+                Ordine newOrdine = new Ordine(optUser.get(),new ArrayList<>(),Calendar.getInstance().getTime());
 
                 if(!optCarrello.get().getElementi().isEmpty()){
                     Programmazione editedProgrammazione = optCarrello.get().getElementi().get(0).getProgrammazione();
@@ -180,6 +180,10 @@ public class CarrelloService {
                     System.out.println(postiConverted);
                     System.out.println(posti);
                     programmazioneRepository.aggiornaPosti(posti,editedProgrammazione.getId());
+                    double totale = 0.0;
+                    for(Biglietto b : newOrdine.getBiglietti())
+                        totale+=b.getCosto();
+                    newOrdine.setTotale(totale);
                     ordineRepository.save(newOrdine);
                     repository.delete(optCarrello.get());
 

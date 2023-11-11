@@ -25,17 +25,16 @@ public class Ordine {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordine")
     private List<Biglietto> biglietti = new ArrayList<>();
 
-    private double sconto;
+    private double totale;
 
     private Date data;
 
     @OneToOne
     private Reso reso;
 
-    public Ordine(User cliente, List<Biglietto> biglietti, double sconto, Date data) {
+    public Ordine(User cliente, List<Biglietto> biglietti, Date data) {
         this.cliente = cliente;
         this.biglietti = biglietti;
-        this.sconto = sconto;
         this.data = data;
     }
 }
