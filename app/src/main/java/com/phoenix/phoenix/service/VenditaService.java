@@ -86,4 +86,11 @@ public class VenditaService {
         }
         return ResponseEntity.badRequest().body("Vendita non registrata!");
     }
+
+//    public ResponseEntity delete(Long id) {
+//        Optional<Vendita> venditaDB = repository.findById(id);
+//        if(venditaDB.isPresent()){
+//
+//        }
+//    }
 }

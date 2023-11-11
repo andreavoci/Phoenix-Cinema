@@ -32,7 +32,7 @@ import { Reso } from '../model/reso';
          <p>{{getPosti(o)}}</p>
      </section>
      <section class="content-annulla" >
-      <button (click)="annullaOrdine(o)" *ngIf="o.biglietti[0].programmazione.orario < this.oggi">Rimborso</button>
+      <button (click)="annullaOrdine(o)" *ngIf="confrontaDate(o.biglietti[0].programmazione.orario)">Rimborso</button>
      </section>
     </div>
  </div>
@@ -211,7 +211,6 @@ export class OrdineComponent {
   resi: Reso[] = [];
   ordini: Ordine[] = [];
   id:number = -1;
-  oggi: Date = new Date();
 
   ngOnInit(): void {
     // Recupera il parametro 'id' dall'URL
@@ -271,5 +270,11 @@ export class OrdineComponent {
     this.http.post<Reso>(Util.resiServerUrl+'/create',form).subscribe(result=>{
       console.log(result)
     })
+  }
+
+  confrontaDate(data: Date): boolean{
+    const programm = new Date(data);
+    const today = new Date();
+    return programm > today;
   }
 }

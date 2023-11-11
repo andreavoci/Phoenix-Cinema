@@ -8,12 +8,10 @@ import com.phoenix.phoenix.service.SalaService;
 import com.phoenix.phoenix.service.VenditaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/vendite")
@@ -25,9 +23,14 @@ public class VenditaController {
         this.service = service;
     }
 
+    @GetMapping
+    public List<Vendita> getVendite(){return service.getAll();}
+
     @PostMapping(path = "/create")
     public ResponseEntity aggiungiVendita(@RequestBody VenditaBody body) { return this.service.create(body.userID, body.biglietti, body.elementi);}
 
+//    @PostMapping(path = "/delete")
+//    public ResponseEntity rimuoviVendita(@RequestBody Long id){ return service.delete(id);}
 }
 
 class VenditaBody{
