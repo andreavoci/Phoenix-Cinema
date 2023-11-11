@@ -37,6 +37,8 @@ import { ResSalaComponent } from './riservata/sala.component';
 import { ResBiglietteriaProgrammazioneComponent } from './riservata/biglietteria-programmazione.component';
 import { ResBiglietteriaVenditaComponent } from './riservata/biglietteria-vendita.component copy';
 import { ResResiComponent } from './riservata/resi.component';
+import { ResFatturaComponent } from './riservata/fattura.component';
+import { ResVenditaComponent } from './riservata/vendita.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { ResResiComponent } from './riservata/resi.component';
     ResSalaComponent,
     ResBiglietteriaProgrammazioneComponent,
     ResBiglietteriaVenditaComponent,
-    ResResiComponent
+    ResResiComponent,
+    ResFatturaComponent,
+    ResVenditaComponent
   ],
   imports: [
     BrowserModule,

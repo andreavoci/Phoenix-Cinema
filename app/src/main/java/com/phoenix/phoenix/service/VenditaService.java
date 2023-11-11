@@ -43,23 +43,26 @@ public class VenditaService {
             return ResponseEntity.badRequest().body("Dipendente inesistente!");
         }
         double totale=0;
-        if(!biglietti.isEmpty()){
-            Programmazione programmazione;
+        if(biglietti!=null && !biglietti.isEmpty()){
             Vendita vendita = new Vendita(dipendente.get(),null, biglietti);
             repository.save(vendita);
+            Biglietto biglietto = (Biglietto)biglietti.toArray()[0];
+            System.out.println(biglietto.getProgrammazione());
+            Optional<Programmazione> programmazione = programmazioneRepository.findById(biglietto.getProgrammazione().getId());
+            Collection<Posto> posti = programmazione.get().getPosti();
             for(Biglietto b : biglietti){
                 totale+=b.getCosto();
                 long posto = b.getPosto();
-                programmazione=b.getProgrammazione();
-                Collection<Posto> posti = programmazione.getPosti();
+
                 for(Posto p : posti){
                     if(p.getId()==posto)
                         p.setStato("OCCUPATO");
                 }
-                programmazioneRepository.save(programmazione);
                 b.setVendita(vendita);
+                b.setProgrammazione(programmazione.get());
                 bigliettoRepository.save(b);
             }
+            programmazioneRepository.aggiornaPosti(posti,programmazione.get().getId());
             vendita.setTotale(totale);
             return ResponseEntity.ok().body(repository.save(vendita));
         }else if(!elementi.isEmpty()){

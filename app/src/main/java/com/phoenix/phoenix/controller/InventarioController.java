@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/inventario")
@@ -26,6 +27,7 @@ public class InventarioController {
         return service.deletemerce(merce);
     }
 
-
+    @PostMapping(path = "/updateQuantita")
+    public ResponseEntity updateQuantita(@RequestBody List<Integer> nuovoInv){return service.updateQuantita(nuovoInv);}
 
 }

@@ -95,7 +95,7 @@ export class ResInventarioComponent {
   ngAfterViewInit() {
     this.errorPopup = document.getElementById("error-popup")
   }
-  
+
   ngOnInit(): void {
     this.getMerce()   
   }
@@ -140,15 +140,25 @@ export class ResInventarioComponent {
     }
   }
   updateQuantita(form:any){
-    console.log(form)
-    const esposta = form["esposta"]
+    const esposta=Number(form["esposta"]);
     if(this.inventarioSelezionato){
       if(esposta>this.inventarioSelezionato.quantitaInStock){
         console.log("ciao")
         this.errorPopup_animation("la quantità esposta non può essere maggiore dello stock",true);
       }
       else{
-        window.location.reload()
+        const body = [this.inventarioSelezionato.id,esposta];
+        console.log(body)
+        this.http.post(Util.inventarioServerUrl+"/updateQuantita",body, { responseType: 'text' }).subscribe(
+           
+          success => {
+            console.log(success)
+            window.location.reload()
+          },
+          error => {
+            console.log(error)
+          }
+        )
       }
     }
   }

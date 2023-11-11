@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { Inventario } from '../model/inventario';
+import { AuthService } from '../services/auth.service';
+import { ElementoCarrello } from '../model/elementocarrello';
+import { ElementoVendita } from '../model/elementovendita';
+import { Util } from '../services/util';
 
 @Component({
   selector: 'app-res-biglietteria-vendita',
@@ -52,7 +56,7 @@ import { Inventario } from '../model/inventario';
           <table>
             <tr class="title">
               <th> totale {{totale}} €</th>
-              <th><button>checkout</button></th>
+              <th><button class="button-checkout" (click)="checkout()">checkout</button></th>
             </tr>
           </table>
       </div>
@@ -118,15 +122,29 @@ import { Inventario } from '../model/inventario';
     .btn-operazione:hover{
       background: lightgray
     }
+    
+    .button-checkout {
+      cursor:pointer;
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 4px 8px;
+      font-size: 16px;
+      font-weight:bold;
+      background:rgb(0,255,0);
+      border: solid 2px black;
+      border-radius:5px;
+    }
+    .button-checkout:hover {
+      background:green;
+    }
 
   `]
 })
 export class ResBiglietteriaVenditaComponent {
 
   inventario: Inventario[] = []
-  merceSel: Inventario[]=[];
   totale: number=0;
-  merceSelezionata : Record<number,number>= {};
+  merceSelezionata : Record<number,number> = {}; //id,quantità
 
   constructor(private http: HttpClient){
   }
@@ -141,22 +159,29 @@ export class ResBiglietteriaVenditaComponent {
     })
   }
   selezionaMerce(m:number){
+    console.log("ciao")
     console.log(m)
     this.totale=0;
-    if (this.inventario[m].quantitaEsposta<=0) {
-      return
-    } 
-    // Aggiungi il nuovo elemento solo se non esiste già uno con lo stesso nome
-    if (this.merceSelezionata[m]== undefined) {
-      this.merceSelezionata[m]=1;
-    } 
-    for (const id in this.merceSelezionata) {
-      const elementoEsistente = this.inventario.find(e => e.id === Number(id));
-
-      if (this.merceSelezionata.hasOwnProperty(id) && elementoEsistente) {
-        this.totale+= elementoEsistente.prezzo* this.merceSelezionata[id];
+    console.log(this.inventario)
+    console.log(this.inventario[m])
+    const elemento = this.inventario.find(e => e.id === m) as  Inventario|null 
+    if (elemento){
+      if(elemento.quantitaEsposta<=0){
+        return
       }
-    }
+      
+      // Aggiungi il nuovo elemento solo se non esiste già uno con lo stesso nome
+      if (this.merceSelezionata[m]== undefined) {
+        this.merceSelezionata[m]=1;
+      } 
+      for (const id in this.merceSelezionata) {
+        const elementoEsistente = this.inventario.find(e => e.id === Number(id));
+
+        if (this.merceSelezionata.hasOwnProperty(id) && elementoEsistente) {
+          this.totale+= elementoEsistente.prezzo* this.merceSelezionata[id];
+        }
+      }
+    } 
 
     console.log(this.merceSelezionata)
   }
@@ -170,34 +195,65 @@ export class ResBiglietteriaVenditaComponent {
   }
   modificaQuantita(key:string,modifica:number){
     const id=Number(key)
-
-    if(modifica>=1 && this.inventario[id].quantitaEsposta<this.merceSelezionata[id]+1){
-      return
-    }
-    if(modifica<1 && (this.merceSelezionata[id]<=0 || this.merceSelezionata[id]==undefined)){
-      return
-    }
-    else if(this.merceSelezionata[id]== undefined) {
-      this.merceSelezionata[id]=1;
-    } 
-    else{
-      this.merceSelezionata[id]+=modifica;
-    }
-    
-    this.totale=0;
-
-    for (const id in this.merceSelezionata) {
-      if(this.merceSelezionata[id]==0){
-        delete this.merceSelezionata[id];  
+    const elemento = this.inventario.find(e => e.id === id) as  Inventario|null 
+    if (elemento){
+      if(elemento.quantitaEsposta<=0){
+        return
       }
-      const elementoEsistente = this.inventario.find(e => e.id === Number(id));
+      if(modifica>=1 && elemento.quantitaEsposta<this.merceSelezionata[id]+1){
+        return
+      }
+      if(modifica<1 && (this.merceSelezionata[id]<=0 || this.merceSelezionata[id]==undefined)){
+        return
+      }
+      else if(this.merceSelezionata[id]== undefined) {
+        this.merceSelezionata[id]=1;
+      } 
+      else{
+        this.merceSelezionata[id]+=modifica;
+      }
+      
+      this.totale=0;
 
-      if (this.merceSelezionata.hasOwnProperty(id) && elementoEsistente) {
-        this.totale+= elementoEsistente.prezzo* this.merceSelezionata[id];
+      for (const i in this.merceSelezionata) {
+        if(this.merceSelezionata[i]==0){
+          delete this.merceSelezionata[i];  
+        }
+        const elementoEsistente = this.inventario.find(e => e.id === Number(i));
+
+        if (this.merceSelezionata.hasOwnProperty(i) && elementoEsistente) {
+          this.totale+= elementoEsistente.prezzo* this.merceSelezionata[i];
+        }
       }
     }
+  }
+  
+  checkout(){
+    if(Object.keys(this.merceSelezionata).length>0){
+      if(AuthService.getToken("id")){
+        var userId:number = Number(AuthService.getToken("id"))
+        var elementi:ElementoVendita[] = [];
+        for (let key in this.merceSelezionata) {
+          console.log(key)
+          console.log(this.merceSelezionata[key])
 
-
+          const elemento = this.inventario.find(e => e.id === Number(key)) as  Inventario|null 
+          if(elemento){
+              elementi.push(new ElementoVendita(elemento,this.merceSelezionata[key], elemento.prezzo));
+          }
+          
+        }
+        var form:any = {
+          'userID' : userId,
+          'biglietti' : null,
+          'elementi' : elementi,
+        }
+        this.http.post(Util.venditaServerUrl+"/create",form).subscribe(result =>{
+          console.log(result)
+          window.location.reload();
+        })
+      }
+    }
   }
   
 }

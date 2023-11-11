@@ -166,7 +166,6 @@ public class CarrelloService {
                         posti.forEach(posto -> {
                             if(posto.getId()==e.getPosto()){
                                 posto.setStato("OCCUPATO");
-                                System.out.println("okok");
                             }
                         });
 

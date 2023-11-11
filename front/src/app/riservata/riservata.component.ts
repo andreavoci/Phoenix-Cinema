@@ -33,6 +33,7 @@ import { Dipendente } from '../model/dipendente';
       <app-res-sala *ngIf="type=='sala'"></app-res-sala>
       <app-hr *ngIf="type=='hr'"></app-hr>
       <app-resi *ngIf="type=='resi'"></app-resi>
+      <app-res-fattura *ngIf="type=='fatture'"></app-res-fattura>
     </div>    
   `,
   styleUrls: ["./riservata.css"],

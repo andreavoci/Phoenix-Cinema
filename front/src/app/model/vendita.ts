@@ -9,5 +9,5 @@ export interface Vendita{
     elementi:Array<ElementoVendita>;
     biglietti:Array<Biglietto>;
     totale:number;
-    data:Data;
+    data:Date;
 }
