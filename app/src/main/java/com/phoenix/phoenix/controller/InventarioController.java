@@ -26,4 +26,6 @@ public class InventarioController {
         return service.deletemerce(merce);
     }
 
+
+
 }

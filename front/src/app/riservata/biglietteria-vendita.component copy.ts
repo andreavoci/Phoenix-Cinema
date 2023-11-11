@@ -12,6 +12,7 @@ import { Inventario } from '../model/inventario';
         <div style="padding:2% 5%;">
           <button *ngFor="let i of inventario" 
             [class.selected]="merceSelezionata[i.id]"
+            [class.terminato]="i.quantitaEsposta==0"
             class="btn-operazione" 
             (click)="selezionaMerce(i.id)"
           >
@@ -108,6 +109,11 @@ import { Inventario } from '../model/inventario';
     .btn-operazione.selected {
       background: orange;
     }
+    
+    .btn-operazione.terminato {
+      background: red;
+      pointer-events:none;
+    }
 
     .btn-operazione:hover{
       background: lightgray
@@ -137,6 +143,9 @@ export class ResBiglietteriaVenditaComponent {
   selezionaMerce(m:number){
     console.log(m)
     this.totale=0;
+    if (this.inventario[m].quantitaEsposta<=0) {
+      return
+    } 
     // Aggiungi il nuovo elemento solo se non esiste già uno con lo stesso nome
     if (this.merceSelezionata[m]== undefined) {
       this.merceSelezionata[m]=1;
@@ -161,6 +170,10 @@ export class ResBiglietteriaVenditaComponent {
   }
   modificaQuantita(key:string,modifica:number){
     const id=Number(key)
+
+    if(modifica>=1 && this.inventario[id].quantitaEsposta<this.merceSelezionata[id]+1){
+      return
+    }
     if(modifica<1 && (this.merceSelezionata[id]<=0 || this.merceSelezionata[id]==undefined)){
       return
     }

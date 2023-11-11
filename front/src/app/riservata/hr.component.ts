@@ -4,8 +4,7 @@ import { Dipendente } from "../model/dipendente";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
-import { Util } from "../services/util";
-import { Mansione } from "../model/mansione";
+import { Mansione, Util } from "../services/util";
 
 @Component({
     selector: 'app-hr',

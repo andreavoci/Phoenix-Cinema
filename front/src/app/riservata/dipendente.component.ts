@@ -3,9 +3,8 @@ import { Candidatura } from '../model/candidatura';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Util } from '../services/util';
+import { Mansione, Util } from '../services/util';
 import { Dipendente } from '../model/dipendente';
-import { Mansione } from '../model/mansione';
 
 @Component({
     selector: 'app-res-dipendente',
@@ -109,8 +108,8 @@ import { Mansione } from '../model/mansione';
         </button>
 
         <button class="item-button" style="background:blue" (click)="modificaDipendente();">
-            <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
-            </button>
+          <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+        </button>
 
         <p class="button-item">{{messageErrorDip}}</p>
         <div *ngIf="checkEliminaDip==true">
@@ -178,7 +177,9 @@ import { Mansione } from '../model/mansione';
     mansioni: string[] = this.enumValues(Mansione)
 
     constructor(private http: HttpClient){}
-    
+    ngAfterViewInit() {
+      this.errorPopup = document.getElementById("error-popup")
+    }
     ngOnInit(): void {
         this.getDipendenti()
     }

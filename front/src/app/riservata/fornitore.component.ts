@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { Fornitore } from "../model/fornitore";
-import { Util } from "../services/util";
+import { TipoFornitore, Util } from "../services/util";
 
 @Component({
   selector: 'app-resfornitore',
@@ -27,7 +27,9 @@ import { Util } from "../services/util";
               <p>Ragione Sociale</p>
               <input name="ragione_sociale" ngModel (click)="errorPopup_animation('',false)">
               <p>Tipo</p>
-              <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+              <select name="tipo" ngModel (click)="errorPopup_animation('',false)">
+                <option *ngFor="let t of tipiFornitore" [ngValue]="t">{{t}}</option>
+              </select>              
               <p>Indirizzo</p>
               <input name="indirizzo" ngModel (click)="errorPopup_animation('',false)">
               <p>Telefono</p>
@@ -60,8 +62,9 @@ import { Util } from "../services/util";
                 <p>Ragione Sociale</p>
                 <input name="ragione_sociale" ngModel [(ngModel)]="fornitoreSelezionato.ragione_sociale" (click)="errorPopup_animation('',false)">
                 <p>Tipo</p>
-                <input name="tipo" ngModel [(ngModel)]="fornitoreSelezionato.tipo" (click)="errorPopup_animation('',false)">
-                <p>Indirizzo</p>
+                <select name="tipo" ngModel (click)="errorPopup_animation('',false)">
+                  <option *ngFor="let t of tipiFornitore" [ngValue]="t">{{t}}</option>
+                </select> <p>Indirizzo</p>
                 <input name="indirizzo" ngModel [(ngModel)]="fornitoreSelezionato.indirizzo" (click)="errorPopup_animation('',false)">
                 <p>Telefono</p>
                 <input name="telefono" ngModel [(ngModel)]="fornitoreSelezionato.telefono" (click)="errorPopup_animation('',false)">
@@ -136,8 +139,11 @@ export class ResFornitoreComponent {
  emailValue:string = "";
  fornitoreSelezionato: any = {};
  
-  
+
+ tipiFornitore: string[] = this.enumValues(TipoFornitore)
+ 
  constructor(private http: HttpClient, private route: ActivatedRoute, private domSanitizer: DomSanitizer) { }
+
 
  ngAfterViewInit() {
   this.errorPopup = document.getElementById("error-popup")

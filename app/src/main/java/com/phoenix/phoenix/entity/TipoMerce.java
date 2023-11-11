@@ -2,5 +2,10 @@ package com.phoenix.phoenix.entity;
 
 public enum TipoMerce {
     BEVANDA,
-    CIBO
+    CIBO,
+    PULIZIA,
+    ATTREZZATURA,
+    IMBALLAGGI,
+    TECNOLOGIA,
+    ALTRO
 }

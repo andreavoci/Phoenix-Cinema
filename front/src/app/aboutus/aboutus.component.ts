@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Util } from '../services/util';
-import { Mansione } from '../model/mansione';
+import { Mansione, Util } from '../services/util';
 import { AuthService } from '../services/auth.service';
 import { User } from '../model/user';
 

@@ -37,3 +37,33 @@ export interface LoginResponse {
     id: string,
     token: string
   }
+
+  export enum Mansione{
+    MAGAZZINO = "MAGAZZINO",
+    HR = "HR",
+    SOCIALMEDIAMANAGER = "SOCIALMEDIAMANAGER",
+    BIGLIETTERIA = "BIGLIETTERIA",
+    DIRETTORE = "DIRETTORE",
+    CONTABILE = "CONTABILE",
+    PROIEZIONE = "PROIEZIONE"
+}
+
+export enum TipoMerce{
+    BEVANDA = "BEVANDA",
+    CIBO = "CIBO",
+    PULIZIA = "PULIZIA",
+    ATTREZZATURA = "ATTREZZATURA",
+    IMBALLAGGI = "IMBALLAGGI",
+    TECNOLOGIA = "TECNOLOGIA",
+    ALTRO = "ALTRO"
+}
+
+
+export enum TipoFornitore{
+    PELLICOLA = "PELLICOLA",
+    ALIMENTARI = "ALIMENTARI",
+    PULIZIA = "PULIZIA",
+    ATTREZZATURA = "ATTREZZATURA",
+    IMBALLAGGI = "IMBALLAGGI",
+    TECNOLOGIA = "TECNOLOGIA"
+}

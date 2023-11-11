@@ -7,7 +7,7 @@ import { Merce } from "../model/merce";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Util } from "../services/util";
+import { TipoMerce, Util } from "../services/util";
 import { Fattura } from "../model/fattura";
 import { NgForm } from "@angular/forms";
 import { Programmazione } from "../model/programmazione";
@@ -25,7 +25,7 @@ import { Candidatura } from "../model/candidatura";
             <p id="error-popup">{{errorPopup_text}}</p>
             <div class="navbar-popup">
                 <p class="title-popup">Inserisci Fornitura</p>
-                <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popup.close();" >
+                <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popup.close();step_fornitura=1;errorPopup_animation('',false);" >
                   <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
                 </button>
             </div>
@@ -38,6 +38,8 @@ import { Candidatura } from "../model/candidatura";
           </div>
         </div>
       </dialog>
+
+
       <div class="container-buttons">
         <button class="item-button" style="background:green" (click)="popup.show();">
             <span class="material-icons" style="font-size:30px;color:white;width:100%;">add</span>
@@ -47,9 +49,6 @@ import { Candidatura } from "../model/candidatura";
             <span class="material-icons" style="font-size:30px;color:white;width:100%;">delete</span>
         </button>
 
-        <button class="item-button" style="background:blue" (click)="modificaFornitura();">
-            <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
-        </button>
 
         <p class="button-item">{{messageError}}</p>
         <div *ngIf="checkElimina==true">
@@ -76,11 +75,11 @@ import { Candidatura } from "../model/candidatura";
             <td><input type="checkbox" [value]=f.id (change)="onCheckChange($event)" style="width:20px;height:20px"></td>
             <td>{{f.id}}</td>
             <td><span *ngIf="f.fornitore">{{f.fornitore.ragione_sociale}}</span></td>
-            <td><span *ngIf="f.fattura">{{f.fattura.id}}</span></td>
+            <td><span *ngIf="f.fattura"><a (click)="openFattura(f.fattura)">{{f.fattura.id}}</a></span></td>
             <td>{{f.tipo}}</td>
             <td>{{f.prezzo}}</td>
-            <td><span *ngIf="f.merci">[{{f.merci.length}}]</span></td>
-            <td><span *ngIf="f.pellicole">[{{f.pellicole.length}}]</span></td>
+            <td><span *ngIf="f.merci"><a (click)="openMerci(f.merci)">[{{f.merci.length}}]</a></span></td>
+            <td><span *ngIf="f.pellicole"><a (click)="openPellicole(f.pellicole)">[{{f.pellicole.length}}]</a></span></td>
             <td>
               <div *ngIf="!f.arrivo; else arrivato" style="width:100%;justify-content:center;align-items:center;display:flex;">
                 <button class="item-button" style="background:green;width:20px;height:20px;" (click)="inviaDataArrivo(f.id);">
@@ -94,12 +93,8 @@ import { Candidatura } from "../model/candidatura";
         </table>
       </div>
     </div>
-    <ng-template #fornitura1>      
-        <div *ngIf="fornituraModifica;then fornitura1_edit;else fornitura1_new">
-          
-        </div>
-    </ng-template>
-    <ng-template #fornitura1_new>
+
+    <ng-template #fornitura1>
       <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
       <p>Fornitore</p>
       <select name="fornitore" ngModel (click)="errorPopup_animation('',false)">
@@ -108,25 +103,6 @@ import { Candidatura } from "../model/candidatura";
       </select>
       
       <!-- <input name="tipo" ngModel (click)="errorPopup_animation('',false)"> -->
-      <div class="footer-popup">
-        <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
-          <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
-        </button>
-      </div>
-      </form>
-    </ng-template>
-    
-    <ng-template #fornitura1_edit >
-      <form #fornitura1="ngForm" (ngSubmit)="creaFornitura(2,fornitura1.value)">
-      <p>Fornitore</p>
-      <select name="fornitore" ngModel (click)="errorPopup_animation('',false)">
-          <option value="" disabled>Scegli un fornitore</option>
-          
-          <option *ngFor="let f of fornitori" [ngValue]="f">{{f.ragione_sociale}}</option>
-      </select>
-      <p>Tipo</p>
-      <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
-      
       <div class="footer-popup">
         <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
           <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
@@ -147,13 +123,18 @@ import { Candidatura } from "../model/candidatura";
         <p>Nome</p>
         <input name="nome" ngModel (click)="errorPopup_animation('',false)">
         <p>Tipo</p>
-        <input name="tipo" ngModel (click)="errorPopup_animation('',false)">
+        <select name="tipo" ngModel (click)="errorPopup_animation('',false)">
+          <option *ngFor="let t of tipiMerce" [ngValue]="t">{{t}}</option>
+        </select>
         <p>Prezzo</p>
         <input name="prezzo" ngModel (click)="errorPopup_animation('',false)">
         <p>Quantità</p>
         <input name="quantita" ngModel (click)="errorPopup_animation('',false)">
         
         <div class="footer-popup">
+          <button (click)="skipFornitura(3,[])" class="item-button" style="margin:5px;background:blue;width:30px;height:30px;">
+            <span class="material-icons" style="font-size:25px;color:white;width:100%;">skip_next</span>
+          </button>
           <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
             <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
           </button>
@@ -181,6 +162,10 @@ import { Candidatura } from "../model/candidatura";
         <input name="prezzo_noleggio" ngModel (click)="errorPopup_animation('',false)">
         
         <div class="footer-popup">
+          
+          <button (click)="skipFornitura(4,[])" class="item-button" style="margin:5px;background:blue;width:30px;height:30px;">
+            <span class="material-icons" style="font-size:25px;color:white;width:100%;">skip_next</span>
+          </button>
           <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
             <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
           </button>
@@ -214,9 +199,96 @@ import { Candidatura } from "../model/candidatura";
         </div>   
       </form>
     </ng-template>
+  
+    <dialog #popupFattura id="popupFattura">
+      <div class="background-blur">
+              
+        <div *ngIf="fatturaSelezionata" class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+              <p class="title-popup">Fattura</p>
+              <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popupFattura.close();step_fornitura=1;errorPopup_animation('',false);" >
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+              </button>
+          </div>
+          
+          <p style="font-weight:bold">ID</p>
+          <p style="padding:0 0 5px 15px">{{fatturaSelezionata.id}}</p>
+          <p style="font-weight:bold">Importo Fattura</p>
+          <p style="padding:0 0 5px 15px">{{fatturaSelezionata.importo}}€</p>
+          <p style="font-weight:bold">Emissione Fattura</p>
+          <p style="padding:0 0 5px 15px">{{fatturaSelezionata.emissione | date }}</p>
+          <p style="font-weight:bold">Pagamento Fattura</p>
+          <p style="padding:0 0 5px 15px">{{fatturaSelezionata.pagamento | date}}</p>
+        
+        </div>
+      </div>
+    </dialog>
     
+    <dialog #popupMerci id="popupMerci">
+      <div class="background-blur">
+              
+        <div class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+              <p class="title-popup">Merci</p>
+              <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popupMerci.close();step_fornitura=1;errorPopup_animation('',false);" >
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+              </button>
+          </div>
+          
+          <p>[</p>
+          <div *ngFor="let m of merciSelezionate">
+            <p>{{m|json}},</p>
+          </div>
+          <p>]</p>
+        
+        </div>
+      </div>
+    </dialog>
+
+    <dialog #popupPellicole id="popupPellicole">
+      <div class="background-blur">
+              
+        <div class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+              <p class="title-popup">Pellicole</p>
+              <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popupPellicole.close();step_fornitura=1;errorPopup_animation('',false);" >
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+              </button>
+          </div>
+          <p>[</p>
+          <div *ngFor="let p of pellicoleSelezionate">
+            <p>{{'{'}}</p>
+            <p style="font-weight:bold">ID</p>
+            <p style="padding:0 0 5px 15px">{{p.id}}</p>
+            <p style="font-weight:bold">Titolo</p>
+            <p style="padding:0 0 5px 15px">{{p.titolo}}</p>
+            <p style="font-weight:bold">Data uscita</p>
+            <p style="padding:0 0 5px 15px">{{p.data_uscita | date }}</p>
+            <p style="font-weight:bold">Regista</p>
+            <p style="padding:0 0 5px 15px">{{p.regista}}</p>
+            <p style="font-weight:bold">Attori</p>
+            <p style="padding:0 0 5px 15px">{{p.attori}}</p>
+            <p style="font-weight:bold">Fine noleggio</p>
+            <p style="padding:0 0 5px 15px">{{p.fine_noleggio | date }}</p>
+            <p> {{'},'}}</p>
+        
+          </div>
+          <p>]</p>
+        </div>
+      </div>
+    </dialog>
+
     `,
-    styleUrls: ["./riservata.css"]
+    styleUrls: ["./riservata.css"],
+    
+    styles: [`
+      td > span> a{
+        cursor:pointer;
+      }
+    `]
 })
 
 export class ResFornituraComponent{
@@ -226,8 +298,6 @@ export class ResFornituraComponent{
   pellicole: Pellicola[] = [];
   fornitureSel: number[]=[]
   fornituraCreata : Fornitura | null  = null;
-  
-  fornituraModifica : Fornitura | null  = null;
 
   messageError = "";
   errorPopup_text = ""
@@ -235,6 +305,16 @@ export class ResFornituraComponent{
   errorPopup : HTMLElement|null=null;
   step_fornitura = 1
   fornituraResponse="risultato";
+
+  tipiMerce: string[] = this.enumValues(TipoMerce)
+  
+  merciSelezionate : Merce[] =[];
+  fatturaSelezionata : Fattura|null=null;
+  pellicoleSelezionate : Pellicola[]=[];
+
+  enumValues(enumType: any): string[]{
+      return Object.keys(enumType).map(key => enumType[key]);
+  }
   
   constructor(private http: HttpClient,private route: ActivatedRoute,private domSanitizer:DomSanitizer){}
   ngAfterViewInit() {
@@ -312,6 +392,10 @@ export class ResFornituraComponent{
     }
   }
 
+  skipFornitura(step:number,form:any){
+    this.errorPopup_animation('',false);
+    this.step_fornitura=step;
+  }
   creaFornitura(step:number,form:any){
     console.log(form)
     if(step==2){
@@ -332,23 +416,30 @@ export class ResFornituraComponent{
     }
     else if(step==3){
       console.log(form)
-      // if(form.length==0){
-      //   this.errorPopup_animation("Devi aggiungere almeno una merce! usa il pulsante [+]",true)
-      // }
-      // else{
-      if(this.fornituraCreata){
-        console.log(step);
-        this.fornituraCreata.merci=this.merci;
-        this.step_fornitura=step;
+      if(form.length==0){
+        this.errorPopup_animation("Devi aggiungere almeno una merce! usa il pulsante [+] (skip pulsante blu)",true)
       }
-      // }
+      else{
+        if(this.fornituraCreata){
+          console.log(step);
+          this.fornituraCreata.merci=this.merci;
+          this.step_fornitura=step;
+        }
+      }
     }
     else if(step==4){
-      if(this.fornituraCreata){
-        console.log(step);
-        this.fornituraCreata.pellicole=this.pellicole;
-        this.step_fornitura=step;
+      console.log(form)
+      if(form.length==0){
+        this.errorPopup_animation("Devi aggiungere almeno una pellicola! usa il pulsante [+] (skip pulsante blu)",true)
       }
+      else{
+        if(this.fornituraCreata){
+          console.log(step);
+          this.fornituraCreata.pellicole=this.pellicole;
+          this.step_fornitura=step;
+        }
+      }
+      
     }
     else if(step==5){
       console.log(form)
@@ -393,22 +484,6 @@ export class ResFornituraComponent{
       this.checkElimina = true;
     }
   }
-  
-  modificaFornitura(){
-    if(this.fornitureSel.length==0){
-      this.fornituraModifica=null
-      this.messageError = "Errore! Seleziona la forniture da modificare"
-    }
-    else if(this.fornitureSel.length>1) {
-      this.fornituraModifica=null
-      this.messageError = "Errore! Seleziona una sola fornitura da modificare"
-    }
-    else{
-      this.fornituraModifica = this.forniture.find((f) => f.id == this.fornitureSel[0]) as Fornitura|null;
-      let myDialog:any = <any>document.getElementById("popup");
-      myDialog.showModal();
-    }
-  }
 
   annullaEliminazione(){
     this.messageError = ""
@@ -430,6 +505,31 @@ export class ResFornituraComponent{
     this.checkElimina = false;
   }
   
+  openFattura(f:Fattura){
+    console.log("ciao")
+    this.fatturaSelezionata = f;
+    
+    let myDialog:any = <any>document.getElementById("popupFattura");
+    myDialog.showModal();
+  }
+
+  openMerci(merci:Merce[]){
+    console.log("ciao")
+    this.merciSelezionate = merci;
+
+    let myDialog:any = <any>document.getElementById("popupMerci");
+    myDialog.showModal();
+  }
+
+  openPellicole(pellicole:Pellicola[]){
+    console.log("ciao")
+    this.pellicoleSelezionate = pellicole;
+
+    let myDialog:any = <any>document.getElementById("popupPellicole");
+    myDialog.showModal();
+  }
+
+
   inviaDataArrivo(id: number) {
     const fornituraArrivata = this.forniture.find((f)=>f.id == id);
     this.http.post(Util.fornitureServerUrl + '/setDataArrivo', fornituraArrivata).subscribe((response) => { 

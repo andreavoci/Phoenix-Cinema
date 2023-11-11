@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "candidatura")
 public class Candidature {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

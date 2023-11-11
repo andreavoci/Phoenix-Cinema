@@ -9,6 +9,45 @@ import { Util } from '../services/util';
   template: `
   <div class="container">
     <p class="titolo">VISUALIZZAZIONE INVENTARIO</p>
+    <dialog #popupInventario id="popupInventario">
+      
+      <div class="background-blur">
+        <div class="component-popup" style="width:auto;">
+          <p id="error-popup">{{errorPopup_text}}</p>
+          <div class="navbar-popup">
+            <p class="title-popup">Modifica Quantità</p>
+            <button class="item-button" style="margin:5px;background:red;width:30px;height:30px;" (click)="popupInventario.close();" >
+                <span class="material-icons" style="font-size:25px;color:white;width:100%;">close</span>
+            </button>
+            
+          </div>
+          <div>      
+            <form #quantitaForm="ngForm" (ngSubmit)="updateQuantita(quantitaForm.value)">
+                      
+              <p>Stock</p>
+              <p>{{inventarioSelezionato?.quantitaInStock}}</p>
+              <p>Esposta</p>
+              <input name="esposta" ngModel (click)="errorPopup_animation('',false)">
+                      
+              <div class="footer-popup">
+                <button type="submit" class="item-button" style="margin:5px;background:green;width:30px;height:30px;">
+                    <span class="material-icons" style="font-size:25px;color:white;width:100%;">arrow_forward</span>
+                </button>
+              </div>         
+            </form>
+          </div>
+        </div>
+      </div> 
+    </dialog>    
+
+
+
+    <div class="container-buttons">
+      <button class="item-button" style="background:blue" (click)="modificaInventario();">
+        <span class="material-icons" style="font-size:30px;color:white;width:100%;">edit</span>
+      </button>
+      <p class="button-item">{{messageErrorInventario}}</p>
+    </div>
         <div class="table-div">
           <table>
             <tr class="title">
@@ -22,7 +61,7 @@ import { Util } from '../services/util';
               <th>Totale</th>
             </tr>
             <tr class="row" *ngFor="let i of inventario">
-              <td></td>
+              <td><input type="checkbox" [value]=i.id (change)="onCheckChange($event)" style="width:20px;height:20px"></td>
               <td>{{i.id}}</td>
               <td>{{i.nome}}</td>
               <td>{{i.tipo}}</td>
@@ -40,29 +79,32 @@ import { Util } from '../services/util';
   styles: [``]
 })
 export class ResInventarioComponent {
-  @ViewChild("dialogoArrivo") dialogoArrivo: ElementRef | undefined;
   errorPopup_text: string = '';
-  fornituraSel: number[]=[]
+  inventarioSel: number[]=[]
   errorPopup : HTMLElement|null=null;
-  messageError = "";
-  checkEliminaFornitura : boolean = false;
+  messageErrorInventario = "";
   editing: boolean = false
   dataArrivo: string | null = null; 
-  forniture : Fornitura[] = [];
-  selectedForniture: any = {};
   inventario: Inventario[] = []
+  inventarioSelezionato : Inventario|null=null;
+
 
   constructor(private http: HttpClient){
   }
 
+  ngAfterViewInit() {
+    this.errorPopup = document.getElementById("error-popup")
+  }
+  
   ngOnInit(): void {
-    this.getForniture()
     this.getMerce()   
   }
   
   errorPopup_animation(text:string,visible:boolean){
     
+    console.log("dasdd")
     if(this.errorPopup){
+      console.log("cioa")
       if(visible){
         this.errorPopup.style.top="-30px"
       }
@@ -73,51 +115,52 @@ export class ResInventarioComponent {
     }
   }
 
-  onCheckChangeFornitura(event:any){
-    if(event.target.checked){
-      this.fornituraSel.push(event.target.value)
-    }
-    else{
-      this.fornituraSel = this.fornituraSel.filter(m=>m !== event.target.value)
-    }
-    this.messageError="";
-    this.checkEliminaFornitura=false;
-  }
-
-  inviaDataArrivo(id: number) {
-      this.selectedForniture = this.forniture.find((f)=>f.id == id);
-      this.http.post(Util.fornitureServerUrl + '/setDataArrivo', this.selectedForniture).subscribe((response) => { 
-      });
-      window.location.reload()
-  }
   
-  getForniture() {
-    this.http.get<Fornitura[]>(Util.fornitureServerUrl).subscribe(result=>{
-      this.forniture=result;
-      console.log(this.forniture)
-    })
-  }
-  toggleSelection(fornitura: Fornitura) {
-    const index = this.selectedForniture.indexOf(fornitura);
-
-    if (index === -1) {
-      this.selectedForniture.push(fornitura); // If not already selected, add to the array
-    } else {
-      this.selectedForniture.splice(index, 1); // If already selected, remove from the array
-    }
-  }
-
-  isFornituraSelected(fornitura: Fornitura): boolean {
-    console.log(this.selectedForniture)
-    return this.selectedForniture.includes(fornitura);
-  }  
   getMerce() {
     this.http.get<Inventario[]>('http://localhost:8091/api/inventario').subscribe(result=>{
       this.inventario=result;
       console.log(this.inventario)
     })
   }
-  
+  modificaInventario(){
+    if(this.inventarioSel.length==0){
+      this.editing=false
+      this.messageErrorInventario = "Errore! Seleziona prima l'inventario da modificare"
+    }
+    else if(this.inventarioSel.length>1) {
+      this.editing=false
+      this.messageErrorInventario = "Errore! Seleziona un solo inventario da modificare"
+    }
+    else{
+      this.editing=true
+      this.inventarioSelezionato = this.inventario.find((i) => i.id == this.inventarioSel[0]) as Inventario|null;
+      
+      let myDialog:any = <any>document.getElementById("popupInventario");
+      myDialog.showModal();
+    }
+  }
+  updateQuantita(form:any){
+    console.log(form)
+    const esposta = form["esposta"]
+    if(this.inventarioSelezionato){
+      if(esposta>this.inventarioSelezionato.quantitaInStock){
+        console.log("ciao")
+        this.errorPopup_animation("la quantità esposta non può essere maggiore dello stock",true);
+      }
+      else{
+        window.location.reload()
+      }
+    }
+  }
+  onCheckChange(event:any){
+    if(event.target.checked){
+      this.inventarioSel.push(event.target.value)
+    }
+    else{
+      this.inventarioSel = this.inventarioSel.filter(i=>i !== event.target.value)
+    }
+    this.messageErrorInventario="";
+  }
 }
 
 
