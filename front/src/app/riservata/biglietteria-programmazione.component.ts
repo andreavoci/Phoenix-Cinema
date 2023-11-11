@@ -1,3 +1,4 @@
+import { Biglietto } from './../model/biglietto';
 import { Component } from "@angular/core";
 import { Fornitura } from "../model/fornitura";
 import { HttpClient, HttpResponse } from "@angular/common/http";
@@ -10,6 +11,10 @@ import { Merce } from "../model/merce";
 import { Pellicola } from "../model/pellicola";
 import { Util } from "../services/util";
 import { Programmazione } from "../model/programmazione";
+import { AuthBody } from "../model/authbody";
+import { ElementoCarrello } from "../model/elementocarrello";
+import { AuthService } from "../services/auth.service";
+import { ElementoVendita } from "../model/elementovendita";
 
 @Component({
     selector: 'app-res-biglietteria-programmazione',
@@ -330,6 +335,7 @@ export class ResBiglietteriaProgrammazioneComponent{
         this.pellicole = result;
         })
     }
+
     getProgrammazione(){
         this.http.get<Programmazione[]>(Util.programmazioniServerUrl).subscribe(result=>{
             this.programmazioni = result;
@@ -440,10 +446,36 @@ export class ResBiglietteriaProgrammazioneComponent{
             // }
         });
     }
+
     calcolaRidotto(programmazione:Programmazione){
         return Number((programmazione.prezzo*0.75).toFixed(2))
     }
+
     checkout(){
-        
+        if(this.programmazioneSelezionata){
+            if(AuthService.getToken("id")){
+              var userId:number = Number(AuthService.getToken("id"))
+              var biglietti:Biglietto[] = [];
+              for (let key in this.postiAggiunti) {
+                console.log(key)
+                console.log(this.postiAggiunti[key])
+                if(this.postiAggiunti[key][1]=="normale"){
+                    biglietti.push(new Biglietto(this.programmazioneSelezionata, Number(key), this.programmazioneSelezionata.prezzo));
+                }
+                else{
+                    biglietti.push(new Biglietto(this.programmazioneSelezionata, Number(key), this.calcolaRidotto(this.programmazioneSelezionata)));
+                }
+              }
+              var form:any = {
+                'userID' : userId,
+                'biglietti' : biglietti,
+                'merci' : null,
+              }
+              this.http.post(Util.venditaServerUrl+"/create",form).subscribe(result =>{
+              console.log(result)
+              window.location.reload();
+            })
+          }
+        }
     }
 }

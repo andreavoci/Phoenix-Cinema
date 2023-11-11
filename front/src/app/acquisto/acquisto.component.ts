@@ -185,7 +185,8 @@ export class AcquistoComponent {
       this.totalCost=0;
       for(let k in this.postiAggiunti){
         this.totalCost+=this.programmazioneSelezionata.prezzo;
-      }
+      }        
+      this.totalCost= Number(this.totalCost.toFixed(2))
     }
 
     // Cambia lo stato di selezione del posto quando viene fatto clic su di esso

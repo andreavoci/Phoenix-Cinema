@@ -284,9 +284,11 @@ export class CarrelloComponent {
   checkout():void{
     var authbody:AuthBody = new AuthBody(this.id,"empty");
     console.log(authbody);
-    this.http.post<Carrello>(Util.carrelloServerUrl+"/checkout",authbody).subscribe(result=>{
-      console.log(result);
-      window.location.reload();
+    this.http.post<String>(Util.carrelloServerUrl+"/checkout",authbody).subscribe(success => {
+      window.location.href='/ordini'
+    },
+    error => {
+      window.location.reload()
     })
   }
 

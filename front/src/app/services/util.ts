@@ -16,6 +16,7 @@ export namespace Util {
     export const dipendentiServerUrl = 'http://localhost:8091/api/dipendenti';
     export const inventarioServerUrl = 'http://localhost:8091/api/inventario';
     export const resiServerUrl = 'http://localhost:8091/api/resi';
+    export const venditaServerUrl = 'http://localhost:8091/api/vendite';
 
     export function getPagineGestione(ruolo: string): string[] {
         if(ruolo=="DIRETTORE"){

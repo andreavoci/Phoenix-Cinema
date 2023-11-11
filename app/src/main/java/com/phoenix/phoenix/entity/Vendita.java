@@ -24,19 +24,19 @@ public class Vendita {
     @OneToOne
     private Dipendente dipendente;
 
-    @Convert(converter = ElementoVenditaConverter.class)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendita", orphanRemoval = true)
     private Collection<ElementoVendita> elementi;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendita")
-    private List<Biglietto> biglietti = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendita", orphanRemoval = true)
+    private Collection<Biglietto> biglietti;
 
     private double totale;
 
     private Date data;
 
-    public Vendita(Dipendente dipendente, List<ElementoVendita> merce, List<Biglietto> biglietti){
+    public Vendita(Dipendente dipendente, Collection<ElementoVendita> elementi, Collection<Biglietto> biglietti){
         this.dipendente=dipendente;
-        this.elementi=merce;
+        this.elementi=elementi;
         this.biglietti=biglietti;
         this.data = new Date();
     }

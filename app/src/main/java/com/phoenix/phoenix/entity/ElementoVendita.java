@@ -1,5 +1,6 @@
 package com.phoenix.phoenix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class ElementoVendita implements Serializable {
 
     @Id
@@ -22,11 +24,16 @@ public class ElementoVendita implements Serializable {
     private long id;
 
     @OneToOne
-    private Merce merce;
+    private Inventario merce;
 
     private int quantita;
 
     private double costo;
+
+    @ManyToOne
+    @JoinColumn(name = "vendita_id")
+    @JsonIgnore
+    private Vendita vendita;
 
 }
 
