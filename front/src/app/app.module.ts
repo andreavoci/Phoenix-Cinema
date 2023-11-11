@@ -27,9 +27,15 @@ import { ResBiglietteriaComponent } from './riservata/biglietteria.component';
 import { ResHrComponent } from './riservata/hr.component';
 import { ResFornituraComponent } from './riservata/fornitura.component';
 import { ResProiezioneComponent } from './riservata/proiezione.component';
-import { InventoryComponent } from './riservata/inventario.component';
+import { ResInventarioComponent } from './riservata/inventario.component';
 import { ResMagazziniereComponent } from './riservata/magazziniere.component';
 import { ResPellicolaComponent } from './riservata/pellicola.component';
+import { ResCandidaturaComponent } from './riservata/candidatura.component';
+import { ResDipendenteComponent } from './riservata/dipendente.component';
+import { ResProgrammazioneComponent } from './riservata/programmazione.component';
+import { ResSalaComponent } from './riservata/sala.component';
+import { ResBiglietteriaProgrammazioneComponent } from './riservata/biglietteria-programmazione.component';
+import { ResBiglietteriaVenditaComponent } from './riservata/biglietteria-vendita.component copy';
 
 @NgModule({
   declarations: [
@@ -54,9 +60,15 @@ import { ResPellicolaComponent } from './riservata/pellicola.component';
     ResHrComponent,
     ResFornituraComponent,
     ResProiezioneComponent,
-    InventoryComponent,
+    ResInventarioComponent,
     ResMagazziniereComponent,
-    ResPellicolaComponent
+    ResPellicolaComponent,
+    ResCandidaturaComponent,
+    ResDipendenteComponent,
+    ResProgrammazioneComponent,
+    ResSalaComponent,
+    ResBiglietteriaProgrammazioneComponent,
+    ResBiglietteriaVenditaComponent
   ],
   imports: [
     BrowserModule,

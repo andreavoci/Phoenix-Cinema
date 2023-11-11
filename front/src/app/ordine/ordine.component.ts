@@ -25,10 +25,13 @@ import { Programmazione } from '../model/programmazione';
        <p>{{o.biglietti[0].programmazione.orario | date:'dd'}}</p>
        <p>{{o.biglietti[0].programmazione.orario | date:'MMM'}}</p>
      </div> 
-     <section class="content">
+     <section class="content" >
         <p>phoenix cinema</p>
          <p>{{o.biglietti[0].programmazione.pellicola.titolo}}</p>
          <p>{{getPosti(o)}}</p>
+     </section>
+     <section class="content-annulla" >
+      <button>annulla</button>
      </section>
  </div>
   `,
@@ -185,6 +188,12 @@ import { Programmazione } from '../model/programmazione';
      width: 75%;
      font-size: 85%;
      padding: 15px 30px;
+ }
+ .content-annulla {
+     display: table-cell;
+     padding:0px 10px;
+     height:100%;
+     vertical-align:middle;
  }
  .content p {
      font-size: 90%;

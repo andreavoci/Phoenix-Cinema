@@ -81,7 +81,14 @@ import { Candidatura } from "../model/candidatura";
             <td>{{f.prezzo}}</td>
             <td><span *ngIf="f.merci">[{{f.merci.length}}]</span></td>
             <td><span *ngIf="f.pellicole">[{{f.pellicole.length}}]</span></td>
-            <td>{{f.arrivo | date :"dd/MM/yyyy"}}</td>
+            <td>
+              <div *ngIf="!f.arrivo; else arrivato" style="width:100%;justify-content:center;align-items:center;display:flex;">
+                <button class="item-button" style="background:green;width:20px;height:20px;" (click)="inviaDataArrivo(f.id);">
+                  <span class="material-icons" style="font-size:10px;color:white;width:100%;">add</span>
+                </button>
+              </div>
+              <ng-template #arrivato>{{f.arrivo | date :"dd/MM/yyyy"}}</ng-template>
+            </td>
             <td>{{f.scadenza | date :"dd/MM/yyyy"}}</td>
           </tr>
         </table>
@@ -423,4 +430,11 @@ export class ResFornituraComponent{
     this.checkElimina = false;
   }
   
+  inviaDataArrivo(id: number) {
+    const fornituraArrivata = this.forniture.find((f)=>f.id == id);
+    this.http.post(Util.fornitureServerUrl + '/setDataArrivo', fornituraArrivata).subscribe((response) => { 
+    });
+    window.location.reload()
+}
+
 }

@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Util } from '../services/util';
 
 @Component({
-  selector: 'app-respellicola',
+  selector: 'app-res-pellicola',
   template: `
 <div class="container">
       <p class="titolo">PELLICOLE</p>

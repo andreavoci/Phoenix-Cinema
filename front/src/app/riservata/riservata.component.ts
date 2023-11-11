@@ -24,24 +24,18 @@ import { Dipendente } from '../model/dipendente';
       <app-resfornitore *ngIf="type=='fornitore'"></app-resfornitore>
       <app-biglietteria *ngIf="type=='biglietteria'"></app-biglietteria>
       <app-magazziniere *ngIf="type=='magazziniere'"></app-magazziniere>
-      <app-inventario *ngIf="type=='inventario'"></app-inventario>
-      <app-respellicola *ngIf="type=='pellicola'"></app-respellicola>
+      <app-res-inventario *ngIf="type=='inventario'"></app-res-inventario>
       <app-proiezione *ngIf="type=='proiezione'"></app-proiezione>
+      <app-res-candidatura *ngIf="type=='candidatura'"></app-res-candidatura>
+      <app-res-dipendente *ngIf="type=='dipendenti'"></app-res-dipendente>
+      <app-res-programmazione *ngIf="type=='programmazione'"></app-res-programmazione>
+      <app-res-pellicola *ngIf="type=='pellicola'"></app-res-pellicola>
+      <app-res-sala *ngIf="type=='sala'"></app-res-sala>
       <app-hr *ngIf="type=='hr'"></app-hr>
     </div>    
   `,
   styleUrls: ["./riservata.css"],
-  styles: [ `
-    #msg404{
-      display:flex;
-      flex-direction:column;
-      font-size:40px;
-      color:white;
-      height:100%;
-      justify-content:center;
-    }
-  `,
-  ]
+  styles: [ ``,]
 })
 
 export class RiservataComponent {
@@ -53,7 +47,9 @@ export class RiservataComponent {
     if (this.route.snapshot.paramMap.get('type')){
       this.type = this.route.snapshot.paramMap.get('type');
     }
+    console.log("riservata")
     console.log(this.type)
+    console.log("riservata")
   }
   
 }
