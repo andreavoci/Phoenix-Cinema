@@ -9,11 +9,11 @@ import { User } from '../model/user';
   template: `
   <div id="aboutUsDiv" class="about-us-container">
       <div class="about-us-header">
-        <h2>-About Us-</h2>
+        <h2>About Us</h2>
       </div>
       <div class="section">
         <div class="description">
-          <strong>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2012 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</strong>
+          <strong>Situato nel cuore di Rende, il Phoenix Cinema è più di un cinema: è un'esperienza straordinaria. Fondato nel 2006 dai visionari del cinema Aldo, Giovanni e Giacomo, il nostro cinema è stato creato con passione e dedizione per portare il meglio del cinema direttamente a voi.</strong>
           <strong>Abbiamo plasmato una destinazione cinematografica che celebra il potere delle storie. Ogni visita al Phoenix Cinema è un viaggio attraverso mondi fantastici, un'opportunità per ridere, piangere e condividere emozioni uniche sul grande schermo.</strong>
           <strong>Le nostre strutture di alta qualità, la vasta selezione di film e l'impegno costante per l'innovazione ci rendono una presenza ineguagliabile nella comunità di Rende e oltre.</strong>
           <strong>Il nostro cinema è il luogo ideale per serate speciali con amici e familiari. Organizziamo eventi speciali, proiezioni private e molto altro ancora. Siamo qui per soddisfare le vostre esigenze specifiche e per condividere la magia delle storie e il potere delle immagini in movimento.</strong>
@@ -21,21 +21,21 @@ import { User } from '../model/user';
       </div>
       <div class="section">
         <div class="member">
-          <img src="https://giornaledellospettacolo.globalist.it/wp-content/uploads/2017/12/0004C26D-aldo-baglio-a-autore-e-interprete-del-film-ma-non-regista.jpg" alt="Aldo Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/17/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6576_500x500.jpg" alt="Aldo Image" class="member-image">
           <div class="member-description">
             <strong>Aldo</strong>
             <p> è il cuore pulsante di Phoenix Cinema. La sua visione e passione per il cinema hanno dato vita a questa avventura straordinaria. Aldo è il creatore di opportunità e il motore di questa esperienza cinematografica unica.</p>
           </div>
         </div>
         <div class="member">
-          <img src="https://cdn.calciomercato.com/images/2020-04/cosi.la.vita.460x340.jpg" alt="Giovanni Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/16/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6554_500X500.jpg" alt="Giovanni Image" class="member-image">
           <div class="member-description">
             <strong>Giovanni</strong>
             <p> è la mente strategica dietro il successo di Phoenix Cinema. Il suo impegno nel garantire un ambiente di lavoro stimolante è fondamentale per il benessere dei dipendenti e la qualità dell'esperienza offerta al pubblico.</p>
           </div>
         </div>
         <div class="member">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh7RgVhQZvp4GAF4OrdSEtae4w7bD4ShDFUA&usqp=CAU" alt="Giacomo Image" class="member-image">
+          <img src="https://www.agidi.it/upload/artisti/imgslide/13/thumbnail/GDX_%C2%A9Giovanni%20De%20Sandre_6536_LD_quad.jpg" alt="Giacomo Image" class="member-image">
           <div class="member-description">
             <strong>Giacomo</strong>
             <p> Con la sua dedizione e il suo impegno costante, Giacomo contribuisce in modo significativo a rendere questo cinema un luogo straordinario. La sua presenza rassicurante e la sua passione per l'arte cinematografica sono evidenti in tutto ciò che fa.</p>

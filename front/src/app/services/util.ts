@@ -15,17 +15,20 @@ export namespace Util {
     export const candidatureServerUrl = 'http://localhost:8091/api/candidature';
     export const dipendentiServerUrl = 'http://localhost:8091/api/dipendenti';
     export const inventarioServerUrl = 'http://localhost:8091/api/inventario';
+    export const resiServerUrl = 'http://localhost:8091/api/resi';
 
     export function getPagineGestione(ruolo: string): string[] {
         if(ruolo=="DIRETTORE"){
-            return ["fornitura","fornitore","fatture","biglietteria","candidatura","dipendenti","inventario","programmazione","pellicola","sala"]
+            return ["fornitura","fornitore","fatture","biglietteria","candidatura","dipendenti","inventario","programmazione","pellicola","sala","resi","vendite"]
         }
         else if(ruolo=="HR"){
             return ["hr"]
         }else if(ruolo=="BIGLIETTERIA"){
-            return ["biglietteria"]
+            return ["biglietteria","vendite"]
         }else if(ruolo=="PROIEZIONE"){
-            return ["proiezione"]
+            return ["programmazione","pellicola","sala"]
+        }else if(ruolo=="CONTABILE"){
+            return ["resi","vendite"]
         }
         return []
     }
