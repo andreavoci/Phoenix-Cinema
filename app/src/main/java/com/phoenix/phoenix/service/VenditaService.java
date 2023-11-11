@@ -47,7 +47,6 @@ public class VenditaService {
             Vendita vendita = new Vendita(dipendente.get(),null, biglietti);
             repository.save(vendita);
             Biglietto biglietto = (Biglietto)biglietti.toArray()[0];
-            System.out.println(biglietto.getProgrammazione());
             Optional<Programmazione> programmazione = programmazioneRepository.findById(biglietto.getProgrammazione().getId());
             Collection<Posto> posti = programmazione.get().getPosti();
             for(Biglietto b : biglietti){

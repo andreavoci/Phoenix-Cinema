@@ -39,6 +39,8 @@ public class ResoService {
             Ordine ordine = r.getOrdine();
             List<Biglietto> bigliettiOrdine = bigliettoRepository.findBigliettoByOrdine(ordine);
             Programmazione programmazione;
+//            Optional<Programmazione> programmazione = programmazioneRepository.findById(bigliettiOrdine.get(0).getProgrammazione().getId());
+//            Collection<Posto> posti = programmazione.get().getPosti();
             for(Biglietto b : bigliettiOrdine){
                 b.setOrdine(null);
                 long postoID = b.getPosto();
@@ -49,7 +51,7 @@ public class ResoService {
                         p.setStato("LIBERO");
                     }
                 }
-                programmazioneRepository.save(programmazione);
+                programmazioneRepository.aggiornaPosti(posti,programmazione.getId());
                 bigliettoRepository.delete(b);
             }
             return ResponseEntity.ok(repository.save(r));

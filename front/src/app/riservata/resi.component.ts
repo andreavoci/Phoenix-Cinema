@@ -32,11 +32,12 @@ import { Util } from "../services/util";
                     <span class="material-icons" style="font-size:10px;color:white;width:100%;">delete</span>
                   </button>
                 </div>
-              </td>        <td>{{r.id}}</td>
-        <td>{{r.ordine.id}}</td>
-        <td>{{r.data | date}}</td>
-        <td>{{r.ordine.biglietti[0].programmazione.orario | date}}</td>
-        <td>{{r.stato}}</td>
+              </td>        
+              <td>{{r.id}}</td>
+              <td>{{r.ordine.id}}</td>
+              <td>{{r.data | date}}</td>
+              <td><span *ngIf="r.ordine.biglietti.length>0">{{r.ordine.biglietti[0].programmazione.orario | date}}</span></td>
+              <td>{{r.stato}}</td>
       </tr>
     </table>
     </div>

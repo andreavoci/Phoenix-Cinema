@@ -55,9 +55,9 @@ export class ResFatturaComponent {
     }
 
     getFatture() {
-    this.http.get<Fattura[]>(Util.fatturaServerUrl).subscribe(result => {
-        this.fatture = result;
-    });
+        this.http.get<Fattura[]>(Util.fatturaServerUrl).subscribe(result => {
+            this.fatture = result;
+        });
     }
     PagaFattura(id:number){
         
